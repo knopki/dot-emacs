@@ -19,6 +19,7 @@
   (org-log-done 'time)
   (org-log-redeadline 'time)
   (org-log-reschedule 'time)
+  (org-log-into-drawer t)
   (org-catch-invisible-edits 'smart)
   (org-startup-indented t)
   (org-pretty-entities t)
@@ -26,11 +27,20 @@
   (org-blank-before-new-entry (quote ((heading) (plain-list-item))))
   (org-enforce-todo-dependencies t)
   (org-enforce-todo-checkbox-dependencies t)
+  (org-archive-location (concat org-directory "/archive/%s_archive::datetree/"))
 
   ;; Keywords
   (org-todo-keywords
    '((sequence "TODO(t!)" "NEXT(n)" "WIP(i!)" "WAITING(w@/!)"
                "GAVE(g!)" "|" "DONE(d!)" "CANCELLED(c@/!)")))
+  (org-todo-keyword-faces
+   '(("TODO"     . org-todo)
+     ("NEXT"     . org-warning)
+     ("WIP"      . (:foreground "OrangeRed" :weight bold))
+     ("WAITING"  . (:foreground "coral" :weight bold))
+     ("GAVE"     . (:foreground "LimeGreen" :weight bold))
+     ("CANCELED" . org-done)
+     ("DONE"     . org-done)))
 
   ;; Priorities
   (org-lowest-priority ?D)
@@ -45,10 +55,11 @@
   ;; Agenda
   (org-agenda-files '("~/org"))
   (org-agenda-text-search-extra-files '(agenda-archives))
-  (org-agenda-span 10)
+  (org-agenda-span 14)
   (org-agenda-start-on-weekday nil)
   (org-agenda-start-day "-3d")
   (org-agenda-skip-deadline-prewarning-if-scheduled t)
+  (org-agenda-skip-scheduled-if-deadline-is-shown t)
   (org-agenda-include-diary t)
   (org-stuck-projects
    '("+projects/-DONE" ("NEXT" "WIP") ("@shop") "\\<IGNORE\\>"))
