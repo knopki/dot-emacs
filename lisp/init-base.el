@@ -401,6 +401,9 @@
 (use-package desktop
   :ensure nil
   :hook ((doom-modeline-mode . desktop-revert))
+  :init
+  (setq desktop-restore-eager 10)
+  (setq desktop-lazy-verbose nil)
   :config
   (desktop-save-mode 1))
 
