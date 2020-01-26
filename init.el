@@ -26,7 +26,7 @@
 
 ;; Performance hacks - better to load it earlier
 (require 'init-perf)
-; (require 'init-benchmark) ;; comment out when non needed
+;; (require 'init-benchmark) ;; comment out when non needed
 
 (require 'init-package)
 
