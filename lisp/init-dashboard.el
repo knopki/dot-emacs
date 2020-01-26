@@ -32,13 +32,10 @@
         dashboard-show-shortcuts nil
         dashboard-items '((recents . 10)
                           (bookmarks . 5)
-                          (projects . 10)
-                          (agenda . 19)))
+                          (projects . 10)))
 
   (setq dashboard-startup-banner 2 ; just text logo
-        dashboard-init-info
-        (format "Emacs ready in %.2f seconds with %d garbage collections."
-                (float-time (time-subtract after-init-time before-init-time)) gcs-done))
+        dashboard-init-info "")
 
   ;; show Dashboard in frames created with emacsclient -c
   ;; (dashboard-setup-startup-hook)
