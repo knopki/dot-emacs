@@ -1,0 +1,36 @@
+* My Emacs configuration
+** Some custom hotkeys
+| Hotkey    | Mode          | Meaning                      |
+|-----------+---------------+------------------------------|
+| SPC <f1>  |               | general-describe-keybindings |
+| SPC <f2>  |               | which-key-show-top-level     |
+| SPC <f3>  |               | which-key-show-major-mode    |
+| SPC <f4>  |               | which-key-show-full-keymap   |
+| SPC <f5>  |               | undo-tree-visualize          |
+|           |               |                              |
+| C-'       | normal visual | avy go to char               |
+| C-"       | normal visual | avy go to word               |
+|           |               |                              |
+| J/K       | visual        | move visual block            |
+|           |               |                              |
+| SPC c     |               | run calculator               |
+|           |               |                              |
+| gc ...    | normal visual | evil commentary prefix       |
+|           |               |                              |
+| s         | operator      | evil-surround-edit           |
+| S         | operator      | evil-Surround-edit           |
+| S         | visual        | evil-surround-region         |
+| gS        | visual        | evil-Surround-region         |
+|           |               |                              |
+| SPC o a   |               | org agenda                   |
+| SPC o c   |               | org capture                  |
+| SPC o l   |               | org agenda list              |
+| SPC o s   |               | org search                   |
+|           |               |                              |
+| SPC p ... |               | projectile menu              |
+|           |               |                              |
+| SPC g ... |               | magit status                 |
+|           |               |                              |
+| SPC y ... |               | yasnippet insert snipped     |
+|           |               |                              |
+|-----------+---------------+------------------------------|
