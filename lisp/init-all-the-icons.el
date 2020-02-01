@@ -7,7 +7,8 @@
 
 (use-package all-the-icons
   :if (display-graphic-p)
-  :init (unless (or sys/win32p (member "all-the-icons" (font-family-list)))
+  :init (unless (or (eq system-type 'windows-nt)
+                    (member "all-the-icons" (font-family-list)))
           (all-the-icons-install-fonts t))
   :config
   (add-to-list 'all-the-icons-mode-icon-alist

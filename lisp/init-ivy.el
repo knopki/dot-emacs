@@ -89,8 +89,12 @@
 ;; Correcting words with flyspell via Ivy
 (use-package flyspell-correct-ivy
   :after (:all (flyspell ivy))
-  :bind (:map flyspell-mode-map
-              ([remap flyspell-correct-word-before-point] . flyspell-correct-previous-word-generic)))
+  :init
+  (setq flyspell-correct-interface #'flyspell-correct-ivy)
+  :general
+  ;; Redefine evil-mode keybinding
+  ;; Also, use M-o to access ivy menu
+  (general-nmap "z=" 'flyspell-correct-wrapper))
 
 
 ;; More friendly display transformer for Ivy

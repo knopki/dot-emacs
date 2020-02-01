@@ -11,7 +11,7 @@
   (set-charset-priority 'unicode))       ; pretty
 (prefer-coding-system 'utf-8)            ; pretty
 (setq locale-coding-system 'utf-8)       ; please
-(unless sys/win32p
+(unless (eq system-type 'windows-nt)
   (setq selection-coding-system 'utf-8)) ; with sugar on top
 
 ;; Typing yes/no is obnoxious when y/n will do
@@ -39,8 +39,8 @@
 
 
 ;; Menu/Tool/Scroll bars
-(unless emacs/>=27p        ; Move to early init-file in 27
-  (unless sys/mac-x-p
+(unless (>= emacs-major-version 27)       ; Move to early init-file in 27
+  (unless (and (display-graphic-p) (eq system-type 'darwin))
     (push '(menu-bar-lines . 0) default-frame-alist))
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist))
@@ -74,8 +74,8 @@
     (set-face-attribute 'default nil
                         :font knopki/font-default
                         :height (cond
-                                 (sys/mac-x-p 130)
-                                 (sys/win32p 110)
+                                 ((and (display-graphic-p) (eq system-type 'darwin)) 130)
+                                 ((eq system-type 'windows-nt) 110)
                                  (t 120)))))
 
 ;; More performant rapid scrolling over unfontified regions. May cause brief

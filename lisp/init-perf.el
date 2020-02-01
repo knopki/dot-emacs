@@ -4,6 +4,7 @@
 (eval-when-compile
   (require 'init-const))
 
+
 ;; A big contributor to startup times is garbage collection. We up the gc
 ;; threshold to temporarily prevent it from running, then reset it later.
 ;; Not resetting it will cause stuttering/freezes.
@@ -64,10 +65,10 @@
 
 ;; Remove command line options that aren't relevant to our current OS; that
 ;; means less to process at startup.
-(unless sys/macp   (setq command-line-ns-option-alist nil))
-(unless sys/linuxp (setq command-line-x-option-alist nil))
+(unless (eq system-type 'darwin) (setq command-line-ns-option-alist nil))
+(unless (eq system-type 'gnu/linux) (setq command-line-x-option-alist nil))
 
-;; Don’t compact font caches during GC.
+;; Don’t compact font caches during garbage collect
 (setq inhibit-compacting-font-caches t)
 
 ;; Resizing the Emacs frame can be a terribly expensive part of changing the

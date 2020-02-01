@@ -40,8 +40,7 @@
     (advice-add #'ibuffer-find-file :override #'my-ibuffer-find-file))
 
   ;; Display buffer icons on GUI
-  (when (and (display-graphic-p)
-             (require 'all-the-icons nil t))
+  (when (and (display-graphic-p) (require 'all-the-icons nil t))
     ;; For alignment, the size of the name field should be the width of an icon
     (define-ibuffer-column icon (:name "  ")
       (let ((icon (if (and (buffer-file-name)
@@ -52,7 +51,7 @@
             (setq icon (all-the-icons-faicon "file-o" :face 'all-the-icons-dsilver :height 0.8 :v-adjust 0.0))
           icon)))
 
-    (setq ibuffer-formats `((mark modified read-only ,(if emacs/>=26p 'locked "")
+    (setq ibuffer-formats `((mark modified read-only ,(if (>= emacs-major-version 26) 'locked "")
                                   ;; Here you may adjust by replacing :right with :center or :left
                                   ;; According to taste, if you want the icon further from the name
                                   " " (icon 2 2 :left :elide)

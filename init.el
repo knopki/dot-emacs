@@ -26,8 +26,9 @@
 
 ;; Performance hacks - better to load it earlier
 (require 'init-perf)
-;; (require 'init-benchmark) ;; comment out when non needed
+(when (getenv "EMACS_BENCHMARK") (require 'init-benchmark))
 
+;; Initialize use-package
 (require 'init-package)
 
 ;; Normalize paths
@@ -44,7 +45,7 @@
 (require 'init-hide-mode-line)
 (require 'init-solaire-mode)
 
-;; Create VIMacs homunculus
+;; Create Vi-macs homunculus
 (require 'init-evil)
 (require 'init-general)
 
