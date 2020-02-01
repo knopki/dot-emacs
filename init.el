@@ -66,6 +66,7 @@
 (require 'init-company)
 (require 'init-aggressive-indent)
 (require 'init-magit)
+(require 'init-diff-hl)
 (require 'init-yasnippet)
 
 
