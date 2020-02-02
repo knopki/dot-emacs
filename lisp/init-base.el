@@ -2,9 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 (eval-when-compile
-  (require 'no-littering)
-  (require 'init-const)
-  (require 'init-package))
+  (require 'init-const))
 
 ;; UTF-8 as the default coding system
 (when (fboundp 'set-charset-priority)

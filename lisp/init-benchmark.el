@@ -1,8 +1,6 @@
 ;;; init-benchmark.el --- Start benchmark if needed. -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-package))
 
 (use-package benchmark-init
   :defines swiper-font-lock-exclude

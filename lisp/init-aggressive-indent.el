@@ -1,9 +1,6 @@
 ;;; init-aggressive-indent.el --- More aggressive indentation. -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-package))
-
 
 ;; Minor mode to aggressively keep your code always indented
 (use-package aggressive-indent

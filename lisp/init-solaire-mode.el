@@ -1,9 +1,6 @@
 ;;; init-solaire-mode.el --- Make certain buffers grossly incandescent -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-package))
-
 
 (use-package solaire-mode
   :functions persp-load-state-from-file

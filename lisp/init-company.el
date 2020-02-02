@@ -1,10 +1,6 @@
 ;;; init-company.el --- -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-package))
-
 
 (use-package company
   :diminish company-mode

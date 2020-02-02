@@ -2,11 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-package))
-
-
 (use-package ibuffer
   :ensure nil
   :functions (all-the-icons-icon-for-file

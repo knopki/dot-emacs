@@ -1,8 +1,6 @@
 ;;; init-general.el --- A general is the leader.  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-package))
 
 (use-package general
   :config

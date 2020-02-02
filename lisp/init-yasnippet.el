@@ -3,7 +3,6 @@
 ;;; Code:
 
 (eval-when-compile
-  (require 'init-package)
   (require 'init-general))
 
 

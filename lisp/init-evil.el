@@ -2,8 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 (eval-when-compile
-  (require 'init-const)
-  (require 'init-package))
+  (require 'init-const))
 
 (use-package evil
   :diminish undo-tree-mode

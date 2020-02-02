@@ -1,8 +1,6 @@
 ;;; init-doom-themes.el --- Theme. -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-package))
 
 
 (use-package doom-themes

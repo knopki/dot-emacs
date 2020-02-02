@@ -2,9 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-package))
-
 
 (use-package nix-mode
   :mode ("\\.nix\\'" "\\.nix.in\\'")

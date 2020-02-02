@@ -1,9 +1,6 @@
 ;;; init-all-the-icons.el --- -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-package))
-
 
 (use-package all-the-icons
   :if (display-graphic-p)

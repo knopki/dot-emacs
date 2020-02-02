@@ -1,9 +1,6 @@
 ;;; init-doom-modeline.el --- Modeline. -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-package))
-
 
 (use-package doom-modeline
   :hook (after-init . doom-modeline-mode)

@@ -1,9 +1,6 @@
 ;;; init-ivy.el --- Initialize ivy configurations. -*- lexical-binding: t; -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-const)
-  (require 'init-package))
 
 (use-package ivy
   :diminish ivy-mode

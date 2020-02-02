@@ -1,5 +1,12 @@
+#+TITLE: My Emacs configuration
+#+AUTHOR: Sergey Korolev
+#+EMAIL: korolev.srg@gmail.com
+#+PROPERTY: header-args:elisp :tangle "init.el"
+#+OPTIONS: ^:{}
+
 * My Emacs configuration
-** Some custom hotkeys
+** Some custom keybindings
+|-----------+---------------+------------------------------|
 | Hotkey    | Mode          | Meaning                      |
 |-----------+---------------+------------------------------|
 | SPC <f1>  |               | general-describe-keybindings |
@@ -34,3 +41,269 @@
 | SPC y ... |               | yasnippet insert snipped     |
 |           |               |                              |
 |-----------+---------------+------------------------------|
+** Initialization
+*** Header
+#+begin_src elisp
+  ;; -*- lexical-binding: t -*-
+  ;; This file was tangled (automatically generated) from `README.org'
+#+end_src
+*** Update load paths
+Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
+#+begin_src elisp
+  (defun update-load-path (&rest _)
+    "Update `load-path'."
+    (push (expand-file-name "site-lisp" user-emacs-directory) load-path)
+    (push (expand-file-name "lisp" user-emacs-directory) load-path))
+
+  (defun add-subdirs-to-load-path (&rest _)
+    "Add subdirectories to `load-path'."
+    (let ((default-directory
+            (expand-file-name "site-lisp" user-emacs-directory)))
+      (normal-top-level-add-subdirs-to-load-path)))
+
+  (advice-add #'package-initialize :after #'update-load-path)
+  (when (file-directory-p (expand-file-name "site-lisp" user-emacs-directory))
+    (advice-add #'package-initialize :after #'add-subdirs-to-load-path))
+
+  (update-load-path)
+#+end_src
+*** Performance hacks
+Default garbage collection thresholds.
+#+begin_src elisp
+  (defvar default-gc-cons-percentage gc-cons-percentage)
+  (defconst knopki/gc-cons-threshold-bytes
+    16777216 ; 16Mb
+    "The default value to use for `gc-cons-threshold'.
+  If you experience freezing, decrease this.
+  If you experience stuttering, increase this.")
+#+end_src
+
+A big contributor to startup times is garbage collection. We up the garbage
+collector threshold to temporarily prevent it from running, then reset it
+later. Not resetting it will cause stuttering/freezes. Also, disable GC when
+cursor in the any minibuffer and restore on minibuffer exit.
+#+begin_src elisp
+  (setq gc-cons-threshold most-positive-fixnum gc-cons-percentage 100)
+
+  ;; Startup hook
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              "Restore default values after startup."
+              (setq file-name-handler-alist default-file-name-handler-alist
+                    gc-cons-threshold knopki/gc-cons-threshold-bytes
+                    gc-cons-percentage default-gc-cons-percentage)))
+
+  ;; Stop GC in minibuffer
+  (add-hook 'minibuffer-setup-hook
+            (lambda ()
+              (setq gc-cons-threshold most-positive-fixnum
+                    gc-cons-percentage 100)))
+
+  ;; GC and back GC threshold to normal on minibuffer exit
+  (add-hook 'minibuffer-exit-hook
+            (lambda ()
+              (garbage-collect)
+              (setq gc-cons-threshold knopki/gc-cons-threshold-bytes
+                    gc-cons-percentage default-gc-cons-percentage)))
+#+end_src
+
+Run GC every 10s when idle.
+#+begin_src elisp
+  (run-with-idle-timer 10 t #'garbage-collect)
+#+end_src
+
+Collect garbage automatically while unfocusing the frame.
+`focus-out-hook' is obsolete since 27.1.
+#+begin_src elisp
+  (if (boundp 'after-focus-change-function)
+      (add-function :after after-focus-change-function
+                    (lambda ()
+                      (unless (frame-focus-state)
+                        (garbage-collect))))
+    (add-hook 'focus-out-hook 'garbage-collect))
+#+end_src
+
+In noninteractive sessions, prioritize non-byte-compiled source files to prevent
+the use of stale byte-code. Otherwise, it saves us a little IO time to skip the
+mtime checks on every *.elc file we load.
+#+begin_src elisp
+  (setq load-prefer-newer noninteractive)
+#+end_src
+
+This is consulted on every `require', `load' and various path/io functions. You
+get a minor speed up by nooping this.
+#+begin_src elisp
+  (defvar default-file-name-handler-alist file-name-handler-alist)
+  (setq file-name-handler-alist nil)
+#+end_src
+
+Don't make a second case-insensitive pass over `auto-mode-alist'. If it has to,
+it's our (the user's) failure. One case for all!
+#+begin_src elisp
+  (setq auto-mode-case-fold nil)
+#+end_src
+
+Don't ping things that look like domain names.
+#+begin_src elisp
+  (setq ffap-machine-p-known 'reject)
+#+end_src
+
+Remove command line options that aren't relevant to our current OS; that means
+less to process at startup.
+#+begin_src elisp
+  (unless (eq system-type 'darwin) (setq command-line-ns-option-alist nil))
+  (unless (eq system-type 'gnu/linux) (setq command-line-x-option-alist nil))
+#+end_src
+
+Don’t compact font caches during garbage collect.
+#+begin_src elisp
+  (setq inhibit-compacting-font-caches t)
+#+end_src
+
+Resizing the Emacs frame can be a terribly expensive part of changing the
+font. By inhibiting this, we halve startup times, particularly when we use fonts
+that are larger than the system default (which would resize the frame).
+#+begin_src elisp
+  (setq frame-inhibit-implied-resize t)
+#+end_src
+
+Disable bidirectional text rendering for a modest performance boost. Of course,
+this renders Emacs unable to detect/display right-to-left languages (sorry!),
+but for us left-to-right language speakers/writers, it's a boon.
+#+begin_src elisp
+  (setq-default bidi-display-reordering 'left-to-right)
+#+end_src
+
+Reduce rendering/line scan work for Emacs by not rendering cursors or regions in
+non-focused windows.
+#+begin_src elisp
+  (setq-default cursor-in-non-selected-windows nil)
+#+end_src
+*** Initialize 'use-package
+`use-package' package is the central gear of my configuration.
+
+HACK: DO NOT copy package-selected-packages to init/custom file forcibly - [[https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751][ref]]
+#+begin_src elisp
+(defun my-save-selected-packages (&optional value)
+  "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
+  (when value
+    (setq package-selected-packages value)))
+(advice-add 'package--save-selected-packages :override #'my-save-selected-packages)
+#+end_src
+
+Setup package archives.
+#+begin_src elisp
+  (require 'package)
+  (setq package-archives '(("org"          . "https://orgmode.org/elpa/")
+                           ("gnu"          . "https://elpa.gnu.org/packages/")
+                           ("melpa-stable" . "https://stable.melpa.org/packages/")
+                           ("melpa"        . "https://melpa.org/packages/")))
+#+end_src
+
+Initialize packages.
+#+begin_src elisp
+  (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
+    (setq package-enable-at-startup nil)          ; To prevent initializing twice
+    (package-initialize))
+#+end_src
+
+Setup `use-package'.
+#+begin_src elisp
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+
+  ;; Should set before loading `use-package'
+  (eval-and-compile
+    (setq use-package-always-ensure t))
+
+  (eval-when-compile
+    (require 'use-package))
+
+  ;; Required by `use-package'
+  (use-package diminish)
+  (use-package bind-key)
+#+end_src
+
+Update GPG keyring for GNU ELPA.
+#+begin_src elisp
+  (use-package gnu-elpa-keyring-update)
+#+end_src
+*** Benchmarking
+Enable startup benchmarking if started with `EMACS_BENCHMARK` environment
+variable is set.
+#+begin_src elisp
+  (when (getenv "EMACS_BENCHMARK")
+    (use-package benchmark-init
+      :defines swiper-font-lock-exclude
+      :commands (benchmark-init/activate)
+      :hook (after-init . benchmark-init/deactivate)
+      :init (benchmark-init/activate)
+      :config
+      (with-eval-after-load 'swiper
+        (add-to-list 'swiper-font-lock-exclude 'benchmark-init/tree-mode))))
+#+end_src
+*** Setup standard file paths
+The default paths used to store configuration files and persistent data are not
+consistent across Emacs packages. This package sets out to fix this by changing
+the values of path variables to put configuration files in
+no-littering-etc-directory (defaulting to ~/.emacs.d/etc/) and persistent data
+files in no-littering-var-directory (defaulting to ~/.emacs.d/var/), and by
+using descriptive file names and subdirectories when appropriate.
+#+begin_src elisp
+  (require 'no-littering)
+#+end_src
+* Old init file
+#+begin_src elisp
+  ;; Setup builtin settings and packages
+  (require 'init-base)
+
+  ;; Essential look & feel (doomed)
+  (require 'init-doom-themes)
+  (require 'init-doom-modeline)
+  (require 'init-all-the-icons)
+  (require 'init-dashboard)
+  (require 'init-hide-mode-line)
+  (require 'init-solaire-mode)
+
+  ;; Create Vi-macs homunculus
+  (require 'init-evil)
+  (require 'init-general)
+  (require 'init-reverse-im)
+
+  ;; Global modes
+  (require 'init-which-key)
+  (require 'init-undo-tree)
+  (require 'init-ivy)
+  (require 'init-flycheck)
+  (require 'init-avy)
+  (require 'init-persistent-scratch)
+
+  ;; Sometimes modes
+  (require 'init-ibuffer)
+  (require 'init-org)
+
+  ;; Programming
+  (require 'init-projectile)
+  (require 'init-company)
+  (require 'init-aggressive-indent)
+  (require 'init-magit)
+  (require 'init-diff-hl)
+  (require 'init-yasnippet)
+  (require 'init-direnv)
+  (require 'init-nix)
+
+
+  ;; Load manual customizations
+  (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+  (when (file-exists-p custom-file)
+    (load custom-file))
+
+  (provide 'init)
+  ;;; init.el ends here
+#+end_src
+
+* Tangle save hook
+# Local Variables:
+# eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t)
+# End:
