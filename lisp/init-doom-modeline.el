@@ -20,6 +20,8 @@
 
 (use-package nyan-mode
   :diminish nyan-mode
+  :custom
+  (nyan-bar-length 16)
   :hook (after-init . nyan-mode))
 
 
