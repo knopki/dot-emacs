@@ -70,6 +70,7 @@
 (require 'init-diff-hl)
 (require 'init-yasnippet)
 (require 'init-direnv)
+(require 'init-nix)
 
 
 ;; Load manual customizations
