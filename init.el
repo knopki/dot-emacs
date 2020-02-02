@@ -69,6 +69,7 @@
 (require 'init-magit)
 (require 'init-diff-hl)
 (require 'init-yasnippet)
+(require 'init-direnv)
 
 
 ;; Load manual customizations
