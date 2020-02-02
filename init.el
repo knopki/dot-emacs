@@ -48,6 +48,7 @@
 ;; Create Vi-macs homunculus
 (require 'init-evil)
 (require 'init-general)
+(require 'init-reverse-im)
 
 ;; Global modes
 (require 'init-which-key)
