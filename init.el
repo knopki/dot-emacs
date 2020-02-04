@@ -333,17 +333,10 @@ If you experience stuttering, increase this.")
   (inhibit-startup-echo-area-message t "Don't echo messages.")
   (inhibit-splash-screen t "Don't show the splash screen.")
   (initial-scratch-message nil "Disable initial scratch message.")
-  (initial-major-mode 'text-mode "It just text by default."))
+  (initial-major-mode 'text-mode "It just text by default.")
 
-;; Tabify
-;; Buffer re-tabbing.
-
-
-(use-package tabify
-  :ensure nil
-  :commands (tabify untabify)
-  :config
-  (setq tabify-regexp "^\t* [ \t]+"))
+  (history-length 1000 "Max length of history lists.")
+  (history-delete-duplicates t "Delete dups in history."))
 
 ;; Files
 ;; Files, backups, etc.
@@ -438,6 +431,119 @@ If you experience stuttering, increase this.")
   (save-interprogram-paste-before-kill
    t "Save clipboard contents into kill-ring before replacing them."))
 
+;; Whitespaces
+;; Delete trailing whitespaces on buffer save.
+
+
+(use-package whitespace
+  :ensure nil
+  :hook (before-save . whitespace-cleanup))
+
+;; Recent files
+;; Exclude some files from =recentf= lists and save list on save and some times on timer.
+
+
+(use-package recentf
+  :ensure nil
+  :hook (after-init . recentf-mode)
+  :init
+  ;; Save recent list some times
+  (run-at-time t (* 5 60) 'recentf-save-list)
+  :custom
+  (recentf-max-saved-items 200 "Many-many items in recent list.")
+  (recentf-exclude
+   '("\\.?cache"
+     "url"
+     "COMMIT_EDITMSG\\'"
+     "bookmarks"
+     "\\.\\(?:gz\\|gif\\|svg\\|png\\|jpe?g\\)$"
+     "^/tmp/"
+     "^/ssh:"
+     "\\.?ido\\.last$"
+     "\\.revive$"
+     "/TAGS$"
+     (lambda (file) (file-in-directory-p file package-user-dir))
+     (expand-file-name recentf-save-file)
+     no-littering-var-directory
+     no-littering-etc-directory) "Excludes from recent list."))
+
+;; Save history
+
+(use-package savehist
+  :ensure nil
+  :hook (after-init . savehist-mode)
+  :custom
+  (enable-recursive-minibuffers t "Allow minibuffer commands while in minibuffer.")
+  (savehist-additional-variables
+   '(mark-ring
+     global-mark-ring
+     search-ring
+     regexp-search-ring
+     extended-command-history) "Additional variables to save.")
+  (savehist-autosave-interval 300 "Save history sometime."))
+
+;; Auto revert
+;; Revert buffer of file change on disk.
+
+
+(use-package autorevert
+  :ensure nil
+  :diminish
+  :hook (after-init . global-auto-revert-mode)
+  :custom
+  (auto-revert-check-vc-info t "Update version control.")
+  (auto-revert-verbose nil "Silent auto revert."))
+
+;; Delete selection
+
+(use-package delsel
+  :ensure nil
+  :custom
+  (delete-selection-mode t "Replace the active region just by typing text."))
+
+;; Unique buffer names
+
+(use-package uniquify
+  :ensure nil
+  :custom
+  (uniquify-buffer-name-style 'forward "bar/mumble/name"))
+
+;; On-the-fly spell checker
+;; =hunspell= is must because of ability to query multiple dictionaries.
+
+
+(use-package flyspell
+  :ensure nil
+  :diminish
+  :if (executable-find "hunspell")
+  :hook
+  (((text-mode outline-mode org-mode) . flyspell-mode)
+   (prog-mode . flyspell-prog-mode))
+  :init
+  (with-eval-after-load "ispell"
+    (setq ispell-program-name "hunspell")
+    (setq ispell-dictionary "en_US,ru_RU")
+    (ispell-set-spellchecker-params)
+    (ispell-hunspell-add-multi-dic "en_US,ru_RU"))
+  :custom
+  (flyspell-issue-message-flag nil "Be silent."))
+
+;; Desktop save and load
+;; Restore last autosaved session.
+
+
+(use-package desktop
+  :ensure nil
+  :hook
+  ;; Must be loaded after 'doom-modeline
+  ;; See: https://github.com/seagle0128/doom-modeline/issues/216
+  (doom-modeline-mode . desktop-revert)
+  :custom
+  (desktop-restore-eager 10 "Restore immediately last N buffers.")
+  (desktop-lazy-verbose nil "Be silent.")
+  :config
+  (setq desktop-save-mode t))
+
 ;; Menu/Tool/Scroll bars
 
 (unless (>= emacs-major-version 27)       ; Move to early init-file in 27
@@ -445,6 +551,50 @@ If you experience stuttering, increase this.")
     (push '(menu-bar-lines . 0) default-frame-alist))
   (push '(tool-bar-lines . 0) default-frame-alist)
   (push '(vertical-scroll-bars) default-frame-alist))
+
+;; Mouse
+
+(use-package mouse
+  :ensure nil
+  :defer t
+  :custom
+  (mouse-yank-at-point t "Yanks at point instead of click."))
+
+
+
+;; Mouse wheel settings.
+
+
+(use-package mwheel
+  :ensure nil
+  :defer t
+  :custom
+  (mouse-wheel-scroll-amount '(1 ((shift) . 5)) "Amount of scroll by mouse wheel.")
+  (mouse-wheel-progressive-speed nil "Progressive scrolling."))
+
+;; Tooltips
+;; Don't display floating tooltips; display their contents in the echo-area.
+
+
+(use-package tooltip
+  :ensure nil
+  :defer t
+  :custom
+  (tooltip-mode nil))
+
+;; Frame
+
+(use-package frame
+  :ensure nil
+  :hook
+  ;; Display dividers between windows
+  (window-setup . window-divider-mode)
+  :custom
+  (blink-cursor-mode nil "Don't blink the cursor.")
+  ;; Display dividers between windows
+  (window-divider-default-places t "Dividers on the bottom and on the right.")
+  (window-divider-default-bottom-width 1)
+  (window-divider-default-right-width 1))
 
 ;; Fonts
 
@@ -462,10 +612,90 @@ If you experience stuttering, increase this.")
                                  ((eq system-type 'windows-nt) 110)
                                  (t 120)))))
 
-;; Old init file
+;; Ediff
+;; A comprehensive visual interface to diff & patch.
 
-;; Setup builtin settings and packages
-(require 'init-base)
+
+(use-package ediff
+  :ensure nil
+  :hook
+  ;; show org ediffs unfolded
+  ((ediff-prepare-buffer . outline-show-all)
+   ;; restore window layout when done
+   (ediff-quit . winner-undo))
+
+  :custom
+  (ediff-window-setup-function 'ediff-setup-windows-multiframe))
+
+;; Eldoc
+
+(use-package eldoc
+  :ensure nil
+  :diminish eldoc-mode
+  :hook
+  (prog-mode . eldoc-mode)
+  :custom
+  (global-eldoc-mode -1 "Disable global mode."))
+
+;; Tabify
+;; Buffer re-tabbing.
+
+
+(use-package tabify
+  :ensure nil
+  :commands (tabify untabify)
+  :config
+  (setq tabify-regexp "^\t* [ \t]+"))
+
+;; Highlight matching parens
+
+(use-package paren
+  :ensure nil
+  :custom
+  (show-paren-mode t "Enable show matching parens."))
+
+;; Automatic parenthesis pairing
+
+(use-package elec-pair
+  :ensure nil
+  :hook (prog-mode . electric-pair-mode)
+  :custom
+  (electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
+
+;; Display line numbers
+
+(use-package display-line-numbers
+  :ensure nil
+  :hook (prog-mode . display-line-numbers-mode))
+
+;; C/C++
+
+(use-package cc-vars
+  :ensure nil
+  :defer t
+  :custom
+  (c-basic-offset 4 "Default indentation.")
+  (c-default-style '((java-mode . "java")
+                     (awk-mode . "awk")
+                     (other . "k&r"))))
+
+;; Python
+
+(use-package python
+  :ensure nil
+  :defer t
+  :custom
+  (python-indent-offset 2))
+
+;; Javascript
+
+(use-package js
+  :ensure nil
+  :defer t
+  :custom
+  (js-indent-level 2))
+
+;; Old init file
 
 ;; Essential look & feel (doomed)
 (require 'init-doom-themes)
@@ -484,7 +714,6 @@ If you experience stuttering, increase this.")
 (require 'init-which-key)
 (require 'init-undo-tree)
 (require 'init-ivy)
-(require 'init-flycheck)
 (require 'init-avy)
 (require 'init-persistent-scratch)
 
@@ -493,6 +722,7 @@ If you experience stuttering, increase this.")
 (require 'init-org)
 
 ;; Programming
+(require 'init-flycheck)
 (require 'init-projectile)
 (require 'init-company)
 (require 'init-aggressive-indent)

@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 (eval-when-compile
-  (require 'init-base)
   (require 'init-general))
 
 ;; Manage and navigate projects
