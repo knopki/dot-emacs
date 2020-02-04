@@ -1,10 +1,22 @@
 #+TITLE: My Emacs configuration
 #+AUTHOR: Sergey Korolev
 #+EMAIL: korolev.srg@gmail.com
-#+PROPERTY: header-args:elisp :tangle "init.el"
+#+PROPERTY: header-args:elisp :tangle "init.el" :comments org
 #+OPTIONS: ^:{}
 
-* My Emacs configuration
+* About
+This is my Emacs configuration, built with =use-package= and
+=org-mode=. =use-package= allows declarative description of packages and it’s
+settings, =org-mode= allows to represent this configuration as document and
+generate config from it.
+
+This file declares local variable hook - run =org-babel-tangle= on every save.
+
+** Usage
+Clone repository to =~/.emacs.d= and run Emacs.
+
+** TODO Table of Contents                                            :TOC@3:
+* Documentation
 ** Some custom keybindings
 |-----------+---------------+------------------------------|
 | Hotkey    | Mode          | Meaning                      |
@@ -41,14 +53,49 @@
 | SPC y ... |               | yasnippet insert snipped     |
 |           |               |                              |
 |-----------+---------------+------------------------------|
-** Initialization
-*** Header
-#+begin_src elisp
+* Initialization
+Initial bootstrapping and things related to package management.
+
+** Early Init
+Emacs HEAD (27+) introduces =early-init.el=, which is run before =init.el=,
+before package and UI initialization happens.
+
+#+begin_src elisp :tangle "early-init.el" :comments no
+  ;; -*- lexical-binding: t -*-
+  ;; This file was tangled (automatically generated) from `README.org'
+
+  ;; Defer garbage collection further back in the startup process
+  (setq gc-cons-threshold most-positive-fixnum)
+
+  ;; In Emacs 27+, package initialization occurs before `user-init-file' is
+  ;; loaded, but after `early-init-file'. We want init packages manually.
+  (setq package-enable-at-startup nil)
+
+  ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
+  (push '(menu-bar-lines . 0) default-frame-alist)
+  (push '(tool-bar-lines . 0) default-frame-alist)
+  (push '(vertical-scroll-bars) default-frame-alist)
+
+  ;; Resizing the Emacs frame can be a terribly expensive part of changing the
+  ;; font. By inhibiting this, we easily halve startup times with fonts that are
+  ;; larger than the system default.
+  (setq frame-inhibit-implied-resize t)
+
+  ;; Ignore X resources; its settings would be redundant with the other settings
+  ;; in this file and can conflict with later config (particularly where the
+  ;; cursor color is concerned).
+  (advice-add #'x-apply-session-resources :override #'ignore)
+#+end_src
+
+** Header
+#+begin_src elisp :comments no
   ;; -*- lexical-binding: t -*-
   ;; This file was tangled (automatically generated) from `README.org'
 #+end_src
-*** Update load paths
-Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
+
+** Update load paths
+Optimize: Force =lisp= and =site-lisp= at the head to reduce the startup time.
+
 #+begin_src elisp
   (defun update-load-path (&rest _)
     "Update `load-path'."
@@ -67,8 +114,10 @@ Optimize: Force "lisp"" and "site-lisp" at the head to reduce the startup time.
 
   (update-load-path)
 #+end_src
-*** Performance hacks
+
+** Performance hacks
 Default garbage collection thresholds.
+
 #+begin_src elisp
   (defvar default-gc-cons-percentage gc-cons-percentage)
   (defconst knopki/gc-cons-threshold-bytes
@@ -82,6 +131,7 @@ A big contributor to startup times is garbage collection. We up the garbage
 collector threshold to temporarily prevent it from running, then reset it
 later. Not resetting it will cause stuttering/freezes. Also, disable GC when
 cursor in the any minibuffer and restore on minibuffer exit.
+
 #+begin_src elisp
   (setq gc-cons-threshold most-positive-fixnum gc-cons-percentage 100)
 
@@ -108,12 +158,14 @@ cursor in the any minibuffer and restore on minibuffer exit.
 #+end_src
 
 Run GC every 10s when idle.
+
 #+begin_src elisp
   (run-with-idle-timer 10 t #'garbage-collect)
 #+end_src
 
 Collect garbage automatically while unfocusing the frame.
-`focus-out-hook' is obsolete since 27.1.
+=focus-out-hook= is obsolete since 27.1.
+
 #+begin_src elisp
   (if (boundp 'after-focus-change-function)
       (add-function :after after-focus-change-function
@@ -125,37 +177,43 @@ Collect garbage automatically while unfocusing the frame.
 
 In noninteractive sessions, prioritize non-byte-compiled source files to prevent
 the use of stale byte-code. Otherwise, it saves us a little IO time to skip the
-mtime checks on every *.elc file we load.
+=mtime= checks on every *.elc file we load.
+
 #+begin_src elisp
   (setq load-prefer-newer noninteractive)
 #+end_src
 
-This is consulted on every `require', `load' and various path/io functions. You
+This is consulted on every =require=, =load= and various path/io functions. You
 get a minor speed up by nooping this.
+
 #+begin_src elisp
   (defvar default-file-name-handler-alist file-name-handler-alist)
   (setq file-name-handler-alist nil)
 #+end_src
 
-Don't make a second case-insensitive pass over `auto-mode-alist'. If it has to,
+Don't make a second case-insensitive pass over =auto-mode-alist=. If it has to,
 it's our (the user's) failure. One case for all!
+
 #+begin_src elisp
   (setq auto-mode-case-fold nil)
 #+end_src
 
 Don't ping things that look like domain names.
+
 #+begin_src elisp
   (setq ffap-machine-p-known 'reject)
 #+end_src
 
 Remove command line options that aren't relevant to our current OS; that means
 less to process at startup.
+
 #+begin_src elisp
   (unless (eq system-type 'darwin) (setq command-line-ns-option-alist nil))
   (unless (eq system-type 'gnu/linux) (setq command-line-x-option-alist nil))
 #+end_src
 
 Don’t compact font caches during garbage collect.
+
 #+begin_src elisp
   (setq inhibit-compacting-font-caches t)
 #+end_src
@@ -163,26 +221,29 @@ Don’t compact font caches during garbage collect.
 Resizing the Emacs frame can be a terribly expensive part of changing the
 font. By inhibiting this, we halve startup times, particularly when we use fonts
 that are larger than the system default (which would resize the frame).
+
 #+begin_src elisp
   (setq frame-inhibit-implied-resize t)
 #+end_src
 
-Disable bidirectional text rendering for a modest performance boost. Of course,
-this renders Emacs unable to detect/display right-to-left languages (sorry!),
-but for us left-to-right language speakers/writers, it's a boon.
+Disable bidirectional text rendering for a modest performance boost. No RTL, oops.
+
 #+begin_src elisp
   (setq-default bidi-display-reordering 'left-to-right)
 #+end_src
 
 Reduce rendering/line scan work for Emacs by not rendering cursors or regions in
 non-focused windows.
+
 #+begin_src elisp
   (setq-default cursor-in-non-selected-windows nil)
 #+end_src
-*** Initialize 'use-package
-`use-package' package is the central gear of my configuration.
+
+** Initialize 'use-package
+=use-package= package is the central gear of my configuration.
 
 HACK: DO NOT copy package-selected-packages to init/custom file forcibly - [[https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751][ref]]
+
 #+begin_src elisp
 (defun my-save-selected-packages (&optional value)
   "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
@@ -192,22 +253,26 @@ HACK: DO NOT copy package-selected-packages to init/custom file forcibly - [[htt
 #+end_src
 
 Setup package archives.
+
 #+begin_src elisp
   (require 'package)
-  (setq package-archives '(("org"          . "https://orgmode.org/elpa/")
-                           ("gnu"          . "https://elpa.gnu.org/packages/")
-                           ("melpa-stable" . "https://stable.melpa.org/packages/")
-                           ("melpa"        . "https://melpa.org/packages/")))
+  (setq package-archives
+        (append (eval (car (get 'package-archives 'standard-value)))
+                '(("org" . "http://orgmode.org/elpa/")
+                  ("gnu"          . "https://elpa.gnu.org/packages/")
+                  ("melpa" . "http://melpa.org/packages/"))))
 #+end_src
 
 Initialize packages.
+
 #+begin_src elisp
   (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
     (setq package-enable-at-startup nil)          ; To prevent initializing twice
     (package-initialize))
 #+end_src
 
-Setup `use-package'.
+Setup =use-package=.
+
 #+begin_src elisp
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
@@ -226,12 +291,15 @@ Setup `use-package'.
 #+end_src
 
 Update GPG keyring for GNU ELPA.
+
 #+begin_src elisp
   (use-package gnu-elpa-keyring-update)
 #+end_src
-*** Benchmarking
-Enable startup benchmarking if started with `EMACS_BENCHMARK` environment
+
+** Benchmarking
+Enable startup benchmarking if started with =EMACS_BENCHMARK= environment
 variable is set.
+
 #+begin_src elisp
   (when (getenv "EMACS_BENCHMARK")
     (use-package benchmark-init
@@ -240,18 +308,245 @@ variable is set.
       :hook (after-init . benchmark-init/deactivate)
       :init (benchmark-init/activate)
       :config
+      (setq use-package-compute-statistics t)
       (with-eval-after-load 'swiper
         (add-to-list 'swiper-font-lock-exclude 'benchmark-init/tree-mode))))
 #+end_src
-*** Setup standard file paths
+
+** Setup standard file paths
 The default paths used to store configuration files and persistent data are not
 consistent across Emacs packages. This package sets out to fix this by changing
 the values of path variables to put configuration files in
-no-littering-etc-directory (defaulting to ~/.emacs.d/etc/) and persistent data
-files in no-littering-var-directory (defaulting to ~/.emacs.d/var/), and by
+no-littering-etc-directory (defaulting to =~/.emacs.d/etc/=) and persistent data
+files in no-littering-var-directory (defaulting to =~/.emacs.d/var/=), and by
 using descriptive file names and subdirectories when appropriate.
+
 #+begin_src elisp
   (require 'no-littering)
+#+end_src
+
+* Essential settings
+** Emacs variables that defined in C source code
+#+begin_src elisp
+  (use-package emacs
+    :ensure nil
+    :demand
+    :init
+    ;; UTF-8 as the default coding system.
+    (when (fboundp 'set-charset-priority)
+      (set-charset-priority 'unicode))       ; pretty
+    (prefer-coding-system 'utf-8)            ; pretty
+    (setq locale-coding-system 'utf-8)       ; please
+    (unless (eq system-type 'windows-nt)
+      (setq selection-coding-system 'utf-8)) ; with sugar on top
+
+    (fset #'display-startup-echo-area-message #'ignore)
+    :hook
+    ;; Favor hard-wrapping in text modes.
+    (text-mode . auto-fill-mode)
+
+    ;; Keep cursor from getting stuck in the read-only prompt
+    (minibuffer-setup-hook . cursor-intangible-mode)
+
+    :custom
+    (use-file-dialog nil "File dialogs via minibuffer only.")
+    (use-dialog-box nil "Dialogs via minibuffer only.")
+
+
+    (truncate-lines t "Truncate long lines.")
+    (truncate-partial-width-windows nil "Truncate lines without magic.")
+
+    ;; Tab and Space. Permanently indent with spaces, never with TABs.
+    (tab-width 4 "Sane default.")
+    (indent-tabs-mode nil "Tabs are evil.")
+    (fill-column 80 "Wrap line at 80.")
+
+    (delete-by-moving-to-trash t "Deleting files go to OS's trash folder.")
+
+    ;; Menu/Tool/Scroll bars
+    (hscroll-step 1 "How many colums scroll when points get too close to the edge.")
+    (scroll-step 1 "How many lines scroll when point moves out.")
+    (scroll-margin 5 "Number of lines of margin at the top & bottom.")
+    (scroll-conservatively 10 "Scroll up to this many lines.")
+    (scroll-preserve-screen-position t)
+    ;; Reduce cursor lag by a tiny bit by not auto-adjusting `window-vscroll'
+    ;; for tall lines.
+    (auto-window-vscroll nil)
+    ;; More performant rapid scrolling over unfontified regions. May cause brief
+    ;; spells of inaccurate fontification immediately after scrolling.
+    (fast-but-imprecise-scrolling t)
+    ;; Disable help mouse-overs for mode-line segments (i.e. :help-echo text).
+    ;; They're generally unhelpful and only add confusing visual clutter.
+    (mode-line-default-help-echo nil)
+    (show-help-function nil)
+
+    (visible-cursor nil "Don't make cursor very visible.")
+    (visible-bell t "Flash frame to represent a bell.")
+
+    ;; Try really hard to keep the cursor from getting stuck in the read-only prompt
+    ;; portion of the minibuffer.
+    (minibuffer-prompt-properties
+     '(read-only t intangible t cursor-intangible t face minibuffer-prompt))
+
+    (x-gtk-use-system-tooltips nil "Don't use GTK+ tooltip.")
+
+    (window-resize-pixelwise t "Don't resize in steps.")
+    (frame-resize-pixelwise t "Don't resize in steps.")
+
+    (split-height-threshold nil "Favor vertical splits over horizontal ones.")
+
+    (echo-keystrokes 0.02 "Echo key-sequence in minibuffer, like VIM does.")
+
+    ;; Expand the minibuffer to fit multi-line text displayed in the echo-area. This
+    ;; doesn't look too great with direnv, however...
+    (resize-mini-windows 'grow-only)
+    ;; But don't let the minibuffer grow beyond this size
+    (max-mini-window-height 0.15)
+
+    (x-underline-at-descent-line t "Underline looks a bit better when drawn lower.")
+
+    (indicate-empty-lines t "Visually indicate empty lines.")
+    (indicate-buffer-boundaries 'left "Show buffer boundaries at left fringe.")
+
+    ;; Display the bare minimum at startup. We don't need all that noise.
+    ;; The dashboard/empty scratch buffer is good enough.
+    (inhibit-default-init t "Don't load default font family.")
+    (inhibit-startup-screen t "Don't show startup screen.")
+    (inhibit-startup-echo-area-message t "Don't echo messages.")
+    (inhibit-splash-screen t "Don't show the splash screen.")
+    (initial-scratch-message nil "Disable initial scratch message.")
+    (initial-major-mode 'text-mode "It just text by default."))
+#+end_src
+
+** Tabify
+Buffer re-tabbing.
+
+#+begin_src elisp
+  (use-package tabify
+    :ensure nil
+    :commands (tabify untabify)
+    :config
+    (setq tabify-regexp "^\t* [ \t]+"))
+#+end_src
+** Files
+Files, backups, etc.
+
+#+begin_src elisp
+  (use-package files
+    :ensure nil
+    :defer t
+    :preface
+    (defun my-backup-enable-predicate (name)
+      "Like 'normal-backup-enable-predicate but checks var directory too."
+      (if (string-prefix-p no-littering-var-directory name)
+          nil
+        (normal-backup-enable-predicate name)))
+
+    :config
+    ;; Backups
+    (setq backup-enable-predicate #'my-backup-enable-predicate)
+
+    ;; Don't kill *Scratch*!
+    (with-current-buffer
+        (get-buffer "*scratch*")
+      (add-hook 'kill-buffer-hook
+                (lambda () (error "DENIED! don't kill my *scratch*!"))
+                nil t))
+
+    :custom
+    (confirm-kill-processes nil "Kill process without confirmation.")
+    (require-final-newline t "Add new line at EOF.")
+    (confirm-nonexistent-file-or-buffer t "Confirm before visiting a new file or buffer.")
+
+    (delete-old-versions -1 "Prevents any trimming of backup versions.")
+    (version-control t "Make numeric backup versions unconditionally.")
+    (vc-make-backup-files t "Backups of registered files are made as with other files.")
+
+    (auto-save-file-name-transforms
+     `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
+     "Transforms to apply to buffer file name before auto-save."))
+#+end_src
+
+** Save place
+Point goes to the last place where it was when you previously visited the same file.
+
+#+begin_src elisp
+  (use-package saveplace
+    :ensure nil
+    :defer t
+    :config
+    (save-place-mode 1))
+#+end_src
+** Advice
+Disable warnings from legacy advice system. They aren't useful, and we can't
+often do anything about them besides changing packages upstream.
+
+#+begin_src elisp
+  (use-package advice
+    :ensure nil
+    :defer t
+    :custom
+    (ad-redefinition-action 'accept "Disable warnings."))
+#+end_src
+** Apropos
+Make apropos omnipotent. It's more useful this way.
+
+#+begin_src elisp
+  (use-package apropos
+    :ensure nil
+    :defer t
+    :custom
+    (apropos-do-all t "Make apropos omnipotent."))
+#+end_src
+** Simple
+#+begin_src elisp
+  (use-package simple
+    :ensure nil
+    :hook
+    (window-setup . size-indication-mode)
+    :config
+    ;; Typing yes/no is obnoxious when y/n will do.
+    (defalias #'yes-or-no-p #'y-or-n-p)
+    :custom
+    (column-number-mode t "Display column number in the mode line.")
+    (line-number-mode t "Display line number in the mode line.")
+    (line-move-visual nil "Keep cursor at end of lines.")
+    (track-eol t "Vertical motion starting at EOF keeps to EOL.")
+    (set-mark-command-repeat-pop t "Repeating C-SPC after popping mark pops it again.")
+
+    ;; Eliminate duplicates in the kill ring. That is, if you kill the
+    ;; same thing twice, you won't have to use M-y twice to get past it
+    ;; to older entries in the kill ring.
+    (kill-do-not-save-duplicates t "Don't add same string twice.")
+
+    (save-interprogram-paste-before-kill
+     t "Save clipboard contents into kill-ring before replacing them."))
+#+end_src
+* Look & feel
+** Menu/Tool/Scroll bars
+#+begin_src elisp
+  (unless (>= emacs-major-version 27)       ; Move to early init-file in 27
+    (unless (and (display-graphic-p) (eq system-type 'darwin))
+      (push '(menu-bar-lines . 0) default-frame-alist))
+    (push '(tool-bar-lines . 0) default-frame-alist)
+    (push '(vertical-scroll-bars) default-frame-alist))
+#+end_src
+
+** Fonts
+#+begin_src elisp
+  (defconst knopki/font-default
+    "FuraCode Nerd Font Mono"
+    "Default font face.")
+
+  (when (display-graphic-p)
+    ;; Set default font
+    (when (member knopki/font-default (font-family-list))
+      (set-face-attribute 'default nil
+                          :font knopki/font-default
+                          :height (cond
+                                   ((and (display-graphic-p) (eq system-type 'darwin)) 130)
+                                   ((eq system-type 'windows-nt) 110)
+                                   (t 120)))))
 #+end_src
 * Old init file
 #+begin_src elisp

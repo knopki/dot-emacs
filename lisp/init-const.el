@@ -2,9 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(defconst knopki/font-default
-  "FuraCode Nerd Font Mono"
-  "Default font face.")
 
 
 (provide 'init-const)

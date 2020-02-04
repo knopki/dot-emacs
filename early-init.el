@@ -1,9 +1,5 @@
-;;; early-init.el --- -*- lexical-binding: t; -*-
-;;; Commentary:
-;;; Code:
-
-;; Emacs HEAD (27+) introduces early-init.el, which is run before init.el,
-;; before package and UI initialization happens.
+;; -*- lexical-binding: t -*-
+;; This file was tangled (automatically generated) from `README.org'
 
 ;; Defer garbage collection further back in the startup process
 (setq gc-cons-threshold most-positive-fixnum)
@@ -26,6 +22,3 @@
 ;; in this file and can conflict with later config (particularly where the
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
-
-(provide 'early-init)
-;;; early-init.el ends here
