@@ -135,7 +135,7 @@
 ;; using descriptive file names and subdirectories when appropriate.
 
 
-(require 'no-littering)
+(use-package no-littering :demand)
 
 ;; Emacs variables that defined in C source code
 
@@ -629,7 +629,7 @@
 
 
 ;; Load manual customizations
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(setq custom-file (no-littering-expand-etc-file-name "custom.el"))
 (when (file-exists-p custom-file)
   (load custom-file))
 
