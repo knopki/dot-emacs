@@ -16,60 +16,52 @@ This file declares local variable hook - run =org-babel-tangle= on every save.
 Clone repository to =~/.emacs.d= and run Emacs.
 
 ** TODO Table of Contents                                            :TOC@3:
-* Documentation
-** Some custom keybindings
-|-----------+---------------+------------------------------|
-| Hotkey    | Mode          | Meaning                      |
-|-----------+---------------+------------------------------|
-| SPC <f1>  |               | general-describe-keybindings |
-| SPC <f2>  |               | which-key-show-top-level     |
-| SPC <f3>  |               | which-key-show-major-mode    |
-| SPC <f4>  |               | which-key-show-full-keymap   |
-| SPC <f5>  |               | undo-tree-visualize          |
-|           |               |                              |
-| C-'       | normal visual | avy go to char               |
-| C-"       | normal visual | avy go to word               |
-|           |               |                              |
-| J/K       | visual        | move visual block            |
-|           |               |                              |
-| SPC c     |               | run calculator               |
-|           |               |                              |
-| gc ...    | normal visual | evil commentary prefix       |
-|           |               |                              |
-| s         | operator      | evil-surround-edit           |
-| S         | operator      | evil-Surround-edit           |
-| S         | visual        | evil-surround-region         |
-| gS        | visual        | evil-Surround-region         |
-|           |               |                              |
-| SPC o a   |               | org agenda                   |
-| SPC o c   |               | org capture                  |
-| SPC o l   |               | org agenda list              |
-| SPC o s   |               | org search                   |
-|           |               |                              |
-| SPC p ... |               | projectile menu              |
-|           |               |                              |
-| SPC g ... |               | magit status                 |
-|           |               |                              |
-| SPC y ... |               | yasnippet insert snipped     |
-|           |               |                              |
-|-----------+---------------+------------------------------|
 * Initialization
 Initial bootstrapping and things related to package management.
 
-** Early Init
+** Header
+#+begin_src elisp :comments no
+  ;;; init.el -- My Emacs Configuration.
+  ;;; Commentary:
+  ;;; This file was tangled (automatically generated) from `README.org'
+  ;;; Code:
+
+  ;; -*- lexical-binding: t -*-
+
+  ;; Load 'early-init on old versions
+  (unless (>= emacs-major-version 27)
+    (load-file
+     (expand-file-name "early-init.el"
+                       (file-name-directory (or load-file-name buffer-file-name)))))
+#+end_src
+
+** Early Init - performance hacks
 Emacs HEAD (27+) introduces =early-init.el=, which is run before =init.el=,
-before package and UI initialization happens.
+before package and UI initialization happens. So, some performance hack lives here.
 
 #+begin_src elisp :tangle "early-init.el" :comments no
+  ;;; early-init.el -- My Emacs Configuration.
+  ;;; Commentary:
+  ;;; This file was tangled (automatically generated) from `README.org'
+  ;;; Code:
   ;; -*- lexical-binding: t -*-
-  ;; This file was tangled (automatically generated) from `README.org'
 
-  ;; Defer garbage collection further back in the startup process
+  ;; Defer garbage collection further back in the startup process.
+  ;; Reset it later by enabling `gcmh-mode'.
   (setq gc-cons-threshold most-positive-fixnum)
 
   ;; In Emacs 27+, package initialization occurs before `user-init-file' is
   ;; loaded, but after `early-init-file'. We want init packages manually.
   (setq package-enable-at-startup nil)
+
+  ;; In noninteractive sessions, prioritize non-byte-compiled source files to prevent
+  ;; the use of stale byte-code. Otherwise, it saves us a little IO time to skip the
+  ;; =mtime= checks on every *.elc file we load.
+  (setq load-prefer-newer noninteractive)
+
+  ;; Don't make a second case-insensitive pass over =auto-mode-alist=. If it has to,
+  ;; it's our (the user's) failure. One case for all!
+  (setq auto-mode-case-fold nil)
 
   ;; Prevent the glimpse of un-styled Emacs by disabling these UI elements early.
   (push '(menu-bar-lines . 0) default-frame-alist)
@@ -85,12 +77,25 @@ before package and UI initialization happens.
   ;; in this file and can conflict with later config (particularly where the
   ;; cursor color is concerned).
   (advice-add #'x-apply-session-resources :override #'ignore)
-#+end_src
 
-** Header
-#+begin_src elisp :comments no
-  ;; -*- lexical-binding: t -*-
-  ;; This file was tangled (automatically generated) from `README.org'
+  ;; Remove command line options that aren't relevant to our current OS;
+  ;; that means less to process at startup.
+  (unless (eq system-type 'darwin) (setq command-line-ns-option-alist nil))
+  (unless (eq system-type 'gnu/linux) (setq command-line-x-option-alist nil))
+
+  ;; Don’t compact font caches during garbage collect.
+  (setq inhibit-compacting-font-caches t)
+
+  ;; Disable bidirectional text rendering for a modest performance boost. No RTL, oops.
+  (setq-default bidi-display-reordering 'left-to-right)
+
+  ;; Reduce rendering/line scan work for Emacs by not rendering cursors or regions in
+  ;; non-focused windows.
+  (setq-default cursor-in-non-selected-windows nil)
+
+
+  (provide 'early-init)
+  ;;; early-init.el ends here
 #+end_src
 
 ** Update load paths
@@ -115,148 +120,24 @@ Optimize: Force =lisp= and =site-lisp= at the head to reduce the startup time.
   (update-load-path)
 #+end_src
 
-** Performance hacks
-Default garbage collection thresholds.
-
-#+begin_src elisp
-  (defvar default-gc-cons-percentage gc-cons-percentage)
-  (defconst knopki/gc-cons-threshold-bytes
-    16777216 ; 16Mb
-    "The default value to use for `gc-cons-threshold'.
-  If you experience freezing, decrease this.
-  If you experience stuttering, increase this.")
-#+end_src
-
-A big contributor to startup times is garbage collection. We up the garbage
-collector threshold to temporarily prevent it from running, then reset it
-later. Not resetting it will cause stuttering/freezes. Also, disable GC when
-cursor in the any minibuffer and restore on minibuffer exit.
-
-#+begin_src elisp
-  (setq gc-cons-threshold most-positive-fixnum gc-cons-percentage 100)
-
-  ;; Startup hook
-  (add-hook 'emacs-startup-hook
-            (lambda ()
-              "Restore default values after startup."
-              (setq file-name-handler-alist default-file-name-handler-alist
-                    gc-cons-threshold knopki/gc-cons-threshold-bytes
-                    gc-cons-percentage default-gc-cons-percentage)))
-
-  ;; Stop GC in minibuffer
-  (add-hook 'minibuffer-setup-hook
-            (lambda ()
-              (setq gc-cons-threshold most-positive-fixnum
-                    gc-cons-percentage 100)))
-
-  ;; GC and back GC threshold to normal on minibuffer exit
-  (add-hook 'minibuffer-exit-hook
-            (lambda ()
-              (garbage-collect)
-              (setq gc-cons-threshold knopki/gc-cons-threshold-bytes
-                    gc-cons-percentage default-gc-cons-percentage)))
-#+end_src
-
-Run GC every 10s when idle.
-
-#+begin_src elisp
-  (run-with-idle-timer 10 t #'garbage-collect)
-#+end_src
-
-Collect garbage automatically while unfocusing the frame.
-=focus-out-hook= is obsolete since 27.1.
-
-#+begin_src elisp
-  (if (boundp 'after-focus-change-function)
-      (add-function :after after-focus-change-function
-                    (lambda ()
-                      (unless (frame-focus-state)
-                        (garbage-collect))))
-    (add-hook 'focus-out-hook 'garbage-collect))
-#+end_src
-
-In noninteractive sessions, prioritize non-byte-compiled source files to prevent
-the use of stale byte-code. Otherwise, it saves us a little IO time to skip the
-=mtime= checks on every *.elc file we load.
-
-#+begin_src elisp
-  (setq load-prefer-newer noninteractive)
-#+end_src
-
-This is consulted on every =require=, =load= and various path/io functions. You
-get a minor speed up by nooping this.
-
-#+begin_src elisp
-  (defvar default-file-name-handler-alist file-name-handler-alist)
-  (setq file-name-handler-alist nil)
-#+end_src
-
-Don't make a second case-insensitive pass over =auto-mode-alist=. If it has to,
-it's our (the user's) failure. One case for all!
-
-#+begin_src elisp
-  (setq auto-mode-case-fold nil)
-#+end_src
-
-Don't ping things that look like domain names.
-
-#+begin_src elisp
-  (setq ffap-machine-p-known 'reject)
-#+end_src
-
-Remove command line options that aren't relevant to our current OS; that means
-less to process at startup.
-
-#+begin_src elisp
-  (unless (eq system-type 'darwin) (setq command-line-ns-option-alist nil))
-  (unless (eq system-type 'gnu/linux) (setq command-line-x-option-alist nil))
-#+end_src
-
-Don’t compact font caches during garbage collect.
-
-#+begin_src elisp
-  (setq inhibit-compacting-font-caches t)
-#+end_src
-
-Resizing the Emacs frame can be a terribly expensive part of changing the
-font. By inhibiting this, we halve startup times, particularly when we use fonts
-that are larger than the system default (which would resize the frame).
-
-#+begin_src elisp
-  (setq frame-inhibit-implied-resize t)
-#+end_src
-
-Disable bidirectional text rendering for a modest performance boost. No RTL, oops.
-
-#+begin_src elisp
-  (setq-default bidi-display-reordering 'left-to-right)
-#+end_src
-
-Reduce rendering/line scan work for Emacs by not rendering cursors or regions in
-non-focused windows.
-
-#+begin_src elisp
-  (setq-default cursor-in-non-selected-windows nil)
-#+end_src
-
 ** Initialize 'use-package
 =use-package= package is the central gear of my configuration.
 
 HACK: DO NOT copy package-selected-packages to init/custom file forcibly - [[https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751][ref]]
 
 #+begin_src elisp
-(defun my-save-selected-packages (&optional value)
-  "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
-  (when value
-    (setq package-selected-packages value)))
-(advice-add 'package--save-selected-packages :override #'my-save-selected-packages)
+  (defun my-save-selected-packages (&optional value)
+    "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
+    (when value
+      (setq package-selected-packages value)))
+  (advice-add 'package--save-selected-packages :override #'my-save-selected-packages)
 #+end_src
 
 Setup package archives.
 
 #+begin_src elisp
   (require 'package)
-  (setq package-archives
+  (customize-set-variable 'package-archives
         (append (eval (car (get 'package-archives 'standard-value)))
                 '(("org" . "http://orgmode.org/elpa/")
                   ("gnu"          . "https://elpa.gnu.org/packages/")
@@ -312,6 +193,24 @@ variable is set.
       (with-eval-after-load 'swiper
         (add-to-list 'swiper-font-lock-exclude 'benchmark-init/tree-mode))))
 #+end_src
+** Garbage collector hack
+Set garbage collection threshold to the normal value on setup complete. Run GC
+on idle. Don't run GC in minibuffer and run on exit.
+
+#+begin_src elisp
+  (use-package gcmh
+    :hook
+    (emacs-startup . gcmh-mode)
+    ;; Don't GC in minibuffer at all
+    (minibuffer-setup . (lambda () (setq gc-cons-threshold most-positive-fixnum)))
+    ;; GC after minibuffer exit
+    (minibuffer-exit . gcmh-idle-garbage-collect)
+    :custom
+    (garbage-collection-messages nil "Don't show messages about GC.")
+    (gcmh-low-cons-threshold 800000 "GC threshold used while idling.")
+    (gcmh-high-cons-threshold 800000 "High GC threshold.")
+    (gcmh-idle-delay 5 "Run GC when idle."))
+#+end_src
 
 ** Setup standard file paths
 The default paths used to store configuration files and persistent data are not
@@ -362,6 +261,8 @@ using descriptive file names and subdirectories when appropriate.
     (fill-column 80 "Wrap line at 80.")
 
     (delete-by-moving-to-trash t "Deleting files go to OS's trash folder.")
+
+    (ffap-machine-p-known 'reject "Don't ping.")
 
     ;; Menu/Tool/Scroll bars
     (hscroll-step 1 "How many colums scroll when points get too close to the edge.")
@@ -629,6 +530,42 @@ Restore last autosaved session.
     (setq desktop-save-mode t))
 #+end_src
 
+* Keybindings
+|-----------+---------------+------------------------------|
+| Hotkey    | Mode          | Meaning                      |
+|-----------+---------------+------------------------------|
+| SPC <f1>  |               | general-describe-keybindings |
+| SPC <f2>  |               | which-key-show-top-level     |
+| SPC <f3>  |               | which-key-show-major-mode    |
+| SPC <f4>  |               | which-key-show-full-keymap   |
+| SPC <f5>  |               | undo-tree-visualize          |
+|           |               |                              |
+| C-'       | normal visual | avy go to char               |
+| C-"       | normal visual | avy go to word               |
+|           |               |                              |
+| J/K       | visual        | move visual block            |
+|           |               |                              |
+| SPC c     |               | run calculator               |
+|           |               |                              |
+| gc ...    | normal visual | evil commentary prefix       |
+|           |               |                              |
+| s         | operator      | evil-surround-edit           |
+| S         | operator      | evil-Surround-edit           |
+| S         | visual        | evil-surround-region         |
+| gS        | visual        | evil-Surround-region         |
+|           |               |                              |
+| SPC o a   |               | org agenda                   |
+| SPC o c   |               | org capture                  |
+| SPC o l   |               | org agenda list              |
+| SPC o s   |               | org search                   |
+|           |               |                              |
+| SPC p ... |               | projectile menu              |
+|           |               |                              |
+| SPC g ... |               | magit status                 |
+|           |               |                              |
+| SPC y ... |               | yasnippet insert snipped     |
+|           |               |                              |
+|-----------+---------------+------------------------------|
 * GUI
 ** Menu/Tool/Scroll bars
 #+begin_src elisp
@@ -697,7 +634,6 @@ Don't display floating tooltips; display their contents in the echo-area.
                                    ((eq system-type 'windows-nt) 110)
                                    (t 120)))))
 #+end_src
-* Keybindings
 * Global modes
 * Coding
 ** Ediff
@@ -830,7 +766,18 @@ Buffer re-tabbing.
   ;;; init.el ends here
 #+end_src
 
-* Tangle save hook
-# Local Variables:
-# eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t)
-# End:
+* The end…
+Add standard module footer.
+
+#+begin_src elisp
+  (provide 'init)
+  ;;; init.el ends here
+#+end_src
+
+Add on save hook to this file.
+
+#+begin_src elisp :tangle no
+  ;; Local Variables:
+  ;; eval: (add-hook 'after-save-hook (lambda ()(org-babel-tangle)) nil t)
+  ;; End:
+#+end_src
