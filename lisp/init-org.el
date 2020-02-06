@@ -1,10 +1,6 @@
 ;;; init-org.el --- -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-general))
-
-
 (use-package org
   :ensure nil
   :diminish org-indent-mode

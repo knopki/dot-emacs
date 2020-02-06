@@ -2,10 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-general))
-
-
 (use-package yasnippet
   :diminish yas-minor-mode
   :hook (after-init . yas-global-mode)

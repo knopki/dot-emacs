@@ -11,7 +11,8 @@
               my-ibuffer-find-file)
   :commands (ibuffer-find-file
              ibuffer-current-buffer)
-  :bind ("C-x C-b" . ibuffer)
+  :bind
+  ([remap list-buffers] . ibuffer)
   :init (setq ibuffer-filter-group-name-face '(:inherit (font-lock-string-face bold)))
   :config
   ;; Replace evil :ls etc

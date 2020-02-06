@@ -2,8 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 (eval-when-compile
-  (require 'init-projectile)
-  (require 'init-general))
+  (require 'init-projectile))
 
 ;; Dashboard
 (use-package dashboard

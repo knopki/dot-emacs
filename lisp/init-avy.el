@@ -2,10 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(eval-when-compile
-  (require 'init-general))
-
-
 (use-package avy
              :commands (avy-goto-word-1)
              :general

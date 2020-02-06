@@ -1,8 +1,6 @@
 ;;; init-projectile.el --- Initialize projectile configurations.	-*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-general))
 
 ;; Manage and navigate projects
 (use-package projectile

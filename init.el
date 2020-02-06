@@ -439,6 +439,68 @@
   :config
   (setq desktop-save-mode t))
 
+;; Evil mode
+;; I like VIM keys much more, so =evil-mode= is essential part of my configuration.
+
+
+(use-package evil
+  :diminish undo-tree-mode
+  :hook (after-init . evil-mode)
+  :custom
+  (evil-want-keybinding nil "Don't load evil-keybindings - required by evil-collection")
+  (evil-search-wrap t "Search wrap around the buffer.")
+  (evil-regexp-search t "Search with regexp.")
+  (evil-search-module 'evil-search "Search module to use.")
+  (evil-vsplit-window-right t "Like vim's 'splitright'.")
+  (evil-split-window-below t "Like vim's 'splitbelow'.")
+  (evil-want-C-u-scroll t "Enable C-u scroll.")
+  (evil-want-C-i-jump nil "Disable C-i jumps in jump list.")
+  :config
+  ;; (evil-set-initial-state 'term-mode 'emacs)
+
+  ;; Visually selected text gets replaced by the latest copy action
+  ;; Amazing hack lifted from: http://emacs.stackexchange.com/a/15054/12585
+  (fset 'evil-visual-update-x-selection 'ignore))
+
+;; Evil collection
+;; Vim-like keybindings everywhere in Emacs.
+
+
+(use-package evil-collection
+  :after evil
+  :custom
+  (evil-collection-setup-minibuffer t)
+  :config
+  (evil-collection-init))
+
+;; El General
+;; More convenient method for binding keys.
+
+
+(use-package general
+  :config
+  (general-evil-setup t)
+
+  (general-nmap
+    :prefix "SPC"
+    "<f1>" 'general-describe-keybindings
+    "c"    'calc)
+
+  ;; Move visual block
+  (general-vmap
+    "J" (concat ":m '>+1" (kbd "RET") "gv=gv")
+    "K" (concat ":m '<-2" (kbd "RET") "gv=gv")))
+
+;; Reverse-im
+;; Use bindings while the non-default system layout is active.
+
+
+(use-package reverse-im
+  :custom
+  (reverse-im-modifiers '(control meta super))
+  :config
+  (reverse-im-activate "russian-computer"))
+
 ;; Menu/Tool/Scroll bars
 
 (unless (>= emacs-major-version 27)       ; Move to early init-file in 27
@@ -507,6 +569,17 @@
                                  ((eq system-type 'windows-nt) 110)
                                  (t 120)))))
 
+;; Evil goggles
+;; Displays a visual hint when editing with evil.
+
+
+(use-package evil-goggles
+  :diminish evil-goggles-mode
+  :after evil
+  :config
+  (evil-goggles-mode)
+  (evil-goggles-use-diff-faces))
+
 ;; Ediff
 ;; A comprehensive visual interface to diff & patch.
 
@@ -563,6 +636,34 @@
   :ensure nil
   :hook (prog-mode . display-line-numbers-mode))
 
+;; Evil commentary
+;; =gc= operator, like =vim-commentary=.
+
+
+(use-package evil-commentary
+  :after evil
+  :bind (:map evil-normal-state-map
+              ("gc" . evil-commentary)))
+
+;; Evil surround
+;; Emulates =vim-surround=.
+
+
+(use-package evil-surround
+  :after evil
+  :commands
+  (evil-surround-edit
+   evil-Surround-edit
+   evil-surround-region
+   evil-Surround-region)
+  :general
+  (:states 'operator
+           "s" 'evil-surround-edit
+           "S" 'evil-Surround-edit)
+  (:states 'visual
+           "S" 'evil-surround-region
+           "gS" 'evil-Surround-region))
+
 ;; C/C++
 
 (use-package cc-vars
@@ -599,11 +700,6 @@
 (require 'init-dashboard)
 (require 'init-hide-mode-line)
 (require 'init-solaire-mode)
-
-;; Create Vi-macs homunculus
-(require 'init-evil)
-(require 'init-general)
-(require 'init-reverse-im)
 
 ;; Global modes
 (require 'init-which-key)

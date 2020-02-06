@@ -1,10 +1,6 @@
 ;;; init-undo-tree.el --- Treat undo history as a tree -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-general))
-
-
 (use-package undo-tree
   :diminish
   :defines recentf-exclude

@@ -1,9 +1,6 @@
 ;;; init-which-key.el --- Which-key, help me!  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-(eval-when-compile
-  (require 'init-general))
-
 
 (use-package which-key
   :diminish which-key-mode
