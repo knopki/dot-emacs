@@ -580,6 +580,26 @@
   (evil-goggles-mode)
   (evil-goggles-use-diff-faces))
 
+;; Which key
+;; Displays the key bindings following your currently entered incomplete command (a
+;; prefix) in a popup.
+
+
+(use-package which-key
+  :diminish which-key-mode
+  :hook (after-init . which-key-mode)
+  :general
+  (general-nmap
+    :prefix "SPC"
+    ;; Show top level key bindings
+    "<f2>" 'which-key-show-top-level
+    ;; Show major mode key bindings
+    "<f3>" 'which-key-show-major-mode
+    ;; Show key bindings from any keymap
+    "<f4>" 'which-key-show-full-keymap)
+  :config
+  (which-key-setup-side-window-right-bottom))
+
 ;; Ediff
 ;; A comprehensive visual interface to diff & patch.
 
@@ -702,7 +722,6 @@
 (require 'init-solaire-mode)
 
 ;; Global modes
-(require 'init-which-key)
 (require 'init-undo-tree)
 (require 'init-ivy)
 (require 'init-avy)

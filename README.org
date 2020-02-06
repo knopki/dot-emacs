@@ -710,7 +710,27 @@ Displays a visual hint when editing with evil.
     (evil-goggles-mode)
     (evil-goggles-use-diff-faces))
 #+end_src
-* Global modes
+* Help & manual
+** Which key
+Displays the key bindings following your currently entered incomplete command (a
+prefix) in a popup.
+
+#+begin_src elisp
+  (use-package which-key
+    :diminish which-key-mode
+    :hook (after-init . which-key-mode)
+    :general
+    (general-nmap
+      :prefix "SPC"
+      ;; Show top level key bindings
+      "<f2>" 'which-key-show-top-level
+      ;; Show major mode key bindings
+      "<f3>" 'which-key-show-major-mode
+      ;; Show key bindings from any keymap
+      "<f4>" 'which-key-show-full-keymap)
+    :config
+    (which-key-setup-side-window-right-bottom))
+#+end_src
 * Coding
 ** Ediff
 A comprehensive visual interface to diff & patch.
@@ -834,7 +854,6 @@ Emulates =vim-surround=.
   (require 'init-solaire-mode)
 
   ;; Global modes
-  (require 'init-which-key)
   (require 'init-undo-tree)
   (require 'init-ivy)
   (require 'init-avy)
