@@ -404,6 +404,7 @@ Make apropos omnipotent. It's more useful this way.
 #+begin_src elisp
   (use-package simple
     :ensure nil
+    :diminish visual-line-mode auto-fill-function
     :hook
     (window-setup . size-indication-mode)
     :config

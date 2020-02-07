@@ -4,8 +4,10 @@
 (use-package org
   :ensure nil
   :diminish org-indent-mode
-  :hook ((org-mode . visual-line-mode)
-         (org-mode . org-indent-mode))
+  :hook
+  ((org-mode . visual-line-mode)
+   (org-mode . org-indent-mode)
+   (org-indent-mode . (lambda () (diminish 'org-indent-mode))))
   :custom-face (org-ellipsis ((t (:foreground nil))))
   :custom
   (org-modules '(org-checklist org-habit))

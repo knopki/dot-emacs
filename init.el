@@ -314,6 +314,7 @@ If you experience stuttering, increase this.")
 
 (use-package simple
   :ensure nil
+  :diminish visual-line-mode auto-fill-function
   :hook
   (window-setup . size-indication-mode)
   :config
