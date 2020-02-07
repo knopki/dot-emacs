@@ -731,6 +731,23 @@ prefix) in a popup.
     :config
     (which-key-setup-side-window-right-bottom))
 #+end_src
+** Better help
+#+begin_src elisp
+  (use-package helpful
+    :defer 2
+    :bind
+    (:map help-mode-map
+          ("f" . #'helpful-callable)
+          ("v" . #'helpful-variable)
+          ("k" . #'helpful-key)
+          ("F" . #'helpful-at-point)
+          ("F" . #'helpful-function)
+          ("C" . #'helpful-command))
+    :custom
+    ;; Ivy support
+    (counsel-describe-function-function #'helpful-callable)
+    (counsel-describe-variable-function #'helpful-variable))
+#+end_src
 * Coding
 ** Ediff
 A comprehensive visual interface to diff & patch.

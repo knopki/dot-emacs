@@ -600,6 +600,23 @@
   :config
   (which-key-setup-side-window-right-bottom))
 
+;; Better help
+
+(use-package helpful
+  :defer 2
+  :bind
+  (:map help-mode-map
+        ("f" . #'helpful-callable)
+        ("v" . #'helpful-variable)
+        ("k" . #'helpful-key)
+        ("F" . #'helpful-at-point)
+        ("F" . #'helpful-function)
+        ("C" . #'helpful-command))
+  :custom
+  ;; Ivy support
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable))
+
 ;; Ediff
 ;; A comprehensive visual interface to diff & patch.
 
