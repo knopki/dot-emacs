@@ -576,6 +576,7 @@ If you experience stuttering, increase this.")
 (use-package evil-goggles
   :diminish evil-goggles-mode
   :after evil
+  :defer 2
   :config
   (evil-goggles-mode)
   (evil-goggles-use-diff-faces))
@@ -587,7 +588,7 @@ If you experience stuttering, increase this.")
 
 (use-package which-key
   :diminish which-key-mode
-  :hook (after-init . which-key-mode)
+  :defer 2
   :general
   (general-nmap
     :prefix "SPC"
