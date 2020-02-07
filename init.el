@@ -501,14 +501,6 @@
   :config
   (reverse-im-activate "russian-computer"))
 
-;; Menu/Tool/Scroll bars
-
-(unless (>= emacs-major-version 27)       ; Move to early init-file in 27
-  (unless (and (display-graphic-p) (eq system-type 'darwin))
-    (push '(menu-bar-lines . 0) default-frame-alist))
-  (push '(tool-bar-lines . 0) default-frame-alist)
-  (push '(vertical-scroll-bars) default-frame-alist))
-
 ;; Mouse
 
 (use-package mouse

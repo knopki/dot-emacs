@@ -632,14 +632,6 @@ Use bindings while the non-default system layout is active.
     (reverse-im-activate "russian-computer"))
 #+end_src
 * GUI
-** Menu/Tool/Scroll bars
-#+begin_src elisp
-  (unless (>= emacs-major-version 27)       ; Move to early init-file in 27
-    (unless (and (display-graphic-p) (eq system-type 'darwin))
-      (push '(menu-bar-lines . 0) default-frame-alist))
-    (push '(tool-bar-lines . 0) default-frame-alist)
-    (push '(vertical-scroll-bars) default-frame-alist))
-#+end_src
 ** Mouse
 #+begin_src elisp
 (use-package mouse
