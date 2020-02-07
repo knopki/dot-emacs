@@ -32,6 +32,32 @@
 
 (update-load-path)
 
+;; Garbage collector hack
+;; Set garbage collection threshold to the normal value on setup complete. Run GC
+;; on idle. Don't run GC in minibuffer and run on exit.
+
+
+(defvar knopki/gc-cons-threshold (* 4 1024 1024)
+  "The default value to use for `gc-cons-threshold'.
+If you experience freezing, decrease this.
+If you experience stuttering, increase this.")
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            ;; Return GC cons to normal value after loading
+            (setq gc-cons-threshold knopki/gc-cons-threshold)
+
+            ;; Run GC after some idle
+            (run-with-idle-timer 5 t #'garbage-collect)
+
+            ;; Don't GC in minibuffer at all
+            (add-hook 'minibuffer-setup-hook
+                      (lambda () (setq gc-cons-threshold most-positive-fixnum)))
+
+            ;; GC after minibuffer exit
+            (add-hook 'minibuffer-exit-hook
+                      (lambda () (setq gc-cons-threshold knopki/gc-cons-threshold)))))
+
 ;; Initialize 'use-package
 ;; =use-package= package is the central gear of my configuration.
 
@@ -107,24 +133,6 @@
     (setq use-package-compute-statistics t)
     (with-eval-after-load 'swiper
       (add-to-list 'swiper-font-lock-exclude 'benchmark-init/tree-mode))))
-
-;; Garbage collector hack
-;; Set garbage collection threshold to the normal value on setup complete. Run GC
-;; on idle. Don't run GC in minibuffer and run on exit.
-
-
-(use-package gcmh
-  :hook
-  (emacs-startup . gcmh-mode)
-  ;; Don't GC in minibuffer at all
-  (minibuffer-setup . (lambda () (setq gc-cons-threshold most-positive-fixnum)))
-  ;; GC after minibuffer exit
-  (minibuffer-exit . gcmh-idle-garbage-collect)
-  :custom
-  (garbage-collection-messages nil "Don't show messages about GC.")
-  (gcmh-low-cons-threshold 800000 "GC threshold used while idling.")
-  (gcmh-high-cons-threshold 800000 "High GC threshold.")
-  (gcmh-idle-delay 5 "Run GC when idle."))
 
 ;; Setup standard file paths
 ;; The default paths used to store configuration files and persistent data are not
