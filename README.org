@@ -480,14 +480,6 @@ Make apropos omnipotent. It's more useful this way.
     (save-interprogram-paste-before-kill
      t "Save clipboard contents into kill-ring before replacing them."))
 #+end_src
-** Whitespaces
-Delete trailing whitespaces on buffer save.
-
-#+begin_src elisp
-  (use-package whitespace
-    :ensure nil
-    :hook (before-save . whitespace-cleanup))
-#+end_src
 ** Recent files
 Exclude some files from =recentf= lists and save list on save and some times on timer.
 
@@ -542,40 +534,6 @@ Revert buffer of file change on disk.
     :custom
     (auto-revert-check-vc-info t "Update version control.")
     (auto-revert-verbose nil "Silent auto revert."))
-#+end_src
-** Delete selection
-#+begin_src elisp
-  (use-package delsel
-    :ensure nil
-    :custom
-    (delete-selection-mode t "Replace the active region just by typing text."))
-#+end_src
-** Unique buffer names
-#+begin_src elisp
-  (use-package uniquify
-    :ensure nil
-    :custom
-    (uniquify-buffer-name-style 'forward "bar/mumble/name"))
-#+end_src
-** On-the-fly spell checker
-=hunspell= is must because of ability to query multiple dictionaries.
-
-#+begin_src elisp
-  (use-package flyspell
-    :ensure nil
-    :diminish
-    :if (executable-find "hunspell")
-    :hook
-    (((text-mode outline-mode org-mode) . flyspell-mode)
-     (prog-mode . flyspell-prog-mode))
-    :init
-    (with-eval-after-load "ispell"
-      (setq ispell-program-name "hunspell")
-      (setq ispell-dictionary "en_US,ru_RU")
-      (ispell-set-spellchecker-params)
-      (ispell-hunspell-add-multi-dic "en_US,ru_RU"))
-    :custom
-    (flyspell-issue-message-flag nil "Be silent."))
 #+end_src
 ** Desktop save and load
 Restore last autosaved session.
@@ -860,6 +818,65 @@ prefix) in a popup.
     (counsel-describe-function-function #'helpful-callable)
     (counsel-describe-variable-function #'helpful-variable))
 #+end_src
+* Navigation
+* Buffer management
+** Unique buffer names
+#+begin_src elisp
+  (use-package uniquify
+    :ensure nil
+    :custom
+    (uniquify-buffer-name-style 'forward "bar/mumble/name"))
+#+end_src
+* Dired
+* Editing
+** Delete selection
+#+begin_src elisp
+  (use-package delsel
+    :ensure nil
+    :custom
+    (delete-selection-mode t "Replace the active region just by typing text."))
+#+end_src
+** Whitespaces
+Delete trailing whitespaces on buffer save.
+
+#+begin_src elisp
+  (use-package whitespace
+    :ensure nil
+    :hook (before-save . whitespace-cleanup))
+#+end_src
+** On-the-fly spell checker
+=hunspell= is must because of ability to query multiple dictionaries.
+
+#+begin_src elisp
+  (use-package flyspell
+    :ensure nil
+    :diminish
+    :if (executable-find "hunspell")
+    :hook
+    (((text-mode outline-mode org-mode) . flyspell-mode)
+     (prog-mode . flyspell-prog-mode))
+    :init
+    (with-eval-after-load "ispell"
+      (setq ispell-program-name "hunspell")
+      (setq ispell-dictionary "en_US,ru_RU")
+      (ispell-set-spellchecker-params)
+      (ispell-hunspell-add-multi-dic "en_US,ru_RU"))
+    :custom
+    (flyspell-issue-message-flag nil "Be silent."))
+#+end_src
+
+Correcting words with flyspell via Ivy.
+#+begin_src elisp
+(use-package flyspell-correct-ivy
+  :after (:all (flyspell ivy))
+  :init
+  (setq flyspell-correct-interface #'flyspell-correct-ivy)
+  :general
+  ;; Redefine evil-mode keybinding
+  ;; Also, use M-o to access ivy menu
+  (general-nmap "z=" 'flyspell-correct-wrapper))
+#+end_src
+* Productivity & task management
 * Autocomplete
 ** Prescient
 Library which sorts and filters lists of candidates.

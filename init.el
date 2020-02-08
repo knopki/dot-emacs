@@ -37,7 +37,7 @@
 ;; on idle. Don't run GC in minibuffer and run on exit.
 
 
-(defvar knopki/gc-cons-threshold (* 4 1024 1024)
+(defvar knopki/gc-cons-threshold (* 30 1024 1024)
   "The default value to use for `gc-cons-threshold'.
 If you experience freezing, decrease this.
 If you experience stuttering, increase this.")
@@ -390,14 +390,6 @@ If you experience stuttering, increase this.")
   (save-interprogram-paste-before-kill
    t "Save clipboard contents into kill-ring before replacing them."))
 
-;; Whitespaces
-;; Delete trailing whitespaces on buffer save.
-
-
-(use-package whitespace
-  :ensure nil
-  :hook (before-save . whitespace-cleanup))
-
 ;; Recent files
 ;; Exclude some files from =recentf= lists and save list on save and some times on timer.
 
@@ -452,40 +444,6 @@ If you experience stuttering, increase this.")
   :custom
   (auto-revert-check-vc-info t "Update version control.")
   (auto-revert-verbose nil "Silent auto revert."))
-
-;; Delete selection
-
-(use-package delsel
-  :ensure nil
-  :custom
-  (delete-selection-mode t "Replace the active region just by typing text."))
-
-;; Unique buffer names
-
-(use-package uniquify
-  :ensure nil
-  :custom
-  (uniquify-buffer-name-style 'forward "bar/mumble/name"))
-
-;; On-the-fly spell checker
-;; =hunspell= is must because of ability to query multiple dictionaries.
-
-
-(use-package flyspell
-  :ensure nil
-  :diminish
-  :if (executable-find "hunspell")
-  :hook
-  (((text-mode outline-mode org-mode) . flyspell-mode)
-   (prog-mode . flyspell-prog-mode))
-  :init
-  (with-eval-after-load "ispell"
-    (setq ispell-program-name "hunspell")
-    (setq ispell-dictionary "en_US,ru_RU")
-    (ispell-set-spellchecker-params)
-    (ispell-hunspell-add-multi-dic "en_US,ru_RU"))
-  :custom
-  (flyspell-issue-message-flag nil "Be silent."))
 
 ;; Desktop save and load
 ;; Restore last autosaved session.
@@ -731,6 +689,61 @@ If you experience stuttering, increase this.")
   ;; Ivy support
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable))
+
+;; Unique buffer names
+
+(use-package uniquify
+  :ensure nil
+  :custom
+  (uniquify-buffer-name-style 'forward "bar/mumble/name"))
+
+;; Delete selection
+
+(use-package delsel
+  :ensure nil
+  :custom
+  (delete-selection-mode t "Replace the active region just by typing text."))
+
+;; Whitespaces
+;; Delete trailing whitespaces on buffer save.
+
+
+(use-package whitespace
+  :ensure nil
+  :hook (before-save . whitespace-cleanup))
+
+;; On-the-fly spell checker
+;; =hunspell= is must because of ability to query multiple dictionaries.
+
+
+(use-package flyspell
+  :ensure nil
+  :diminish
+  :if (executable-find "hunspell")
+  :hook
+  (((text-mode outline-mode org-mode) . flyspell-mode)
+   (prog-mode . flyspell-prog-mode))
+  :init
+  (with-eval-after-load "ispell"
+    (setq ispell-program-name "hunspell")
+    (setq ispell-dictionary "en_US,ru_RU")
+    (ispell-set-spellchecker-params)
+    (ispell-hunspell-add-multi-dic "en_US,ru_RU"))
+  :custom
+  (flyspell-issue-message-flag nil "Be silent."))
+
+
+
+;; Correcting words with flyspell via Ivy.
+
+(use-package flyspell-correct-ivy
+  :after (:all (flyspell ivy))
+  :init
+  (setq flyspell-correct-interface #'flyspell-correct-ivy)
+  :general
+  ;; Redefine evil-mode keybinding
+  ;; Also, use M-o to access ivy menu
+  (general-nmap "z=" 'flyspell-correct-wrapper))
 
 ;; Prescient
 ;; Library which sorts and filters lists of candidates.
