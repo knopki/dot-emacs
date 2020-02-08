@@ -125,7 +125,7 @@ Set garbage collection threshold to the normal value on setup complete. Run GC
 on idle. Don't run GC in minibuffer and run on exit.
 
 #+begin_src elisp
-  (defvar knopki/gc-cons-threshold (* 4 1024 1024)
+  (defvar knopki/gc-cons-threshold (* 30 1024 1024)
     "The default value to use for `gc-cons-threshold'.
   If you experience freezing, decrease this.
   If you experience stuttering, increase this.")
