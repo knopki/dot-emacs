@@ -145,6 +145,61 @@ If you experience stuttering, increase this.")
 
 (use-package no-littering :demand)
 
+;; Icons
+;; Dependency of many packages. Display nice icons.
+
+
+(use-package all-the-icons
+  :if (display-graphic-p)
+  :init (unless (or (eq system-type 'windows-nt)
+                    (member "all-the-icons" (font-family-list)))
+          (all-the-icons-install-fonts t))
+  :config
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(xwidget-webkit-mode all-the-icons-faicon "chrome" :v-adjust -0.1 :face all-the-icons-blue))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(diff-mode all-the-icons-octicon "git-compare" :v-adjust 0.0 :face all-the-icons-lred))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(flycheck-error-list-mode all-the-icons-octicon "checklist" :height 1.1 :v-adjust 0.0 :face all-the-icons-lred))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(elfeed-search-mode all-the-icons-faicon "rss-square" :v-adjust -0.1 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(elfeed-show-mode all-the-icons-octicon "rss" :height 1.1 :v-adjust 0.0 :face all-the-icons-lorange))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.[bB][iI][nN]$" all-the-icons-octicon "file-binary" :v-adjust 0.0 :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.c?make$" all-the-icons-fileicon "gnu" :face all-the-icons-dorange))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.conf$" all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.toml$" all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(conf-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(conf-space-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(forge-topic-mode all-the-icons-alltheicon "git" :face all-the-icons-blue))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.xpm$" all-the-icons-octicon "file-media" :v-adjust 0.0 :face all-the-icons-dgreen))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(helpful-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1 :face all-the-icons-purple))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(Info-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1))
+  (add-to-list 'all-the-icons-icon-alist
+               '(".*\\.ipynb\\'" all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(ein:notebooklist-mode all-the-icons-faicon "book" :face all-the-icons-lorange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(ein:notebook-mode all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(ein:notebook-multilang-mode all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-dorange))
+  (add-to-list 'all-the-icons-icon-alist
+               '("\\.epub\\'" all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(nov-mode all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
+  (add-to-list 'all-the-icons-mode-icon-alist
+               '(gfm-mode all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
+
 ;; Emacs variables that defined in C source code
 
 (use-package emacs
@@ -627,61 +682,6 @@ If you experience stuttering, increase this.")
   (solaire-mode-remap-fringe nil "Don't colorize fringe.")
   :config
   (solaire-mode-swap-bg))
-
-;; Icons
-;; Dependency of many packages. Display nice icons.
-
-
-(use-package all-the-icons
-  :if (display-graphic-p)
-  :init (unless (or (eq system-type 'windows-nt)
-                    (member "all-the-icons" (font-family-list)))
-          (all-the-icons-install-fonts t))
-  :config
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(xwidget-webkit-mode all-the-icons-faicon "chrome" :v-adjust -0.1 :face all-the-icons-blue))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(diff-mode all-the-icons-octicon "git-compare" :v-adjust 0.0 :face all-the-icons-lred))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(flycheck-error-list-mode all-the-icons-octicon "checklist" :height 1.1 :v-adjust 0.0 :face all-the-icons-lred))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(elfeed-search-mode all-the-icons-faicon "rss-square" :v-adjust -0.1 :face all-the-icons-orange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(elfeed-show-mode all-the-icons-octicon "rss" :height 1.1 :v-adjust 0.0 :face all-the-icons-lorange))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.[bB][iI][nN]$" all-the-icons-octicon "file-binary" :v-adjust 0.0 :face all-the-icons-yellow))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.c?make$" all-the-icons-fileicon "gnu" :face all-the-icons-dorange))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.conf$" all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.toml$" all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(conf-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(conf-space-mode all-the-icons-octicon "settings" :v-adjust 0.0 :face all-the-icons-yellow))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(forge-topic-mode all-the-icons-alltheicon "git" :face all-the-icons-blue))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.xpm$" all-the-icons-octicon "file-media" :v-adjust 0.0 :face all-the-icons-dgreen))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(helpful-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1 :face all-the-icons-purple))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(Info-mode all-the-icons-faicon "info-circle" :height 1.1 :v-adjust -0.1))
-  (add-to-list 'all-the-icons-icon-alist
-               '(".*\\.ipynb\\'" all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(ein:notebooklist-mode all-the-icons-faicon "book" :face all-the-icons-lorange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(ein:notebook-mode all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-orange))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(ein:notebook-multilang-mode all-the-icons-fileicon "jupyter" :height 1.2 :face all-the-icons-dorange))
-  (add-to-list 'all-the-icons-icon-alist
-               '("\\.epub\\'" all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(nov-mode all-the-icons-faicon "book" :height 1.0 :v-adjust -0.1 :face all-the-icons-green))
-  (add-to-list 'all-the-icons-mode-icon-alist
-               '(gfm-mode all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
 
 ;; Evil goggles
 ;; Displays a visual hint when editing with evil.
