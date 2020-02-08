@@ -576,6 +576,36 @@ If you experience stuttering, increase this.")
   (with-eval-after-load 'treemacs
     (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)))
 
+;; Modeline
+;; Use Doom modeline.
+
+
+(use-package doom-modeline
+  :hook (after-init . doom-modeline-mode)
+  :custom
+  (doom-modeline-minor-modes t "Display minor modes.")
+  (doom-modeline-unicode-fallback t "Use unicode when no icons."))
+
+
+
+;; Nyan Mode is an analog indicator of your position in the buffer.
+
+
+(use-package nyan-mode
+  :diminish nyan-mode
+  :hook (after-init . nyan-mode)
+  :custom (nyan-bar-length 16 "Bar length."))
+
+
+
+;; Hide modeline when needed.
+
+
+(use-package hide-mode-line
+  :hook
+  ;; Hide mode-line for completion list
+  ((completion-list-mode completion-in-region-mode) . hide-mode-line-mode))
+
 ;; Evil goggles
 ;; Displays a visual hint when editing with evil.
 
@@ -739,10 +769,8 @@ If you experience stuttering, increase this.")
 ;; Old init file
 
 ;; Essential look & feel (doomed)
-(require 'init-doom-modeline)
 (require 'init-all-the-icons)
 (require 'init-dashboard)
-(require 'init-hide-mode-line)
 (require 'init-solaire-mode)
 
 ;; Global modes
