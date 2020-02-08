@@ -643,11 +643,11 @@ Use bindings while the non-default system layout is active.
 * GUI
 ** Mouse
 #+begin_src elisp
-(use-package mouse
-  :ensure nil
-  :defer t
-  :custom
-  (mouse-yank-at-point t "Yanks at point instead of click."))
+  (use-package mouse
+    :ensure nil
+    :defer t
+    :custom
+    (mouse-yank-at-point t "Yanks at point instead of click."))
 #+end_src
 
 Mouse wheel settings.
