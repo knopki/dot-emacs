@@ -588,6 +588,14 @@ If you experience stuttering, increase this.")
 
 
 
+;; Hide minor modes to menu.
+
+
+(use-package minions
+  :hook (doom-modeline-mode . minions-mode))
+
+
+
 ;; Nyan Mode is an analog indicator of your position in the buffer.
 
 

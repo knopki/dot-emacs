@@ -717,6 +717,13 @@ Use Doom modeline.
     (doom-modeline-unicode-fallback t "Use unicode when no icons."))
 #+end_src
 
+Hide minor modes to menu.
+
+#+begin_src elisp
+  (use-package minions
+    :hook (doom-modeline-mode . minions-mode))
+#+end_src
+
 Nyan Mode is an analog indicator of your position in the buffer.
 
 #+begin_src elisp
