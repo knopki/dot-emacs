@@ -1205,6 +1205,41 @@ If you experience stuttering, increase this.")
   :custom
   (uniquify-buffer-name-style 'forward "bar/mumble/name"))
 
+;; Projectile
+;; Manage and navigate projects.
+
+
+(use-package projectile
+  :diminish projectile-mode
+  :hook (after-init . projectile-mode)
+  :general
+  (general-nmap
+    :prefix "SPC"
+    "p" '(:keymap projectile-command-map :package projectile))
+  :custom
+  (projectile-mode-line-prefix "" "Mode line lighter prefix for Projectile.")
+  (projectile-sort-order 'recentf "Sort order.")
+  (projectile-use-git-grep t "Use git grep in git projects.")
+  (projectile-enable-cache t)
+  (projectile-completion-system 'ivy "Ivy integration.")
+  :config
+  ;; Update mode-line at the first time
+  (projectile-update-mode-line))
+
+;; Projectile Ivy integration
+;; More advanced Ivy integration.
+
+
+(use-package counsel-projectile
+  :after (projectile)
+  :hook (after-init . counsel-projectile-mode)
+  :custom
+  (counsel-projectile-rg-initial-input
+   '(projectile-symbol-or-selection-at-point)
+   "Initial minibuffer input.")
+  :config
+  (define-obsolete-function-alias 'counsel-more-chars 'ivy-more-chars "26.3"))
+
 ;; Delete selection
 
 (use-package delsel
@@ -1380,7 +1415,6 @@ If you experience stuttering, increase this.")
 
 ;; Programming
 (require 'init-flycheck)
-(require 'init-projectile)
 (require 'init-company)
 (require 'init-aggressive-indent)
 (require 'init-magit)
