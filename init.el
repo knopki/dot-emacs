@@ -1198,6 +1198,17 @@ If you experience stuttering, increase this.")
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable))
 
+;; Avy
+;; Jump to things in Emacs tree-style.
+
+
+(use-package avy
+  :commands (avy-goto-word-1)
+  :general
+  (general-mmap
+    "C-'" 'evil-avy-goto-char-timer
+    "C-\"" 'evil-avy-goto-word-0))
+
 ;; Unique buffer names
 
 (use-package uniquify
@@ -1491,7 +1502,6 @@ If you experience stuttering, increase this.")
 
 ;; Global modes
 (require 'init-undo-tree)
-(require 'init-avy)
 (require 'init-persistent-scratch)
 
 ;; Sometimes modes

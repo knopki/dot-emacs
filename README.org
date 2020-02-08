@@ -1329,6 +1329,17 @@ prefix) in a popup.
     (counsel-describe-variable-function #'helpful-variable))
 #+end_src
 * Navigation
+** Avy
+Jump to things in Emacs tree-style.
+
+#+begin_src elisp
+  (use-package avy
+    :commands (avy-goto-word-1)
+    :general
+    (general-mmap
+      "C-'" 'evil-avy-goto-char-timer
+      "C-\"" 'evil-avy-goto-word-0))
+#+end_src
 * Buffer management
 ** Unique buffer names
 #+begin_src elisp
@@ -1626,7 +1637,6 @@ Emulates =vim-surround=.
 #+begin_src elisp
   ;; Global modes
   (require 'init-undo-tree)
-  (require 'init-avy)
   (require 'init-persistent-scratch)
 
   ;; Sometimes modes
