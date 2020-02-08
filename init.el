@@ -606,6 +606,20 @@ If you experience stuttering, increase this.")
   ;; Hide mode-line for completion list
   ((completion-list-mode completion-in-region-mode) . hide-mode-line-mode))
 
+;; Solaire mode
+;; Visually distinguish file-visiting windows from other types of windows.
+
+
+(use-package solaire-mode
+  :hook
+  (((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+   (minibuffer-setup . solaire-mode-in-minibuffer)
+   (after-load-theme . solaire-mode-swap-bg))
+  :custom
+  (solaire-mode-remap-fringe nil "Don't colorize fringe.")
+  :config
+  (solaire-mode-swap-bg))
+
 ;; Evil goggles
 ;; Displays a visual hint when editing with evil.
 
@@ -771,7 +785,6 @@ If you experience stuttering, increase this.")
 ;; Essential look & feel (doomed)
 (require 'init-all-the-icons)
 (require 'init-dashboard)
-(require 'init-solaire-mode)
 
 ;; Global modes
 (require 'init-undo-tree)
