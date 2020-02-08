@@ -653,98 +653,6 @@ If you experience stuttering, increase this.")
   (evil-goggles-mode)
   (evil-goggles-use-diff-faces))
 
-;; Which key
-;; Displays the key bindings following your currently entered incomplete command (a
-;; prefix) in a popup.
-
-
-(use-package which-key
-  :diminish which-key-mode
-  :defer 2
-  :general
-  (general-nmap
-    :prefix "SPC"
-    ;; Show top level key bindings
-    "<f2>" 'which-key-show-top-level
-    ;; Show major mode key bindings
-    "<f3>" 'which-key-show-major-mode
-    ;; Show key bindings from any keymap
-    "<f4>" 'which-key-show-full-keymap)
-  :config
-  (which-key-setup-side-window-right-bottom))
-
-;; Better help
-
-(use-package helpful
-  :defer 2
-  :bind
-  (:map help-mode-map
-        ("f" . #'helpful-callable)
-        ("v" . #'helpful-variable)
-        ("k" . #'helpful-key)
-        ("F" . #'helpful-at-point)
-        ("F" . #'helpful-function)
-        ("C" . #'helpful-command))
-  :custom
-  ;; Ivy support
-  (counsel-describe-function-function #'helpful-callable)
-  (counsel-describe-variable-function #'helpful-variable))
-
-;; Unique buffer names
-
-(use-package uniquify
-  :ensure nil
-  :custom
-  (uniquify-buffer-name-style 'forward "bar/mumble/name"))
-
-;; Delete selection
-
-(use-package delsel
-  :ensure nil
-  :custom
-  (delete-selection-mode t "Replace the active region just by typing text."))
-
-;; Whitespaces
-;; Delete trailing whitespaces on buffer save.
-
-
-(use-package whitespace
-  :ensure nil
-  :hook (before-save . whitespace-cleanup))
-
-;; On-the-fly spell checker
-;; =hunspell= is must because of ability to query multiple dictionaries.
-
-
-(use-package flyspell
-  :ensure nil
-  :diminish
-  :if (executable-find "hunspell")
-  :hook
-  (((text-mode outline-mode org-mode) . flyspell-mode)
-   (prog-mode . flyspell-prog-mode))
-  :init
-  (with-eval-after-load "ispell"
-    (setq ispell-program-name "hunspell")
-    (setq ispell-dictionary "en_US,ru_RU")
-    (ispell-set-spellchecker-params)
-    (ispell-hunspell-add-multi-dic "en_US,ru_RU"))
-  :custom
-  (flyspell-issue-message-flag nil "Be silent."))
-
-
-
-;; Correcting words with flyspell via Ivy.
-
-(use-package flyspell-correct-ivy
-  :after (:all (flyspell ivy))
-  :init
-  (setq flyspell-correct-interface #'flyspell-correct-ivy)
-  :general
-  ;; Redefine evil-mode keybinding
-  ;; Also, use M-o to access ivy menu
-  (general-nmap "z=" 'flyspell-correct-wrapper))
-
 ;; Prescient
 ;; Library which sorts and filters lists of candidates.
 
@@ -1252,6 +1160,98 @@ If you experience stuttering, increase this.")
       ((ivy-rich-file-icon)
        (ivy-rich-candidate))
       :delimiter "\t"))))
+
+;; Which key
+;; Displays the key bindings following your currently entered incomplete command (a
+;; prefix) in a popup.
+
+
+(use-package which-key
+  :diminish which-key-mode
+  :defer 2
+  :general
+  (general-nmap
+    :prefix "SPC"
+    ;; Show top level key bindings
+    "<f2>" 'which-key-show-top-level
+    ;; Show major mode key bindings
+    "<f3>" 'which-key-show-major-mode
+    ;; Show key bindings from any keymap
+    "<f4>" 'which-key-show-full-keymap)
+  :config
+  (which-key-setup-side-window-right-bottom))
+
+;; Better help
+
+(use-package helpful
+  :defer 2
+  :bind
+  (:map help-mode-map
+        ("f" . #'helpful-callable)
+        ("v" . #'helpful-variable)
+        ("k" . #'helpful-key)
+        ("F" . #'helpful-at-point)
+        ("F" . #'helpful-function)
+        ("C" . #'helpful-command))
+  :custom
+  ;; Ivy support
+  (counsel-describe-function-function #'helpful-callable)
+  (counsel-describe-variable-function #'helpful-variable))
+
+;; Unique buffer names
+
+(use-package uniquify
+  :ensure nil
+  :custom
+  (uniquify-buffer-name-style 'forward "bar/mumble/name"))
+
+;; Delete selection
+
+(use-package delsel
+  :ensure nil
+  :custom
+  (delete-selection-mode t "Replace the active region just by typing text."))
+
+;; Whitespaces
+;; Delete trailing whitespaces on buffer save.
+
+
+(use-package whitespace
+  :ensure nil
+  :hook (before-save . whitespace-cleanup))
+
+;; On-the-fly spell checker
+;; =hunspell= is must because of ability to query multiple dictionaries.
+
+
+(use-package flyspell
+  :ensure nil
+  :diminish
+  :if (executable-find "hunspell")
+  :hook
+  (((text-mode outline-mode org-mode) . flyspell-mode)
+   (prog-mode . flyspell-prog-mode))
+  :init
+  (with-eval-after-load "ispell"
+    (setq ispell-program-name "hunspell")
+    (setq ispell-dictionary "en_US,ru_RU")
+    (ispell-set-spellchecker-params)
+    (ispell-hunspell-add-multi-dic "en_US,ru_RU"))
+  :custom
+  (flyspell-issue-message-flag nil "Be silent."))
+
+
+
+;; Correcting words with flyspell via Ivy.
+
+(use-package flyspell-correct-ivy
+  :after (:all (flyspell ivy))
+  :init
+  (setq flyspell-correct-interface #'flyspell-correct-ivy)
+  :general
+  ;; Redefine evil-mode keybinding
+  ;; Also, use M-o to access ivy menu
+  (general-nmap "z=" 'flyspell-correct-wrapper))
 
 ;; Ediff
 ;; A comprehensive visual interface to diff & patch.
