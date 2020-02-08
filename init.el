@@ -1285,7 +1285,13 @@ If you experience stuttering, increase this.")
                                :v-adjust -0.05
                                :height 1.25)
         " ")
-     "Project: ")))
+     "Project: "))
+  (initial-buffer-choice '(lambda ()
+                            (ibuffer)
+                            (get-buffer "*Ibuffer*"))
+                         "Show list of buffers on startup.")
+  :config
+  (add-to-list 'ibuffer-never-show-predicates "^\\*helpful"))
 
 ;; Projectile
 ;; Manage and navigate projects.
@@ -1482,9 +1488,6 @@ If you experience stuttering, increase this.")
   (js-indent-level 2))
 
 ;; Old init file
-
-;; Essential look & feel (doomed)
-(require 'init-dashboard)
 
 ;; Global modes
 (require 'init-undo-tree)
