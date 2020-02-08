@@ -554,21 +554,27 @@ If you experience stuttering, increase this.")
   (window-divider-default-bottom-width 1)
   (window-divider-default-right-width 1))
 
-;; Fonts
+;; Doom theme
+;; Setup Doom themes (use One Dark), set font face.
 
-(defconst knopki/font-default
-  "FuraCode Nerd Font Mono"
-  "Default font face.")
 
-(when (display-graphic-p)
-  ;; Set default font
-  (when (member knopki/font-default (font-family-list))
-    (set-face-attribute 'default nil
-                        :font knopki/font-default
-                        :height (cond
-                                 ((and (display-graphic-p) (eq system-type 'darwin)) 130)
-                                 ((eq system-type 'windows-nt) 110)
-                                 (t 120)))))
+(use-package doom-themes
+  :custom-face (default ((t (:family "FuraCode Nerd Font Mono" :height 120))))
+  :defines doom-themes-treemacs-theme
+  :functions doom-themes-hide-modeline
+  :init (load-theme 'doom-one t)
+  :custom
+  (doom-themes-treemacs-theme "doom-colors")
+  :config
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config)
+
+  ;; Enable customized theme (`all-the-icons' must be installed!)
+  (doom-themes-treemacs-config)
+  (with-eval-after-load 'treemacs
+    (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)))
 
 ;; Evil goggles
 ;; Displays a visual hint when editing with evil.
@@ -733,7 +739,6 @@ If you experience stuttering, increase this.")
 ;; Old init file
 
 ;; Essential look & feel (doomed)
-(require 'init-doom-themes)
 (require 'init-doom-modeline)
 (require 'init-all-the-icons)
 (require 'init-dashboard)
