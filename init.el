@@ -365,31 +365,6 @@ If you experience stuttering, increase this.")
   :custom
   (apropos-do-all t "Make apropos omnipotent."))
 
-;; Simple
-
-(use-package simple
-  :ensure nil
-  :diminish visual-line-mode auto-fill-function
-  :hook
-  (window-setup . size-indication-mode)
-  :config
-  ;; Typing yes/no is obnoxious when y/n will do.
-  (defalias #'yes-or-no-p #'y-or-n-p)
-  :custom
-  (column-number-mode t "Display column number in the mode line.")
-  (line-number-mode t "Display line number in the mode line.")
-  (line-move-visual nil "Keep cursor at end of lines.")
-  (track-eol t "Vertical motion starting at EOF keeps to EOL.")
-  (set-mark-command-repeat-pop t "Repeating C-SPC after popping mark pops it again.")
-
-  ;; Eliminate duplicates in the kill ring. That is, if you kill the
-  ;; same thing twice, you won't have to use M-y twice to get past it
-  ;; to older entries in the kill ring.
-  (kill-do-not-save-duplicates t "Don't add same string twice.")
-
-  (save-interprogram-paste-before-kill
-   t "Save clipboard contents into kill-ring before replacing them."))
-
 ;; Recent files
 ;; Exclude some files from =recentf= lists and save list on save and some times on timer.
 
@@ -1347,6 +1322,31 @@ If you experience stuttering, increase this.")
    "Initial minibuffer input.")
   :config
   (define-obsolete-function-alias 'counsel-more-chars 'ivy-more-chars "26.3"))
+
+;; Simple
+
+(use-package simple
+  :ensure nil
+  :diminish visual-line-mode auto-fill-function
+  :hook
+  (window-setup . size-indication-mode)
+  :config
+  ;; Typing yes/no is obnoxious when y/n will do.
+  (defalias #'yes-or-no-p #'y-or-n-p)
+  :custom
+  (column-number-mode t "Display column number in the mode line.")
+  (line-number-mode t "Display line number in the mode line.")
+  (line-move-visual nil "Keep cursor at end of lines.")
+  (track-eol t "Vertical motion starting at EOF keeps to EOL.")
+  (set-mark-command-repeat-pop t "Repeating C-SPC after popping mark pops it again.")
+
+  ;; Eliminate duplicates in the kill ring. That is, if you kill the
+  ;; same thing twice, you won't have to use M-y twice to get past it
+  ;; to older entries in the kill ring.
+  (kill-do-not-save-duplicates t "Don't add same string twice.")
+
+  (save-interprogram-paste-before-kill
+   t "Save clipboard contents into kill-ring before replacing them."))
 
 ;; Delete selection
 
