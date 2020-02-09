@@ -461,6 +461,15 @@ If you experience stuttering, increase this.")
   :config
   (setq desktop-save-mode t))
 
+;; Persistent Scratch buffer
+;; Save *scratch* buffer content.
+
+
+(use-package persistent-scratch
+  :hook (after-init . persistent-scratch-autosave-mode)
+  :config
+  (persistent-scratch-setup-default))
+
 ;; Evil mode
 ;; I like VIM keys much more, so =evil-mode= is essential part of my configuration.
 
@@ -1500,9 +1509,7 @@ If you experience stuttering, increase this.")
 
 ;; Old init file
 
-;; Global modes
 (require 'init-undo-tree)
-(require 'init-persistent-scratch)
 
 ;; Sometimes modes
 (require 'init-org)
