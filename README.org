@@ -1528,6 +1528,21 @@ Correcting words with flyspell via Ivy.
   ;; Also, use M-o to access ivy menu
   (general-nmap "z=" 'flyspell-correct-wrapper))
 #+end_src
+** Undo Tree
+Treat undo history as a branching tree of changes.
+
+#+begin_src elisp
+  (use-package undo-tree
+    :diminish
+    :hook (after-init . global-undo-tree-mode)
+    :general
+    (general-nmap :prefix "SPC" "<f5>" 'undo-tree-visualize)
+    :custom
+    (undo-tree-visualizer-timestamps t "Display timestamps.")
+    (undo-tree-enable-undo-in-region nil "Do not undo changes only in region.")
+    (undo-tree-visualizer-lazy-drawing 100 "Switch too lazy drawing after N nodes.")
+    (undo-tree-auto-save-history t "Save history to file."))
+#+end_src
 * Productivity & task management
 * Coding
 ** Ediff
@@ -1643,8 +1658,6 @@ Emulates =vim-surround=.
 #+end_src
 * Old init file
 #+begin_src elisp
-  (require 'init-undo-tree)
-
   ;; Sometimes modes
   (require 'init-org)
 

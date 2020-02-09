@@ -1396,6 +1396,21 @@ If you experience stuttering, increase this.")
   ;; Also, use M-o to access ivy menu
   (general-nmap "z=" 'flyspell-correct-wrapper))
 
+;; Undo Tree
+;; Treat undo history as a branching tree of changes.
+
+
+(use-package undo-tree
+  :diminish
+  :hook (after-init . global-undo-tree-mode)
+  :general
+  (general-nmap :prefix "SPC" "<f5>" 'undo-tree-visualize)
+  :custom
+  (undo-tree-visualizer-timestamps t "Display timestamps.")
+  (undo-tree-enable-undo-in-region nil "Do not undo changes only in region.")
+  (undo-tree-visualizer-lazy-drawing 100 "Switch too lazy drawing after N nodes.")
+  (undo-tree-auto-save-history t "Save history to file."))
+
 ;; Ediff
 ;; A comprehensive visual interface to diff & patch.
 
@@ -1508,8 +1523,6 @@ If you experience stuttering, increase this.")
   (js-indent-level 2))
 
 ;; Old init file
-
-(require 'init-undo-tree)
 
 ;; Sometimes modes
 (require 'init-org)
