@@ -87,6 +87,8 @@ Clone repository to =~/.emacs.d= and run Emacs.
     - [[#org-bullets][Org Bullets]]
     - [[#fancy-priorities][Fancy Priorities]]
     - [[#table-of-contents][Table of Contents]]
+- [[#version-control][Version Control]]
+  - [[#magit][Magit]]
 - [[#coding][Coding]]
   - [[#ediff][Ediff]]
   - [[#eldoc][Eldoc]]
@@ -1833,6 +1835,23 @@ Generates an up-to-date table of contents in org files without exporting.
     ;; In markdown too.
     (markdown-mode . toc-org-mode))
 #+end_src
+* Version Control
+** Magit
+Awesome git frontend.
+
+#+begin_src elisp
+  (use-package magit
+    :general
+    (general-leader
+      "g" 'magit-status)
+    :custom
+    (magit-completing-read-function
+     'ivy-completing-read "Called when requested user input."))
+
+  ;; Make Magit Evil
+  (use-package evil-magit
+    :after (:all (magit evil)))
+#+end_src
 * Coding
 ** Ediff
 A comprehensive visual interface to diff & patch.
@@ -1951,7 +1970,6 @@ Emulates =vim-surround=.
   (require 'init-flycheck)
   (require 'init-company)
   (require 'init-aggressive-indent)
-  (require 'init-magit)
   (require 'init-diff-hl)
   (require 'init-yasnippet)
   (require 'init-direnv)

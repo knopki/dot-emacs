@@ -1612,6 +1612,22 @@ If you experience stuttering, increase this.")
   ;; In markdown too.
   (markdown-mode . toc-org-mode))
 
+;; Magit
+;; Awesome git frontend.
+
+
+(use-package magit
+  :general
+  (general-leader
+    "g" 'magit-status)
+  :custom
+  (magit-completing-read-function
+   'ivy-completing-read "Called when requested user input."))
+
+;; Make Magit Evil
+(use-package evil-magit
+  :after (:all (magit evil)))
+
 ;; Ediff
 ;; A comprehensive visual interface to diff & patch.
 
@@ -1729,7 +1745,6 @@ If you experience stuttering, increase this.")
 (require 'init-flycheck)
 (require 'init-company)
 (require 'init-aggressive-indent)
-(require 'init-magit)
 (require 'init-diff-hl)
 (require 'init-yasnippet)
 (require 'init-direnv)
