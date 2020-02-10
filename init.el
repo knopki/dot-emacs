@@ -454,6 +454,8 @@ If you experience stuttering, increase this.")
   :hook (after-init . evil-mode)
   :custom
   (evil-want-keybinding nil "Don't load evil-keybindings - required by evil-collection")
+  (evil-motion-state-modes nil "Use 'normal instead of 'motion state.")
+  (evil-emacs-state-modes nil "Use 'normal instead of 'emacs state.")
   (evil-search-wrap t "Search wrap around the buffer.")
   (evil-regexp-search t "Search with regexp.")
   (evil-search-module 'evil-search "Search module to use.")
@@ -480,22 +482,23 @@ If you experience stuttering, increase this.")
   (evil-collection-init))
 
 ;; El General
-;; More convenient method for binding keys.
+;; More convenient method for binding keys. Setup leader key definers.
 
 
 (use-package general
   :config
-  (general-evil-setup t)
+  (general-evil-setup)
 
-  (general-nmap
+  (general-create-definer general-leader
+    :keymaps 'override
+    :states '(insert motion normal emacs)
     :prefix "SPC"
-    "<f1>" 'general-describe-keybindings
-    "c"    'calc)
-
-  ;; Move visual block
-  (general-vmap
-    "J" (concat ":m '>+1" (kbd "RET") "gv=gv")
-    "K" (concat ":m '<-2" (kbd "RET") "gv=gv")))
+    :non-normal-prefix "M-SPC")
+  (general-create-definer general-major-leader
+    :states '(insert motion emacs)
+    :prefix ","
+    :non-normal-prefix "M-,")
+  (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode")))
 
 ;; Reverse-im
 ;; Use bindings while the non-default system layout is active.
@@ -506,6 +509,13 @@ If you experience stuttering, increase this.")
   (reverse-im-modifiers '(control meta super))
   :config
   (reverse-im-activate "russian-computer"))
+
+;; Some global keybindings
+
+(general-leader
+ ""     nil
+ "<f1>" 'general-describe-keybindings
+ "c"    'calc)
 
 ;; Mouse
 
@@ -1154,14 +1164,13 @@ If you experience stuttering, increase this.")
   :diminish which-key-mode
   :defer 2
   :general
-  (general-nmap
-    :prefix "SPC"
-    ;; Show top level key bindings
-    "<f2>" 'which-key-show-top-level
-    ;; Show major mode key bindings
-    "<f3>" 'which-key-show-major-mode
-    ;; Show key bindings from any keymap
-    "<f4>" 'which-key-show-full-keymap)
+  (general-leader
+   ;; Show top level key bindings
+   "<f2>" 'which-key-show-top-level
+   ;; Show major mode key bindings
+   "<f3>" 'which-key-show-major-mode
+   ;; Show key bindings from any keymap
+   "<f4>" 'which-key-show-full-keymap)
   :config
   (which-key-setup-side-window-right-bottom)
   (which-key-mode))
@@ -1297,8 +1306,7 @@ If you experience stuttering, increase this.")
   :diminish projectile-mode
   :hook (after-init . projectile-mode)
   :general
-  (general-nmap
-    :prefix "SPC"
+  (general-leader
     "p" '(:keymap projectile-command-map :package projectile))
   :custom
   (projectile-mode-line-prefix "" "Mode line lighter prefix for Projectile.")
@@ -1364,6 +1372,12 @@ If you experience stuttering, increase this.")
   :ensure nil
   :hook (before-save . whitespace-cleanup))
 
+;; Move visual block
+
+(general-vmap
+  "J" (concat ":m '>+1" (kbd "RET") "gv=gv")
+  "K" (concat ":m '<-2" (kbd "RET") "gv=gv"))
+
 ;; On-the-fly spell checker
 ;; =hunspell= is must because of ability to query multiple dictionaries.
 
@@ -1405,7 +1419,8 @@ If you experience stuttering, increase this.")
   :diminish
   :hook (after-init . global-undo-tree-mode)
   :general
-  (general-nmap :prefix "SPC" "<f5>" 'undo-tree-visualize)
+  (general-leader
+    "<f5>" 'undo-tree-visualize)
   :custom
   (undo-tree-visualizer-timestamps t "Display timestamps.")
   (undo-tree-enable-undo-in-region nil "Do not undo changes only in region.")
