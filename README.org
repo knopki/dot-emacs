@@ -1560,6 +1560,159 @@ Treat undo history as a branching tree of changes.
     (undo-tree-auto-save-history t "Save history to file."))
 #+end_src
 * Productivity & task management
+** Org mode
+*** Core
+#+begin_src elisp
+  (use-package org
+    :ensure nil
+    :hook
+    (org-mode . visual-line-mode)
+    (org-mode . org-indent-mode)
+    (org-indent-mode . (lambda () (diminish 'org-indent-mode)))
+    :custom-face (org-ellipsis ((t (:foreground nil))))
+    :general
+    (general-leader
+      "o a" 'org-agenda
+      "o c" 'counsel-org-capture
+      "o l" 'org-agenda-list
+      "o s" 'org-search-view)
+    :custom
+    (org-modules '(org-checklist org-habit) "Always load modules.")
+
+    (org-directory "~/org" "Directory with org files.")
+    (org-log-done 'time "Record time when task moves to the DONE state.")
+    (org-log-redeadline 'time "Record time when task deadline changes.")
+    (org-log-reschedule 'time "Record time when task rescheduled.")
+    (org-log-into-drawer t "Insert changes notes and time into a drawer.")
+    (org-catch-invisible-edits 'smart "Check for invisible region before edit.")
+    (org-startup-indented t "Turn on indent mode on startup.")
+    (org-pretty-entities t "Show entities as UTF8 characters.")
+    (org-src-window-setup 'current-window "Show edit buffer in the current window.")
+    (org-enforce-todo-dependencies t "Undone tasks will block parent from DONE.")
+    (org-enforce-todo-checkbox-dependencies t "Unchecked boxes will block parent from DONE.")
+    (org-archive-location
+     (concat org-directory "/archive/%s_archive::datetree/")
+     "The location where subtree should be archived.")
+
+    ;; Keywords
+    (org-todo-keywords
+     '((sequence "TODO(t!)" "NEXT(n)" "WIP(i!)" "WAITING(w@/!)"
+                 "GAVE(g!)" "|" "DONE(d!)" "CANCELLED(c@/!)"))
+     "List of keywords sequences and their interpretation.")
+    (org-todo-keyword-faces
+     '(("TODO"     . org-todo)
+       ("NEXT"     . org-warning)
+       ("WIP"      . (:foreground "OrangeRed" :weight bold))
+       ("WAITING"  . (:foreground "coral" :weight bold))
+       ("GAVE"     . (:foreground "LimeGreen" :weight bold))
+       ("CANCELED" . org-done)
+       ("DONE"     . org-done))
+     "Faces for specific keywords.")
+
+    ;; Priorities
+    (org-lowest-priority ?D "The lowest priority of items.")
+    (org-priority-faces '((?A . error)
+                          (?B . warning)
+                          (?C . success)
+                          (?D . normal))
+                        "Faces for specific Priorities.")
+
+    ;; Tags
+    (org-tags-exclude-from-inheritance
+     '(olga)
+     "List of tags that should never be inherited.")
+
+    ;; Agenda
+    (org-agenda-files '("~/org") "The files to be used for agenda display.")
+    (org-agenda-text-search-extra-files '('agenda-archives) "Extra searched files.")
+    (org-agenda-span 14 "Number of days to include in agenda overview.")
+    (org-agenda-start-on-weekday nil "Start overview on today.")
+    (org-agenda-start-day "-3d" "Show previous days in overview.")
+    (org-agenda-skip-deadline-prewarning-if-scheduled
+     t "Skip deadline prewarning when already scheduled.")
+    (org-agenda-skip-scheduled-if-deadline-is-shown t "Skip scheduling line if deadline.")
+    (org-agenda-include-diary t "Include diary entries like calendar.")
+    (org-stuck-projects
+     '("+projects/-DONE" ("NEXT" "WIP") ("@shop") "\\<IGNORE\\>")
+     "How to identify stuck projects.")
+
+    ;; Capture
+    (org-default-notes-file
+     (expand-file-name "capture.org" org-directory)
+     "Default target for storing notes.")
+    (org-capture-templates
+     '(("t" "My TODO task" entry
+        (file "capture.org")
+        "* TODO  %?\nSCHEDULED: %t"))
+     "Capture templates.")
+
+    ;; Refile
+    (org-refile-targets '((nil :maxlevel . 3)
+                          (org-agenda-files :maxlevel . 3))
+                        "Targets for refiling.")
+    (org-refile-use-cache t "Cache refile targets.")
+
+    ;; Attachments
+    (org-attach-archive-delete file 'query "Ask for attachment delete on node delete.")
+
+    ;; Clock
+    (org-clock-persist 'history "Persist clock history.")
+
+    ;; org-goto/ivy interplay hack
+    (org-goto-interface 'outline-path-completion "For ivy integration.")
+    (org-outline-path-complete-in-steps nil "For ivy integration.")
+
+    ;; Babel
+    (org-confirm-babel-evaluate nil "Evaluate babel without confirmation.")
+    (org-src-fontify-natively t "Fontify code in code blocks.")
+    (org-src-tab-acts-natively t "Indent on tab in code blocks like in code.")
+    :config
+    ;; Add new template
+    (add-to-list 'org-structure-template-alist '("n" . "note"))
+
+    ;; Autosave (no sure is it worth it)
+    (run-with-idle-timer 30 t 'org-save-all-org-buffers)
+
+    ;; Set up hooks for clock persistence.
+    (org-clock-persistence-insinuate)
+
+
+    (defvar load-language-list '((emacs-lisp . t)
+                                 (shell . t)
+                                 (python . t)
+                                 (js . t)
+                                 (css . t)))
+
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . t)
+       (shell . t)
+       (js . t)
+       (css . t)
+       (python . t))))
+#+end_src
+*** Evil
+Evil support in org-mode.
+
+#+begin_src elisp
+  (use-package evil-org
+    :diminish
+    :after (:all (org evil))
+    :hook
+    (org-mode . evil-org-mode)
+    (evil-org-mode . (lambda () (evil-org-set-key-theme)))
+    (org-agenda-mode . (lambda ()
+                         (evil-org-mode)
+                         (require 'evil-org-agenda)
+                         (evil-org-agenda-set-keys)))
+    :general
+    (:keymaps 'org-src-mode-map [remap evil-write] 'org-edit-src-save)
+    :custom
+    (evil-org-key-theme
+     '(navigation insert return textobjects additional shift todo heading calendar)
+     "Key themes to enable.")
+    (evil-org-retain-visual-state-on-shift t "<> should retain selection in visual mode."))
+#+end_src
 * Coding
 ** Ediff
 A comprehensive visual interface to diff & patch.
