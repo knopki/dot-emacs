@@ -1713,6 +1713,29 @@ Evil support in org-mode.
      "Key themes to enable.")
     (evil-org-retain-visual-state-on-shift t "<> should retain selection in visual mode."))
 #+end_src
+*** Org Bullets
+Replace bullets with unicode characters.
+
+#+begin_src elisp
+  (use-package org-bullets
+    :diminish
+    :hook (org-mode . org-bullets-mode)
+    :custom
+    (org-ellipsis "…"))
+#+end_src
+*** Fancy Priorities
+Displays org priorities as custom strings.
+
+#+begin_src elisp
+  (use-package org-fancy-priorities
+    :diminish
+    :hook (org-mode . org-fancy-priorities-mode)
+    :custom
+    (org-fancy-priorities-list
+     (if (char-displayable-p ?⚡)
+         '("⚡" "⬆" "⬇" "☕")
+       '("HI" "MID" "LOW" "OPT"))))
+#+end_src
 * Coding
 ** Ediff
 A comprehensive visual interface to diff & patch.
@@ -1827,9 +1850,6 @@ Emulates =vim-surround=.
 #+end_src
 * Old init file
 #+begin_src elisp
-  ;; Sometimes modes
-  (require 'init-org)
-
   ;; Programming
   (require 'init-flycheck)
   (require 'init-company)

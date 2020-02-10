@@ -1579,6 +1579,29 @@ If you experience stuttering, increase this.")
    "Key themes to enable.")
   (evil-org-retain-visual-state-on-shift t "<> should retain selection in visual mode."))
 
+;; Org Bullets
+;; Replace bullets with unicode characters.
+
+
+(use-package org-bullets
+  :diminish
+  :hook (org-mode . org-bullets-mode)
+  :custom
+  (org-ellipsis "…"))
+
+;; Fancy Priorities
+;; Displays org priorities as custom strings.
+
+
+(use-package org-fancy-priorities
+  :diminish
+  :hook (org-mode . org-fancy-priorities-mode)
+  :custom
+  (org-fancy-priorities-list
+   (if (char-displayable-p ?⚡)
+       '("⚡" "⬆" "⬇" "☕")
+     '("HI" "MID" "LOW" "OPT"))))
+
 ;; Ediff
 ;; A comprehensive visual interface to diff & patch.
 
@@ -1691,9 +1714,6 @@ If you experience stuttering, increase this.")
   (js-indent-level 2))
 
 ;; Old init file
-
-;; Sometimes modes
-(require 'init-org)
 
 ;; Programming
 (require 'init-flycheck)
