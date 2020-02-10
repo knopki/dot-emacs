@@ -1534,14 +1534,14 @@ Delete trailing whitespaces on buffer save.
 
 Correcting words with flyspell via Ivy.
 #+begin_src elisp
-(use-package flyspell-correct-ivy
-  :after (:all (flyspell ivy))
-  :init
-  (setq flyspell-correct-interface #'flyspell-correct-ivy)
-  :general
-  ;; Redefine evil-mode keybinding
-  ;; Also, use M-o to access ivy menu
-  (general-nmap "z=" 'flyspell-correct-wrapper))
+  (use-package flyspell-correct-ivy
+    :after (:all (flyspell ivy))
+    :init
+    (setq flyspell-correct-interface #'flyspell-correct-ivy)
+    :general
+    ;; Redefine evil-mode keybinding
+    ;; Also, use M-o to access ivy menu
+    (general-nmap "z=" 'flyspell-correct-wrapper))
 #+end_src
 ** Undo Tree
 Treat undo history as a branching tree of changes.
