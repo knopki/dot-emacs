@@ -1292,7 +1292,8 @@ prefix) in a popup.
       ;; Show key bindings from any keymap
       "<f4>" 'which-key-show-full-keymap)
     :config
-    (which-key-setup-side-window-right-bottom))
+    (which-key-setup-side-window-right-bottom)
+    (which-key-mode))
 #+end_src
 ** Better help
 #+begin_src elisp

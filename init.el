@@ -1163,7 +1163,8 @@ If you experience stuttering, increase this.")
     ;; Show key bindings from any keymap
     "<f4>" 'which-key-show-full-keymap)
   :config
-  (which-key-setup-side-window-right-bottom))
+  (which-key-setup-side-window-right-bottom)
+  (which-key-mode))
 
 ;; Better help
 
