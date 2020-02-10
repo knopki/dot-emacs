@@ -98,6 +98,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#display-line-numbers][Display line numbers]]
   - [[#evil-commentary][Evil commentary]]
   - [[#evil-surround][Evil surround]]
+  - [[#flycheck][Flycheck]]
   - [[#cc][C/C++]]
   - [[#python][Python]]
   - [[#javascript][Javascript]]
@@ -1937,6 +1938,18 @@ Emulates =vim-surround=.
              "S" 'evil-surround-region
              "gS" 'evil-Surround-region))
 #+end_src
+** Flycheck
+On-the-fly syntax checker.
+
+#+begin_src elisp
+  (use-package flycheck
+    :hook (after-init . global-flycheck-mode)
+    :custom
+    (flycheck-emacs-lisp-load-path 'inherit "Inherit load paths from Emacs.")
+    (flycheck-check-syntax-automatically
+     '(idle-change mode-enabled save) "Run checks only on this events.")
+    (flycheck-idle-change-delay 4 "Idle delay before run checks."))
+#+end_src
 ** C/C++
 #+begin_src elisp
   (use-package cc-vars
@@ -1967,7 +1980,6 @@ Emulates =vim-surround=.
 * Old init file
 #+begin_src elisp
   ;; Programming
-  (require 'init-flycheck)
   (require 'init-company)
   (require 'init-aggressive-indent)
   (require 'init-diff-hl)

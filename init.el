@@ -1712,6 +1712,18 @@ If you experience stuttering, increase this.")
            "S" 'evil-surround-region
            "gS" 'evil-Surround-region))
 
+;; Flycheck
+;; On-the-fly syntax checker.
+
+
+(use-package flycheck
+  :hook (after-init . global-flycheck-mode)
+  :custom
+  (flycheck-emacs-lisp-load-path 'inherit "Inherit load paths from Emacs.")
+  (flycheck-check-syntax-automatically
+   '(idle-change mode-enabled save) "Run checks only on this events.")
+  (flycheck-idle-change-delay 4 "Idle delay before run checks."))
+
 ;; C/C++
 
 (use-package cc-vars
@@ -1742,7 +1754,6 @@ If you experience stuttering, increase this.")
 ;; Old init file
 
 ;; Programming
-(require 'init-flycheck)
 (require 'init-company)
 (require 'init-aggressive-indent)
 (require 'init-diff-hl)
