@@ -4,7 +4,7 @@
 #+PROPERTY: header-args:elisp :tangle "init.el" :comments org
 #+OPTIONS: ^:{}
 
-* About
+* About                                                            :noexport:
 This is my Emacs configuration, built with =use-package= and
 =org-mode=. =use-package= allows declarative description of packages and it’s
 settings, =org-mode= allows to represent this configuration as document and
@@ -12,10 +12,97 @@ generate config from it.
 
 This file declares local variable hook - run =org-babel-tangle= on every save.
 
-** Usage
+** Usage                                                          :noexport:
 Clone repository to =~/.emacs.d= and run Emacs.
 
-** TODO Table of Contents                                            :TOC@3:
+** Table of Contents                                           :TOC@3:QUOTE:
+#+BEGIN_QUOTE
+- [[#initialization][Initialization]]
+  - [[#header][Header]]
+  - [[#early-init---performance-hacks][Early Init - performance hacks]]
+  - [[#update-load-paths][Update load paths]]
+  - [[#garbage-collector-hack][Garbage collector hack]]
+  - [[#initialize-use-package][Initialize 'use-package]]
+  - [[#benchmarking][Benchmarking]]
+  - [[#setup-standard-file-paths][Setup standard file paths]]
+- [[#dependencies][Dependencies]]
+  - [[#icons][Icons]]
+- [[#essential-settings][Essential settings]]
+  - [[#emacs-variables-that-defined-in-c-source-code][Emacs variables that defined in C source code]]
+  - [[#files][Files]]
+  - [[#save-place][Save place]]
+  - [[#advice][Advice]]
+  - [[#apropos][Apropos]]
+  - [[#recent-files][Recent files]]
+  - [[#save-history][Save history]]
+  - [[#auto-revert][Auto revert]]
+  - [[#desktop-save-and-load][Desktop save and load]]
+  - [[#persistent-scratch-buffer][Persistent Scratch buffer]]
+- [[#keybindings][Keybindings]]
+  - [[#cheat-sheet][Cheat sheet]]
+  - [[#evil-mode][Evil mode]]
+  - [[#evil-collection][Evil collection]]
+  - [[#el-general][El General]]
+  - [[#reverse-im][Reverse-im]]
+  - [[#some-global-keybindings][Some global keybindings]]
+- [[#gui][GUI]]
+  - [[#mouse][Mouse]]
+  - [[#tooltips][Tooltips]]
+  - [[#frame][Frame]]
+  - [[#doom-theme][Doom theme]]
+  - [[#modeline][Modeline]]
+  - [[#solaire-mode][Solaire mode]]
+  - [[#evil-goggles][Evil goggles]]
+- [[#autocomplete][Autocomplete]]
+  - [[#prescient][Prescient]]
+  - [[#ivy][Ivy]]
+  - [[#counsel][Counsel]]
+  - [[#ivy-prescient][Ivy prescient]]
+  - [[#swiper][Swiper]]
+  - [[#ivy-rich][Ivy rich]]
+  - [[#company][Company]]
+- [[#help--manual][Help & manual]]
+  - [[#which-key][Which key]]
+  - [[#better-help][Better help]]
+- [[#navigation][Navigation]]
+  - [[#avy][Avy]]
+- [[#buffer-management][Buffer management]]
+  - [[#unique-buffer-names][Unique buffer names]]
+  - [[#ibuffer][ibuffer]]
+- [[#project-management][Project management]]
+  - [[#projectile][Projectile]]
+  - [[#projectile-ivy-integration][Projectile Ivy integration]]
+- [[#dired][Dired]]
+- [[#editing][Editing]]
+  - [[#simple][Simple]]
+  - [[#delete-selection][Delete selection]]
+  - [[#whitespaces][Whitespaces]]
+  - [[#move-visual-block][Move visual block]]
+  - [[#on-the-fly-spell-checker][On-the-fly spell checker]]
+  - [[#undo-tree][Undo Tree]]
+- [[#productivity--task-management][Productivity & task management]]
+  - [[#org-mode][Org mode]]
+    - [[#core][Core]]
+    - [[#evil][Evil]]
+    - [[#org-bullets][Org Bullets]]
+    - [[#fancy-priorities][Fancy Priorities]]
+    - [[#table-of-contents][Table of Contents]]
+- [[#coding][Coding]]
+  - [[#ediff][Ediff]]
+  - [[#eldoc][Eldoc]]
+  - [[#tabify][Tabify]]
+  - [[#highlight-matching-parens][Highlight matching parens]]
+  - [[#automatic-parenthesis-pairing][Automatic parenthesis pairing]]
+  - [[#display-line-numbers][Display line numbers]]
+  - [[#evil-commentary][Evil commentary]]
+  - [[#evil-surround][Evil surround]]
+  - [[#cc][C/C++]]
+  - [[#python][Python]]
+  - [[#javascript][Javascript]]
+- [[#old-init-file][Old init file]]
+- [[#the-end][The end…]]
+#+END_QUOTE
+
 * Initialization
 Initial bootstrapping and things related to package management.
 
@@ -1735,6 +1822,16 @@ Displays org priorities as custom strings.
      (if (char-displayable-p ?⚡)
          '("⚡" "⬆" "⬇" "☕")
        '("HI" "MID" "LOW" "OPT"))))
+#+end_src
+*** Table of Contents
+Generates an up-to-date table of contents in org files without exporting.
+
+#+begin_src elisp
+  (use-package toc-org
+    :hook
+    (org-mode . toc-org-mode)
+    ;; In markdown too.
+    (markdown-mode . toc-org-mode))
 #+end_src
 * Coding
 ** Ediff

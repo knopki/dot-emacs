@@ -1602,6 +1602,16 @@ If you experience stuttering, increase this.")
        '("⚡" "⬆" "⬇" "☕")
      '("HI" "MID" "LOW" "OPT"))))
 
+;; Table of Contents
+;; Generates an up-to-date table of contents in org files without exporting.
+
+
+(use-package toc-org
+  :hook
+  (org-mode . toc-org-mode)
+  ;; In markdown too.
+  (markdown-mode . toc-org-mode))
+
 ;; Ediff
 ;; A comprehensive visual interface to diff & patch.
 
