@@ -1720,6 +1720,10 @@ If you experience stuttering, increase this.")
   :hook (after-init . global-flycheck-mode)
   :custom
   (flycheck-emacs-lisp-load-path 'inherit "Inherit load paths from Emacs.")
+  (flycheck-global-modes
+   '(not org-mode text-mode outline-mode fundamental-mode
+         shell-mode eshell-mode term-mode vterm-mode)
+   "Disable checking in some modes.")
   (flycheck-check-syntax-automatically
    '(idle-change mode-enabled save) "Run checks only on this events.")
   (flycheck-idle-change-delay 4 "Idle delay before run checks."))
