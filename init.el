@@ -1156,6 +1156,131 @@ If you experience stuttering, increase this.")
        (ivy-rich-candidate))
       :delimiter "\t"))))
 
+;; Core
+
+(use-package company
+  :diminish company-mode
+  :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
+  :commands company-abort
+  :hook (prog-mode . company-mode)
+  :bind
+  (:map company-active-map
+        ("M-RET" . company-complete-selection)
+        ("M-q"   . company-other-backend))
+  :custom
+  (company-tooltip-align-annotations t "Align annotation to the right side.")
+  (company-minimum-prefix-length 2 "Minimum prefix length for idle completion.")
+  (company-idle-delay 0.2 "Idle delay in seconds before completion starts.")
+  (company-show-numbers t "Number the candidates (use M-1, M-2 etc to select completions).")
+  (company-eclim-auto-save nil "Stop eclim auto save.")
+  (company-dabbrev-downcase nil "No downcase when completion.")
+  (company-dabbrev-ignore-case nil "Ignore case when collection candidates.")
+  (company-selection-wrap-around t "Selecting item <first|>last wraps around.")
+  (company-global-modes
+   '(not erc-mode message-mode help-mode gud-mode eshell-mode shell-mode)
+   "Disable for some modes.")
+  (company-global-modes nil)
+  (company-backends
+   '((company-capf company-files company-yasnippet company-dabbrev-code))
+   "Default list of active backends.")
+  (company-frontends
+   '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)
+   "List of active frontends."))
+
+;; Company Prescient
+;; Better sorting and filtering.
+
+
+(use-package company-prescient
+  :hook (company-mode . company-prescient-mode))
+
+;; Company Box
+;; A company front-end with icons.
+
+
+(use-package company-box
+  :diminish
+  :if (display-graphic-p)
+  :hook (company-mode . company-box-mode)
+  :custom
+  (company-box-enable-icon t "Display icons.")
+  (company-box-show-single-candidate t "Display when only one candidate.")
+  (company-box-max-candidates 50 "Maximum number of candidates.")
+  :config
+  (with-no-warnings
+    ;; Highlight `company-common'
+    (defun my-company-box--make-line (candidate)
+      (-let* (((candidate annotation len-c len-a backend) candidate)
+              (color (company-box--get-color backend))
+              ((c-color a-color i-color s-color) (company-box--resolve-colors color))
+              (icon-string (and company-box--with-icons-p (company-box--add-icon candidate)))
+              (candidate-string (concat (propertize (or company-common "") 'face 'company-tooltip-common)
+                                        (substring (propertize candidate 'face 'company-box-candidate)
+                                                   (length company-common) nil)))
+              (align-string (when annotation
+                              (concat " " (and company-tooltip-align-annotations
+                                               (propertize " " 'display `(space :align-to (- right-fringe ,(or len-a 0) 1)))))))
+              (space company-box--space)
+              (icon-p company-box-enable-icon)
+              (annotation-string (and annotation (propertize annotation 'face 'company-box-annotation)))
+              (line (concat (unless (or (and (= space 2) icon-p) (= space 0))
+                              (propertize " " 'display `(space :width ,(if (or (= space 1) (not icon-p)) 1 0.75))))
+                            (company-box--apply-color icon-string i-color)
+                            (company-box--apply-color candidate-string c-color)
+                            align-string
+                            (company-box--apply-color annotation-string a-color)))
+              (len (length line)))
+        (add-text-properties 0 len (list 'company-box--len (+ len-c len-a)
+                                         'company-box--color s-color)
+                             line)
+        line))
+    (advice-add #'company-box--make-line :override #'my-company-box--make-line)
+
+    ;; Prettify icons
+    (defun my-company-box-icons--elisp (candidate)
+      (when (derived-mode-p 'emacs-lisp-mode)
+        (let ((sym (intern candidate)))
+          (cond ((fboundp sym) 'Function)
+                ((featurep sym) 'Module)
+                ((facep sym) 'Color)
+                ((boundp sym) 'Variable)
+                ((symbolp sym) 'Text)
+                (t . nil)))))
+    (advice-add #'company-box-icons--elisp :override #'my-company-box-icons--elisp))
+
+  (declare-function all-the-icons-faicon 'all-the-icons)
+  (declare-function all-the-icons-material 'all-the-icons)
+  (declare-function all-the-icons-octicon 'all-the-icons)
+  (setq company-box-icons-all-the-icons
+        `((Unknown . ,(all-the-icons-material "find_in_page" :height 0.85 :v-adjust -0.2))
+          (Text . ,(all-the-icons-faicon "text-width" :height 0.8 :v-adjust -0.05))
+          (Method . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.05 :face 'all-the-icons-purple))
+          (Function . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.05 :face 'all-the-icons-purple))
+          (Constructor . ,(all-the-icons-faicon "cube" :height 0.8 :v-adjust -0.05 :face 'all-the-icons-purple))
+          (Field . ,(all-the-icons-octicon "tag" :height 0.8 :v-adjust 0 :face 'all-the-icons-lblue))
+          (Variable . ,(all-the-icons-octicon "tag" :height 0.8 :v-adjust 0 :face 'all-the-icons-lblue))
+          (Class . ,(all-the-icons-material "settings_input_component" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-orange))
+          (Interface . ,(all-the-icons-material "share" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-lblue))
+          (Module . ,(all-the-icons-material "view_module" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-lblue))
+          (Property . ,(all-the-icons-faicon "wrench" :height 0.8 :v-adjust -0.05))
+          (Unit . ,(all-the-icons-material "settings_system_daydream" :height 0.85 :v-adjust -0.2))
+          (Value . ,(all-the-icons-material "format_align_right" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-lblue))
+          (Enum . ,(all-the-icons-material "storage" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-orange))
+          (Keyword . ,(all-the-icons-material "filter_center_focus" :height 0.85 :v-adjust -0.2))
+          (Snippet . ,(all-the-icons-material "format_align_center" :height 0.85 :v-adjust -0.2))
+          (Color . ,(all-the-icons-material "palette" :height 0.85 :v-adjust -0.2))
+          (File . ,(all-the-icons-faicon "file-o" :height 0.85 :v-adjust -0.05))
+          (Reference . ,(all-the-icons-material "collections_bookmark" :height 0.85 :v-adjust -0.2))
+          (Folder . ,(all-the-icons-faicon "folder-open" :height 0.85 :v-adjust -0.05))
+          (EnumMember . ,(all-the-icons-material "format_align_right" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-lblue))
+          (Constant . ,(all-the-icons-faicon "square-o" :height 0.85 :v-adjust -0.1))
+          (Struct . ,(all-the-icons-material "settings_input_component" :height 0.85 :v-adjust -0.2 :face 'all-the-icons-orange))
+          (Event . ,(all-the-icons-octicon "zap" :height 0.8 :v-adjust 0 :face 'all-the-icons-orange))
+          (Operator . ,(all-the-icons-material "control_point" :height 0.85 :v-adjust -0.2))
+          (TypeParameter . ,(all-the-icons-faicon "arrows" :height 0.8 :v-adjust -0.05))
+          (Template . ,(all-the-icons-material "format_align_left" :height 0.85 :v-adjust -0.2)))
+        company-box-icons-alist 'company-box-icons-all-the-icons))
+
 ;; Which key
 ;; Displays the key bindings following your currently entered incomplete command (a
 ;; prefix) in a popup.
@@ -1759,7 +1884,6 @@ If you experience stuttering, increase this.")
 ;; Old init file
 
 ;; Programming
-(require 'init-company)
 (require 'init-aggressive-indent)
 (require 'init-diff-hl)
 (require 'init-yasnippet)
