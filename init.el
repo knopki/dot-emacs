@@ -693,30 +693,13 @@ If you experience stuttering, increase this.")
      (t . my-ivy-format-function-arrow))
    "Functions that transform the list of candidates into string."))
 
-;; Counsel
-;; Collection of Ivy-enhanced versions of common Emacs commands.
-
-
-(use-package counsel
-  :diminish counsel-mode
-  :hook (ivy-mode . counsel-mode)
-  :custom
-  (counsel-find-file-at-point t "" "Add file-at-point to the list of candidates.")
-  (counsel-yank-pop-separator
-   "\n────────\n" "Separator for kill rings in counsel-yank-pop.")
-  (counsel-grep-base-command
-   (if (executable-find "rg")
-       "rg -S --no-heading --line-number --color never '%s' %s"
-     "grep -E -n -e %s %s")
-   "Use the faster search tool: ripgrep."))
-
 ;; Ivy prescient
 ;; Better sorting and filtering for Ivy.
 
 
 (use-package ivy-prescient
   :commands ivy-prescient-re-builder
-  :after (counsel prescient)
+  :after (prescient)
   :hook (ivy-mode . ivy-prescient-mode)
   :custom-face
   (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
@@ -749,6 +732,24 @@ If you experience stuttering, increase this.")
           counsel-grep counsel-git-grep counsel-ag counsel-imenu
           counsel-yank-pop counsel-recentf counsel-buffer-or-recentf)
    "Which commands have their candidates sorted by prescient."))
+
+;; Counsel
+;; Collection of Ivy-enhanced versions of common Emacs commands.
+
+
+(use-package counsel
+  :diminish counsel-mode
+  :after (ivy-prescient)
+  :hook (ivy-mode . counsel-mode)
+  :custom
+  (counsel-find-file-at-point t "" "Add file-at-point to the list of candidates.")
+  (counsel-yank-pop-separator
+   "\n────────\n" "Separator for kill rings in counsel-yank-pop.")
+  (counsel-grep-base-command
+   (if (executable-find "rg")
+       "rg -S --no-heading --line-number --color never '%s' %s"
+     "grep -E -n -e %s %s")
+   "Use the faster search tool: ripgrep."))
 
 ;; Swiper
 ;; isearch alternative.

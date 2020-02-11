@@ -55,11 +55,12 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#evil-goggles][Evil goggles]]
 - [[#autocomplete][Autocomplete]]
   - [[#prescient][Prescient]]
-  - [[#ivy][Ivy]]
-  - [[#counsel][Counsel]]
-  - [[#ivy-prescient][Ivy prescient]]
-  - [[#swiper][Swiper]]
-  - [[#ivy-rich][Ivy rich]]
+  - [[#ivy--counsel--swiper-stack][Ivy / Counsel / Swiper stack]]
+    - [[#ivy][Ivy]]
+    - [[#ivy-prescient][Ivy prescient]]
+    - [[#counsel][Counsel]]
+    - [[#swiper][Swiper]]
+    - [[#ivy-rich][Ivy rich]]
   - [[#company][Company]]
 - [[#help--manual][Help & manual]]
   - [[#which-key][Which key]]
@@ -72,7 +73,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
 - [[#project-management][Project management]]
   - [[#projectile][Projectile]]
   - [[#projectile-ivy-integration][Projectile Ivy integration]]
-- [[#dired][Dired]]
+- [[#file-management][File management]]
 - [[#editing][Editing]]
   - [[#simple][Simple]]
   - [[#delete-selection][Delete selection]]
@@ -82,7 +83,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#undo-tree][Undo Tree]]
 - [[#productivity--task-management][Productivity & task management]]
   - [[#org-mode][Org mode]]
-    - [[#core][Core]]
+    - [[#core-1][Core]]
     - [[#evil][Evil]]
     - [[#org-bullets][Org Bullets]]
     - [[#fancy-priorities][Fancy Priorities]]
@@ -876,7 +877,8 @@ Library which sorts and filters lists of candidates.
     (prescient-filter-method '(literal regexp initialism fuzzy)
                              "How to interpret filtering queries."))
 #+end_src
-** Ivy
+** Ivy / Counsel / Swiper stack
+*** Ivy
 A generic completion frontend.
 
 #+begin_src elisp
@@ -910,30 +912,13 @@ A generic completion frontend.
        (t . my-ivy-format-function-arrow))
      "Functions that transform the list of candidates into string."))
 #+end_src
-** Counsel
-Collection of Ivy-enhanced versions of common Emacs commands.
-
-#+begin_src elisp
-  (use-package counsel
-    :diminish counsel-mode
-    :hook (ivy-mode . counsel-mode)
-    :custom
-    (counsel-find-file-at-point t "" "Add file-at-point to the list of candidates.")
-    (counsel-yank-pop-separator
-     "\n────────\n" "Separator for kill rings in counsel-yank-pop.")
-    (counsel-grep-base-command
-     (if (executable-find "rg")
-         "rg -S --no-heading --line-number --color never '%s' %s"
-       "grep -E -n -e %s %s")
-     "Use the faster search tool: ripgrep."))
-#+end_src
-** Ivy prescient
+*** Ivy prescient
 Better sorting and filtering for Ivy.
 
 #+begin_src elisp
   (use-package ivy-prescient
     :commands ivy-prescient-re-builder
-    :after (counsel prescient)
+    :after (prescient)
     :hook (ivy-mode . ivy-prescient-mode)
     :custom-face
     (ivy-minibuffer-match-face-1 ((t (:inherit font-lock-doc-face :foreground nil))))
@@ -967,7 +952,25 @@ Better sorting and filtering for Ivy.
             counsel-yank-pop counsel-recentf counsel-buffer-or-recentf)
      "Which commands have their candidates sorted by prescient."))
 #+end_src
-** Swiper
+*** Counsel
+Collection of Ivy-enhanced versions of common Emacs commands.
+
+#+begin_src elisp
+  (use-package counsel
+    :diminish counsel-mode
+    :after (ivy-prescient)
+    :hook (ivy-mode . counsel-mode)
+    :custom
+    (counsel-find-file-at-point t "" "Add file-at-point to the list of candidates.")
+    (counsel-yank-pop-separator
+     "\n────────\n" "Separator for kill rings in counsel-yank-pop.")
+    (counsel-grep-base-command
+     (if (executable-find "rg")
+         "rg -S --no-heading --line-number --color never '%s' %s"
+       "grep -E -n -e %s %s")
+     "Use the faster search tool: ripgrep."))
+#+end_src
+*** Swiper
 isearch alternative.
 
 #+begin_src elisp
@@ -975,7 +978,7 @@ isearch alternative.
     :custom
     (swiper-action-recenter t "Recenter after exiting swiper."))
 #+end_src
-** Ivy rich
+*** Ivy rich
 More friendly display transformer for Ivy.
 TODO: Minimize when PR merged https://github.com/melpa/melpa/pull/6669
 
@@ -1553,7 +1556,7 @@ More advanced Ivy integration.
     :config
     (define-obsolete-function-alias 'counsel-more-chars 'ivy-more-chars "26.3"))
 #+end_src
-* Dired
+* File management
 * Editing
 ** Simple
 #+begin_src elisp
