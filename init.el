@@ -1842,6 +1842,13 @@ If you experience stuttering, increase this.")
   :ensure nil
   :hook (prog-mode . display-line-numbers-mode))
 
+;; Highlight TODOs
+;; Highlight TODO and similar keywords in comments and strings.
+
+
+(use-package hl-todo
+  :hook (prog-mode . hl-todo-mode))
+
 ;; Evil commentary
 ;; =gc= operator, like =vim-commentary=.
 

@@ -102,6 +102,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#highlight-matching-parens][Highlight matching parens]]
   - [[#automatic-parenthesis-pairing][Automatic parenthesis pairing]]
   - [[#display-line-numbers][Display line numbers]]
+  - [[#highlight-todos][Highlight TODOs]]
   - [[#evil-commentary][Evil commentary]]
   - [[#evil-surround][Evil surround]]
   - [[#flycheck][Flycheck]]
@@ -2078,6 +2079,13 @@ Buffer re-tabbing.
   (use-package display-line-numbers
     :ensure nil
     :hook (prog-mode . display-line-numbers-mode))
+#+end_src
+** Highlight TODOs
+Highlight TODO and similar keywords in comments and strings.
+
+#+begin_src elisp
+  (use-package hl-todo
+    :hook (prog-mode . hl-todo-mode))
 #+end_src
 ** Evil commentary
 =gc= operator, like =vim-commentary=.
