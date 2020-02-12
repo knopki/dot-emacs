@@ -1767,6 +1767,22 @@ If you experience stuttering, increase this.")
 (use-package evil-magit
   :after (:all (magit evil)))
 
+;; Magit TODO
+;; Show source files' TODOs (and FIXMEs, etc) in Magit status buffer.
+
+
+(use-package magit-todos
+  :commands (ivy-magit-todos)
+  ;; TODO: add keybindings
+  :hook (magit-mode . magit-todos-mode)
+  ;; TODO: remove after evil-collection updated with fix
+  :general
+  (general-define-key
+   :keymaps '(magit-todos-section-map magit-todos-item-section-map)
+   "jT" nil
+   "jl" nil
+   "j" nil))
+
 ;; Ediff
 ;; A comprehensive visual interface to diff & patch.
 

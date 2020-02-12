@@ -94,6 +94,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
 - [[#version-control][Version Control]]
   - [[#diff-hl][diff-hl]]
   - [[#magit][Magit]]
+  - [[#magit-todo][Magit TODO]]
 - [[#coding][Coding]]
   - [[#ediff][Ediff]]
   - [[#eldoc][Eldoc]]
@@ -2001,6 +2002,22 @@ Awesome git frontend.
   ;; Make Magit Evil
   (use-package evil-magit
     :after (:all (magit evil)))
+#+end_src
+** Magit TODO
+Show source files' TODOs (and FIXMEs, etc) in Magit status buffer.
+
+#+begin_src elisp
+  (use-package magit-todos
+    :commands (ivy-magit-todos)
+    ;; TODO: add keybindings
+    :hook (magit-mode . magit-todos-mode)
+    ;; TODO: remove after evil-collection updated with fix
+    :general
+    (general-define-key
+     :keymaps '(magit-todos-section-map magit-todos-item-section-map)
+     "jT" nil
+     "jl" nil
+     "j" nil))
 #+end_src
 * Coding
 ** Ediff
