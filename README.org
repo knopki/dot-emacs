@@ -691,11 +691,12 @@ I like VIM keys much more, so =evil-mode= is essential part of my configuration.
     (evil-want-C-u-scroll t "Enable C-u scroll.")
     (evil-want-C-i-jump nil "Disable C-i jumps in jump list.")
     :config
-    ;; (evil-set-initial-state 'term-mode 'emacs)
-
     ;; Visually selected text gets replaced by the latest copy action
     ;; Amazing hack lifted from: http://emacs.stackexchange.com/a/15054/12585
-    (fset 'evil-visual-update-x-selection 'ignore))
+    (fset 'evil-visual-update-x-selection 'ignore)
+
+    ;; Kill buffer without window
+    (evil-ex-define-cmd "bd[elete]" #'kill-this-buffer))
 #+end_src
 ** Evil collection
 Vim-like keybindings everywhere in Emacs.
