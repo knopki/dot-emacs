@@ -1738,6 +1738,19 @@ If you experience stuttering, increase this.")
   ;; In markdown too.
   (markdown-mode . toc-org-mode))
 
+;; diff-hl
+;; Highlights uncommitted changes on the fringe.
+
+
+(use-package diff-hl
+  :defer t
+  :after magit
+  :hook
+  (prog-mode . diff-hl-mode)
+  (org-mode . diff-hl-mode)
+  (dired-mode . diff-hl-dired-mode)
+  (magit-post-refresh . diff-hl-magit-post-refresh))
+
 ;; Magit
 ;; Awesome git frontend.
 
@@ -1885,7 +1898,6 @@ If you experience stuttering, increase this.")
 
 ;; Programming
 (require 'init-aggressive-indent)
-(require 'init-diff-hl)
 (require 'init-yasnippet)
 (require 'init-direnv)
 (require 'init-nix)

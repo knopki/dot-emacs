@@ -92,6 +92,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
     - [[#fancy-priorities][Fancy Priorities]]
     - [[#table-of-contents][Table of Contents]]
 - [[#version-control][Version Control]]
+  - [[#diff-hl][diff-hl]]
   - [[#magit][Magit]]
 - [[#coding][Coding]]
   - [[#ediff][Ediff]]
@@ -1970,6 +1971,19 @@ Generates an up-to-date table of contents in org files without exporting.
     (markdown-mode . toc-org-mode))
 #+end_src
 * Version Control
+** diff-hl
+Highlights uncommitted changes on the fringe.
+
+#+begin_src elisp
+  (use-package diff-hl
+    :defer t
+    :after magit
+    :hook
+    (prog-mode . diff-hl-mode)
+    (org-mode . diff-hl-mode)
+    (dired-mode . diff-hl-dired-mode)
+    (magit-post-refresh . diff-hl-magit-post-refresh))
+#+end_src
 ** Magit
 Awesome git frontend.
 
@@ -2118,7 +2132,6 @@ On-the-fly syntax checker.
 #+begin_src elisp
   ;; Programming
   (require 'init-aggressive-indent)
-  (require 'init-diff-hl)
   (require 'init-yasnippet)
   (require 'init-direnv)
   (require 'init-nix)
