@@ -1760,6 +1760,8 @@ If you experience stuttering, increase this.")
   (general-leader
     "g" 'magit-status)
   :custom
+  (magit-diff-toggle-refine-hunk t "Show word-granularity differences within diff hunks.")
+  (magit-prefer-remote-upstream t "Favor remote branches when reading upstream branch.")
   (magit-completing-read-function
    'ivy-completing-read "Called when requested user input."))
 
