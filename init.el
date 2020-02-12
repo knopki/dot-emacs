@@ -1867,6 +1867,20 @@ If you experience stuttering, increase this.")
    '(idle-change mode-enabled save) "Run checks only on this events.")
   (flycheck-idle-change-delay 4 "Idle delay before run checks."))
 
+;; Emacs Lisp
+
+(use-package elisp-mode
+  :ensure nil
+  :hook
+  (emacs-lisp-mode . (lambda ()
+                       (set (make-local-variable 'company-backends)
+                            '((company-capf
+                               company-files
+                               company-yasnippet
+                               company-dabbrev-code)))
+                       company-dabbrev-code
+                       (company-mode t))))
+
 ;; C/C++
 
 (use-package cc-vars

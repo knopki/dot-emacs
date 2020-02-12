@@ -104,9 +104,11 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#evil-commentary][Evil commentary]]
   - [[#evil-surround][Evil surround]]
   - [[#flycheck][Flycheck]]
-  - [[#cc][C/C++]]
-  - [[#python][Python]]
-  - [[#javascript][Javascript]]
+  - [[#programming-modes][Programming Modes]]
+    - [[#emacs-lisp][Emacs Lisp]]
+    - [[#cc][C/C++]]
+    - [[#python][Python]]
+    - [[#javascript][Javascript]]
 - [[#old-init-file][Old init file]]
 - [[#the-end][The end…]]
 #+END_QUOTE
@@ -2101,7 +2103,22 @@ On-the-fly syntax checker.
      '(idle-change mode-enabled save) "Run checks only on this events.")
     (flycheck-idle-change-delay 4 "Idle delay before run checks."))
 #+end_src
-** C/C++
+** Programming Modes
+*** Emacs Lisp
+#+begin_src elisp
+  (use-package elisp-mode
+    :ensure nil
+    :hook
+    (emacs-lisp-mode . (lambda ()
+                         (set (make-local-variable 'company-backends)
+                              '((company-capf
+                                 company-files
+                                 company-yasnippet
+                                 company-dabbrev-code)))
+                         company-dabbrev-code
+                         (company-mode t))))
+#+end_src
+*** C/C++
 #+begin_src elisp
   (use-package cc-vars
     :ensure nil
@@ -2112,7 +2129,7 @@ On-the-fly syntax checker.
                        (awk-mode . "awk")
                        (other . "k&r"))))
 #+end_src
-** Python
+*** Python
 #+begin_src elisp
   (use-package python
     :ensure nil
@@ -2120,7 +2137,7 @@ On-the-fly syntax checker.
     :custom
     (python-indent-offset 2))
 #+end_src
-** Javascript
+*** Javascript
 #+begin_src elisp
   (use-package js
     :ensure nil
