@@ -1182,11 +1182,14 @@ If you experience stuttering, increase this.")
    "Disable for some modes.")
   (company-global-modes nil)
   (company-backends
-   '((company-capf company-files company-yasnippet company-dabbrev-code))
+   '((company-capf company-files company-yasnippet))
    "Default list of active backends.")
   (company-frontends
    '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)
-   "List of active frontends."))
+   "List of active frontends.")
+  :config
+  (with-eval-after-load 'company-mode
+    (add-to-list 'company-backends #'company-dabbrev-code)))
 
 ;; Company Prescient
 ;; Better sorting and filtering.
