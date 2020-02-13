@@ -1770,6 +1770,7 @@ If you experience stuttering, increase this.")
    'ivy-completing-read "Called when requested user input."))
 
 ;; Make Magit Evil
+;; TODO: remove me after merge of https://github.com/emacs-evil/evil-collection/pull/259
 (use-package evil-magit
   :after (:all (magit evil)))
 
