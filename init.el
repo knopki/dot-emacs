@@ -1789,6 +1789,20 @@ If you experience stuttering, increase this.")
    "jl" nil
    "j" nil))
 
+;; Git Time Machine
+;; Walk through git revisions of a file.
+
+
+(use-package git-timemachine
+  :commands (git-timemachine)
+  ;; TODO: setup keybindings
+  :custom-face
+  (git-timemachine-minibuffer-author-face ((t (:inherit success))))
+  (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
+  :hook (before-revert . (lambda ()
+                           (when (bound-and-true-p git-timemachine-mode)
+                             (user-error "Cannot revert the timemachine buffer")))))
+
 ;; Ediff
 ;; A comprehensive visual interface to diff & patch.
 

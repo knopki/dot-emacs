@@ -95,6 +95,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#diff-hl][diff-hl]]
   - [[#magit][Magit]]
   - [[#magit-todo][Magit TODO]]
+  - [[#git-time-machine][Git Time Machine]]
 - [[#coding][Coding]]
   - [[#ediff][Ediff]]
   - [[#eldoc][Eldoc]]
@@ -2025,6 +2026,20 @@ Show source files' TODOs (and FIXMEs, etc) in Magit status buffer.
      "jT" nil
      "jl" nil
      "j" nil))
+#+end_src
+** Git Time Machine
+Walk through git revisions of a file.
+
+#+begin_src elisp
+  (use-package git-timemachine
+    :commands (git-timemachine)
+    ;; TODO: setup keybindings
+    :custom-face
+    (git-timemachine-minibuffer-author-face ((t (:inherit success))))
+    (git-timemachine-minibuffer-detail-face ((t (:inherit warning))))
+    :hook (before-revert . (lambda ()
+                             (when (bound-and-true-p git-timemachine-mode)
+                               (user-error "Cannot revert the timemachine buffer")))))
 #+end_src
 * Coding
 ** Ediff
