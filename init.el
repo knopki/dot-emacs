@@ -11,27 +11,6 @@
    (expand-file-name "early-init.el"
                      (file-name-directory (or load-file-name buffer-file-name)))))
 
-;; Update load paths
-;; Optimize: Force =lisp= and =site-lisp= at the head to reduce the startup time.
-
-
-(defun update-load-path (&rest _)
-  "Update `load-path'."
-  (push (expand-file-name "site-lisp" user-emacs-directory) load-path)
-  (push (expand-file-name "lisp" user-emacs-directory) load-path))
-
-(defun add-subdirs-to-load-path (&rest _)
-  "Add subdirectories to `load-path'."
-  (let ((default-directory
-          (expand-file-name "site-lisp" user-emacs-directory)))
-    (normal-top-level-add-subdirs-to-load-path)))
-
-(advice-add #'package-initialize :after #'update-load-path)
-(when (file-directory-p (expand-file-name "site-lisp" user-emacs-directory))
-  (advice-add #'package-initialize :after #'add-subdirs-to-load-path))
-
-(update-load-path)
-
 ;; Garbage collector hack
 ;; Set garbage collection threshold to the normal value on setup complete. Run GC
 ;; on idle. Don't run GC in minibuffer and run on exit.
