@@ -1201,9 +1201,7 @@ If you experience stuttering, increase this.")
    '(not erc-mode message-mode help-mode gud-mode eshell-mode shell-mode)
    "Disable for some modes.")
   (company-global-modes nil)
-  (company-backends
-   '((company-capf company-files company-yasnippet))
-   "Default list of active backends.")
+  (company-backends '((company-capf company-files)) "Default list of active backends.")
   (company-frontends
    '(company-pseudo-tooltip-frontend company-echo-metadata-frontend)
    "List of active frontends.")
