@@ -98,6 +98,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#magit][Magit]]
   - [[#magit-todo][Magit TODO]]
   - [[#git-time-machine][Git Time Machine]]
+  - [[#browse-at-remote][Browse at remote]]
 - [[#coding][Coding]]
   - [[#eldoc][Eldoc]]
   - [[#tabify][Tabify]]
@@ -2077,6 +2078,15 @@ Walk through git revisions of a file.
     :hook (before-revert . (lambda ()
                              (when (bound-and-true-p git-timemachine-mode)
                                (user-error "Cannot revert the timemachine buffer")))))
+#+end_src
+** Browse at remote
+Open github/gitlab/bitbucket page.
+
+#+begin_src elisp
+  (use-package browse-at-remote
+    :commands (browse-at-remote browse-at-remote-kill)
+    :bind (:map vc-prefix-map
+                ("B" . browse-at-remote)))
 #+end_src
 * Coding
 ** Eldoc

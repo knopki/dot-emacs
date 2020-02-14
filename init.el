@@ -1839,6 +1839,15 @@ If you experience stuttering, increase this.")
                            (when (bound-and-true-p git-timemachine-mode)
                              (user-error "Cannot revert the timemachine buffer")))))
 
+;; Browse at remote
+;; Open github/gitlab/bitbucket page.
+
+
+(use-package browse-at-remote
+  :commands (browse-at-remote browse-at-remote-kill)
+  :bind (:map vc-prefix-map
+              ("B" . browse-at-remote)))
+
 ;; Eldoc
 
 (use-package eldoc
