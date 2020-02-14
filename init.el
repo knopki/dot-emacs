@@ -424,6 +424,15 @@ If you experience stuttering, increase this.")
   :config
   (persistent-scratch-setup-default))
 
+;; Customization
+
+(use-package cus-edit
+  :ensure nil
+  :custom
+  (custom-file (no-littering-expand-etc-file-name "custom.el"))
+  :config
+  (load custom-file))
+
 ;; Evil mode
 ;; I like VIM keys much more, so =evil-mode= is essential part of my configuration.
 
@@ -2058,16 +2067,6 @@ If you experience stuttering, increase this.")
   :defer t
   :custom
   (js-indent-level 2))
-
-;; Old init file
-
-;; Load manual customizations
-(setq custom-file (no-littering-expand-etc-file-name "custom.el"))
-(when (file-exists-p custom-file)
-  (load custom-file))
-
-(provide 'init)
-;;; init.el ends here
 
 ;; The end…
 ;; Add standard module footer.
