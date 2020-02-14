@@ -1977,6 +1977,31 @@ If you experience stuttering, increase this.")
    '(idle-change mode-enabled save) "Run checks only on this events.")
   (flycheck-idle-change-delay 4 "Idle delay before run checks."))
 
+;; Snippets
+;; =yasnippet= for snippets.
+
+
+(use-package yasnippet
+  :diminish yas-minor-mode
+  :hook (after-init . yas-global-mode))
+
+(use-package yasnippet-snippets
+  :after yasnippet)
+
+
+
+;; Integrate =yasnippet= into =ivy=.
+
+
+(use-package ivy-yasnippet
+  :commands ivy-yasnippet--preview
+  :general
+  (general-nmap
+    :prefix "SPC"
+    "y" 'ivy-yasnippet)
+  :config
+  (advice-add #'ivy-yasnippet--preview :override #'ignore))
+
 ;; Emacs Lisp
 
 (use-package elisp-mode
@@ -2021,7 +2046,6 @@ If you experience stuttering, increase this.")
 ;; Old init file
 
 ;; Programming
-(require 'init-yasnippet)
 (require 'init-direnv)
 (require 'init-nix)
 

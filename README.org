@@ -111,6 +111,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#evil-surround][Evil surround]]
   - [[#aggressive-indent][Aggressive Indent]]
   - [[#flycheck][Flycheck]]
+  - [[#snippets][Snippets]]
   - [[#programming-modes][Programming Modes]]
     - [[#emacs-lisp][Emacs Lisp]]
     - [[#cc][C/C++]]
@@ -2220,6 +2221,30 @@ On-the-fly syntax checker.
      '(idle-change mode-enabled save) "Run checks only on this events.")
     (flycheck-idle-change-delay 4 "Idle delay before run checks."))
 #+end_src
+** Snippets
+=yasnippet= for snippets.
+
+#+begin_src elisp
+  (use-package yasnippet
+    :diminish yas-minor-mode
+    :hook (after-init . yas-global-mode))
+
+  (use-package yasnippet-snippets
+    :after yasnippet)
+#+end_src
+
+Integrate =yasnippet= into =ivy=.
+
+#+begin_src elisp
+  (use-package ivy-yasnippet
+    :commands ivy-yasnippet--preview
+    :general
+    (general-nmap
+      :prefix "SPC"
+      "y" 'ivy-yasnippet)
+    :config
+    (advice-add #'ivy-yasnippet--preview :override #'ignore))
+#+end_src
 ** Programming Modes
 *** Emacs Lisp
 #+begin_src elisp
@@ -2265,7 +2290,6 @@ On-the-fly syntax checker.
 * Old init file
 #+begin_src elisp
   ;; Programming
-  (require 'init-yasnippet)
   (require 'init-direnv)
   (require 'init-nix)
 
