@@ -1,3 +1,23 @@
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+*.elc
+.\#*
+
+# flymake-mode
+*_flymake.*
+
+# elpa packages
+/elpa/
+
+# Flycheck
+flycheck_*.el
+
+# server auth directory
+/server/
+
+# all data directory
+/var/
+
+# my customization file
 /etc/custom.el
-/elpa
-/var
