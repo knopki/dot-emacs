@@ -116,6 +116,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#programming-modes][Programming Modes]]
     - [[#emacs-lisp][Emacs Lisp]]
     - [[#cc][C/C++]]
+    - [[#nix][Nix]]
     - [[#python][Python]]
     - [[#javascript][Javascript]]
 - [[#old-init-file][Old init file]]
@@ -2280,6 +2281,35 @@ Switch project environment on buffer switch. Sometimes switching is slow.
                        (awk-mode . "awk")
                        (other . "k&r"))))
 #+end_src
+*** Nix
+#+begin_src elisp
+  (use-package nix-mode
+    :mode ("\\.nix\\'" "\\.nix.in\\'")
+    :custom
+    (nix-indent-function 'smie-indent-line))
+
+
+  (use-package nix-drv-mode
+    :ensure nix-mode
+    :mode "\\.drv\\'")
+
+
+  (use-package nix-repl
+    :ensure nix-mode
+    :commands (nix-repl))
+
+
+  (use-package nix-shell
+    :ensure nix-mode
+    :commands (nix-shell-unpack nix-shell-configure nix-shell-build))
+
+
+  (use-package nix-format
+    :ensure nix-mode
+    :custom
+    (nix-nixfmt-bin "nixpkgs-fmt" "Use nixpkgs-fmt instead of nixfmt-bin.")
+    :commands (nix-format-buffer))
+#+end_src
 *** Python
 #+begin_src elisp
   (use-package python
@@ -2298,10 +2328,6 @@ Switch project environment on buffer switch. Sometimes switching is slow.
 #+end_src
 * Old init file
 #+begin_src elisp
-  ;; Programming
-  (require 'init-nix)
-
-
   ;; Load manual customizations
   (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
   (when (file-exists-p custom-file)

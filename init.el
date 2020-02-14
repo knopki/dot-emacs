@@ -2035,6 +2035,35 @@ If you experience stuttering, increase this.")
                      (awk-mode . "awk")
                      (other . "k&r"))))
 
+;; Nix
+
+(use-package nix-mode
+  :mode ("\\.nix\\'" "\\.nix.in\\'")
+  :custom
+  (nix-indent-function 'smie-indent-line))
+
+
+(use-package nix-drv-mode
+  :ensure nix-mode
+  :mode "\\.drv\\'")
+
+
+(use-package nix-repl
+  :ensure nix-mode
+  :commands (nix-repl))
+
+
+(use-package nix-shell
+  :ensure nix-mode
+  :commands (nix-shell-unpack nix-shell-configure nix-shell-build))
+
+
+(use-package nix-format
+  :ensure nix-mode
+  :custom
+  (nix-nixfmt-bin "nixpkgs-fmt" "Use nixpkgs-fmt instead of nixfmt-bin.")
+  :commands (nix-format-buffer))
+
 ;; Python
 
 (use-package python
@@ -2052,10 +2081,6 @@ If you experience stuttering, increase this.")
   (js-indent-level 2))
 
 ;; Old init file
-
-;; Programming
-(require 'init-nix)
-
 
 ;; Load manual customizations
 (setq custom-file (no-littering-expand-etc-file-name "custom.el"))
