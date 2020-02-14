@@ -94,11 +94,11 @@ Clone repository to =~/.emacs.d= and run Emacs.
     - [[#table-of-contents][Table of Contents]]
 - [[#version-control][Version Control]]
   - [[#diff-hl][diff-hl]]
+  - [[#ediff][Ediff]]
   - [[#magit][Magit]]
   - [[#magit-todo][Magit TODO]]
   - [[#git-time-machine][Git Time Machine]]
 - [[#coding][Coding]]
-  - [[#ediff][Ediff]]
   - [[#eldoc][Eldoc]]
   - [[#tabify][Tabify]]
   - [[#highlight-matching-parens][Highlight matching parens]]
@@ -2014,6 +2014,21 @@ Highlights uncommitted changes on the fringe.
     (dired-mode . diff-hl-dired-mode)
     (magit-post-refresh . diff-hl-magit-post-refresh))
 #+end_src
+** Ediff
+A comprehensive visual interface to diff & patch.
+
+#+begin_src elisp
+  (use-package ediff
+    :ensure nil
+    :hook
+    ;; show org ediffs unfolded
+    ((ediff-prepare-buffer . outline-show-all)
+     ;; restore window layout when done
+     (ediff-quit . winner-undo))
+
+    :custom
+    (ediff-window-setup-function 'ediff-setup-windows-multiframe))
+#+end_src
 ** Magit
 Awesome git frontend.
 
@@ -2064,21 +2079,6 @@ Walk through git revisions of a file.
                                (user-error "Cannot revert the timemachine buffer")))))
 #+end_src
 * Coding
-** Ediff
-A comprehensive visual interface to diff & patch.
-
-#+begin_src elisp
-  (use-package ediff
-    :ensure nil
-    :hook
-    ;; show org ediffs unfolded
-    ((ediff-prepare-buffer . outline-show-all)
-     ;; restore window layout when done
-     (ediff-quit . winner-undo))
-
-    :custom
-    (ediff-window-setup-function 'ediff-setup-windows-multiframe))
-#+end_src
 ** Eldoc
 #+begin_src elisp
   (use-package eldoc

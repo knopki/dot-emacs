@@ -1775,6 +1775,21 @@ If you experience stuttering, increase this.")
   (dired-mode . diff-hl-dired-mode)
   (magit-post-refresh . diff-hl-magit-post-refresh))
 
+;; Ediff
+;; A comprehensive visual interface to diff & patch.
+
+
+(use-package ediff
+  :ensure nil
+  :hook
+  ;; show org ediffs unfolded
+  ((ediff-prepare-buffer . outline-show-all)
+   ;; restore window layout when done
+   (ediff-quit . winner-undo))
+
+  :custom
+  (ediff-window-setup-function 'ediff-setup-windows-multiframe))
+
 ;; Magit
 ;; Awesome git frontend.
 
@@ -1823,21 +1838,6 @@ If you experience stuttering, increase this.")
   :hook (before-revert . (lambda ()
                            (when (bound-and-true-p git-timemachine-mode)
                              (user-error "Cannot revert the timemachine buffer")))))
-
-;; Ediff
-;; A comprehensive visual interface to diff & patch.
-
-
-(use-package ediff
-  :ensure nil
-  :hook
-  ;; show org ediffs unfolded
-  ((ediff-prepare-buffer . outline-show-all)
-   ;; restore window layout when done
-   (ediff-quit . winner-undo))
-
-  :custom
-  (ediff-window-setup-function 'ediff-setup-windows-multiframe))
 
 ;; Eldoc
 
