@@ -49,6 +49,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#mouse][Mouse]]
   - [[#tooltips][Tooltips]]
   - [[#frame][Frame]]
+  - [[#winner-mode][Winner mode]]
   - [[#doom-theme][Doom theme]]
   - [[#modeline][Modeline]]
   - [[#solaire-mode][Solaire mode]]
@@ -790,6 +791,26 @@ Don't display floating tooltips; display their contents in the echo-area.
     (window-divider-default-places t "Dividers on the bottom and on the right.")
     (window-divider-default-bottom-width 1)
     (window-divider-default-right-width 1))
+#+end_src
+** Winner mode
+Restore old window configurations.
+
+#+begin_src elisp
+  (use-package winner
+    :ensure nil
+    :commands (winner-undo winner-redo)
+    :hook (after-init . winner-mode)
+    :custom
+    (winner-boring-buffers '("*Apropos*"
+                             "*Buffer List*"
+                             "*Compile-Log*"
+                             "*Completions*"
+                             "*Fuzzy Completions*"
+                             "*Help*"
+                             "*Ibuffer*"
+                             "*cvs*"
+                             "*esh command on file*"
+                             "*inferior-lisp*")))
 #+end_src
 ** Doom theme
 Setup Doom themes (use One Dark), set font face.

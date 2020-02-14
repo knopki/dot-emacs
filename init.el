@@ -562,6 +562,26 @@ If you experience stuttering, increase this.")
   (window-divider-default-bottom-width 1)
   (window-divider-default-right-width 1))
 
+;; Winner mode
+;; Restore old window configurations.
+
+
+(use-package winner
+  :ensure nil
+  :commands (winner-undo winner-redo)
+  :hook (after-init . winner-mode)
+  :custom
+  (winner-boring-buffers '("*Apropos*"
+                           "*Buffer List*"
+                           "*Compile-Log*"
+                           "*Completions*"
+                           "*Fuzzy Completions*"
+                           "*Help*"
+                           "*Ibuffer*"
+                           "*cvs*"
+                           "*esh command on file*"
+                           "*inferior-lisp*")))
+
 ;; Doom theme
 ;; Setup Doom themes (use One Dark), set font face.
 
