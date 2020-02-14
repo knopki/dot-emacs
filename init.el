@@ -1848,6 +1848,12 @@ If you experience stuttering, increase this.")
   :bind (:map vc-prefix-map
               ("B" . browse-at-remote)))
 
+;; Git related modes
+
+(use-package gitattributes-mode)
+(use-package gitconfig-mode)
+(use-package gitignore-mode)
+
 ;; Eldoc
 
 (use-package eldoc

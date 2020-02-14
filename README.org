@@ -99,6 +99,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#magit-todo][Magit TODO]]
   - [[#git-time-machine][Git Time Machine]]
   - [[#browse-at-remote][Browse at remote]]
+  - [[#git-related-modes][Git related modes]]
 - [[#coding][Coding]]
   - [[#eldoc][Eldoc]]
   - [[#tabify][Tabify]]
@@ -2087,6 +2088,12 @@ Open github/gitlab/bitbucket page.
     :commands (browse-at-remote browse-at-remote-kill)
     :bind (:map vc-prefix-map
                 ("B" . browse-at-remote)))
+#+end_src
+** Git related modes
+#+begin_src elisp
+  (use-package gitattributes-mode)
+  (use-package gitconfig-mode)
+  (use-package gitignore-mode)
 #+end_src
 * Coding
 ** Eldoc
