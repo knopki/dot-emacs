@@ -112,6 +112,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#aggressive-indent][Aggressive Indent]]
   - [[#flycheck][Flycheck]]
   - [[#snippets][Snippets]]
+  - [[#direnv][direnv]]
   - [[#programming-modes][Programming Modes]]
     - [[#emacs-lisp][Emacs Lisp]]
     - [[#cc][C/C++]]
@@ -2243,6 +2244,16 @@ Integrate =yasnippet= into =ivy=.
     :config
     (advice-add #'ivy-yasnippet--preview :override #'ignore))
 #+end_src
+** direnv
+Switch project environment on buffer switch. Sometimes switching is slow.
+
+#+begin_src elisp
+  (use-package direnv
+    :custom
+    (direnv-always-show-summary nil)
+    :config
+    (direnv-mode))
+#+end_src
 ** Programming Modes
 *** Emacs Lisp
 #+begin_src elisp
@@ -2288,7 +2299,6 @@ Integrate =yasnippet= into =ivy=.
 * Old init file
 #+begin_src elisp
   ;; Programming
-  (require 'init-direnv)
   (require 'init-nix)
 
 

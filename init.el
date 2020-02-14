@@ -2000,6 +2000,16 @@ If you experience stuttering, increase this.")
   :config
   (advice-add #'ivy-yasnippet--preview :override #'ignore))
 
+;; direnv
+;; Switch project environment on buffer switch. Sometimes switching is slow.
+
+
+(use-package direnv
+  :custom
+  (direnv-always-show-summary nil)
+  :config
+  (direnv-mode))
+
 ;; Emacs Lisp
 
 (use-package elisp-mode
@@ -2044,7 +2054,6 @@ If you experience stuttering, increase this.")
 ;; Old init file
 
 ;; Programming
-(require 'init-direnv)
 (require 'init-nix)
 
 
