@@ -308,6 +308,7 @@ If you experience stuttering, increase this.")
   (delete-old-versions -1 "Prevents any trimming of backup versions.")
   (version-control t "Make numeric backup versions unconditionally.")
   (vc-make-backup-files t "Backups of registered files are made as with other files.")
+  (backup-by-copying t "Don't clobber symlinks.")
 
   (auto-save-file-name-transforms
    `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
@@ -431,7 +432,7 @@ If you experience stuttering, increase this.")
   :custom
   (custom-file (no-littering-expand-etc-file-name "custom.el"))
   :config
-  (load custom-file))
+  (load custom-file nil t))
 
 ;; Evil mode
 ;; I like VIM keys much more, so =evil-mode= is essential part of my configuration.
@@ -544,6 +545,9 @@ If you experience stuttering, increase this.")
   ;; Display dividers between windows
   (window-setup . window-divider-mode)
   :custom
+  (menu-bar-mode nil "No menu bar.")
+  (tool-bar-mode nil "No tool bar.")
+  (scroll-bar-mode nil "No scroll bar.")
   (blink-cursor-mode nil "Don't blink the cursor.")
   ;; Display dividers between windows
   (window-divider-default-places t "Dividers on the bottom and on the right.")
