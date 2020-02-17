@@ -1763,13 +1763,13 @@ Delete trailing whitespaces on buffer save.
 On the fly spell checking. Disabled by default. =hunspell= is must because of ability to query multiple dictionaries.
 
 Related keybindings:
-| key          | mode   | command                              |
-|--------------+--------+--------------------------------------|
-| <leader> t S | global | Toggle flyspell on/off               |
-| <leader> S b | global | Spell check whole buffer.            |
-| z=           | normal | Correct previous word.               |
-| [s           | normal | Jump to the previous incorrect word. |
-| ]s           | normal | Jump to the next incorrect word.     |
+| key            | mode   | command                              |
+|----------------+--------+--------------------------------------|
+| =<leader> t S= | global | Toggle flyspell on/off               |
+| =<leader> S b= | global | Spell check whole buffer.            |
+| =z==           | normal | Correct previous word.               |
+| =[s=           | normal | Jump to the previous incorrect word. |
+| =]s=           | normal | Jump to the next incorrect word.     |
 
 #+begin_src elisp
   (use-package flyspell
