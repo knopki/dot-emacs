@@ -179,6 +179,79 @@ If you experience stuttering, increase this.")
   (add-to-list 'all-the-icons-mode-icon-alist
                '(gfm-mode all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
 
+;; Evil mode
+;; I like VIM keys much more, so =evil-mode= is essential part of my configuration.
+
+
+(use-package evil
+  :diminish undo-tree-mode
+  :hook (after-init . evil-mode)
+  :custom
+  (evil-want-keybinding nil "Don't load evil-keybindings - required by evil-collection")
+  (evil-motion-state-modes nil "Use 'normal instead of 'motion state.")
+  (evil-emacs-state-modes nil "Use 'normal instead of 'emacs state.")
+  (evil-search-wrap t "Search wrap around the buffer.")
+  (evil-regexp-search t "Search with regexp.")
+  (evil-search-module 'evil-search "Search module to use.")
+  (evil-vsplit-window-right t "Like vim's 'splitright'.")
+  (evil-split-window-below t "Like vim's 'splitbelow'.")
+  (evil-want-C-u-scroll t "Enable C-u scroll.")
+  (evil-want-C-i-jump nil "Disable C-i jumps in jump list.")
+  :config
+  ;; Visually selected text gets replaced by the latest copy action
+  ;; Amazing hack lifted from: http://emacs.stackexchange.com/a/15054/12585
+  (fset 'evil-visual-update-x-selection 'ignore)
+
+  ;; Kill buffer without window
+  (evil-ex-define-cmd "bd[elete]" #'kill-this-buffer))
+
+;; Evil collection
+;; Vim-like keybindings everywhere in Emacs.
+
+
+(use-package evil-collection
+  :after evil
+  :custom
+  (evil-collection-setup-minibuffer t)
+  :config
+  (evil-collection-init))
+
+;; El General
+;; More convenient method for binding keys. Setup leader key definers.
+
+
+(use-package general
+  :config
+  (general-evil-setup)
+
+  (general-create-definer general-leader
+    :keymaps 'override
+    :states '(insert motion normal emacs)
+    :prefix "SPC"
+    :non-normal-prefix "M-SPC")
+  (general-create-definer general-major-leader
+    :states '(insert motion emacs)
+    :prefix ","
+    :non-normal-prefix "M-,")
+  (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode")))
+
+;; Reverse-im
+;; Use bindings while the non-default system layout is active.
+
+
+(use-package reverse-im
+  :custom
+  (reverse-im-modifiers '(control meta super))
+  :config
+  (reverse-im-activate "russian-computer"))
+
+;; Some global keybindings
+
+(general-leader
+ ""     nil
+ "<f1>" 'general-describe-keybindings
+ "c"    'calc)
+
 ;; Emacs variables that defined in C source code
 
 (use-package emacs
@@ -433,79 +506,6 @@ If you experience stuttering, increase this.")
   (custom-file (no-littering-expand-etc-file-name "custom.el"))
   :config
   (load custom-file nil t))
-
-;; Evil mode
-;; I like VIM keys much more, so =evil-mode= is essential part of my configuration.
-
-
-(use-package evil
-  :diminish undo-tree-mode
-  :hook (after-init . evil-mode)
-  :custom
-  (evil-want-keybinding nil "Don't load evil-keybindings - required by evil-collection")
-  (evil-motion-state-modes nil "Use 'normal instead of 'motion state.")
-  (evil-emacs-state-modes nil "Use 'normal instead of 'emacs state.")
-  (evil-search-wrap t "Search wrap around the buffer.")
-  (evil-regexp-search t "Search with regexp.")
-  (evil-search-module 'evil-search "Search module to use.")
-  (evil-vsplit-window-right t "Like vim's 'splitright'.")
-  (evil-split-window-below t "Like vim's 'splitbelow'.")
-  (evil-want-C-u-scroll t "Enable C-u scroll.")
-  (evil-want-C-i-jump nil "Disable C-i jumps in jump list.")
-  :config
-  ;; Visually selected text gets replaced by the latest copy action
-  ;; Amazing hack lifted from: http://emacs.stackexchange.com/a/15054/12585
-  (fset 'evil-visual-update-x-selection 'ignore)
-
-  ;; Kill buffer without window
-  (evil-ex-define-cmd "bd[elete]" #'kill-this-buffer))
-
-;; Evil collection
-;; Vim-like keybindings everywhere in Emacs.
-
-
-(use-package evil-collection
-  :after evil
-  :custom
-  (evil-collection-setup-minibuffer t)
-  :config
-  (evil-collection-init))
-
-;; El General
-;; More convenient method for binding keys. Setup leader key definers.
-
-
-(use-package general
-  :config
-  (general-evil-setup)
-
-  (general-create-definer general-leader
-    :keymaps 'override
-    :states '(insert motion normal emacs)
-    :prefix "SPC"
-    :non-normal-prefix "M-SPC")
-  (general-create-definer general-major-leader
-    :states '(insert motion emacs)
-    :prefix ","
-    :non-normal-prefix "M-,")
-  (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode")))
-
-;; Reverse-im
-;; Use bindings while the non-default system layout is active.
-
-
-(use-package reverse-im
-  :custom
-  (reverse-im-modifiers '(control meta super))
-  :config
-  (reverse-im-activate "russian-computer"))
-
-;; Some global keybindings
-
-(general-leader
- ""     nil
- "<f1>" 'general-describe-keybindings
- "c"    'calc)
 
 ;; Mouse
 

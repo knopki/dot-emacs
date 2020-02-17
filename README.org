@@ -26,6 +26,13 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#setup-standard-file-paths][Setup standard file paths]]
 - [[#dependencies][Dependencies]]
   - [[#icons][Icons]]
+- [[#keybindings][Keybindings]]
+  - [[#cheat-sheet][Cheat sheet]]
+  - [[#evil-mode][Evil mode]]
+  - [[#evil-collection][Evil collection]]
+  - [[#el-general][El General]]
+  - [[#reverse-im][Reverse-im]]
+  - [[#some-global-keybindings][Some global keybindings]]
 - [[#essential-settings][Essential settings]]
   - [[#emacs-variables-that-defined-in-c-source-code][Emacs variables that defined in C source code]]
   - [[#files][Files]]
@@ -38,13 +45,6 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#desktop-save-and-load][Desktop save and load]]
   - [[#persistent-scratch-buffer][Persistent Scratch buffer]]
   - [[#customization][Customization]]
-- [[#keybindings][Keybindings]]
-  - [[#cheat-sheet][Cheat sheet]]
-  - [[#evil-mode][Evil mode]]
-  - [[#evil-collection][Evil collection]]
-  - [[#el-general][El General]]
-  - [[#reverse-im][Reverse-im]]
-  - [[#some-global-keybindings][Some global keybindings]]
 - [[#gui][GUI]]
   - [[#mouse][Mouse]]
   - [[#tooltips][Tooltips]]
@@ -371,6 +371,118 @@ Dependency of many packages. Display nice icons.
     (add-to-list 'all-the-icons-mode-icon-alist
                  '(gfm-mode all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
 #+end_src
+* Keybindings
+** Cheat sheet
+Some non-standard key bindings.
+
+|-----------+---------------+------------------------------|
+| Hotkey    | Mode          | Meaning                      |
+|-----------+---------------+------------------------------|
+| SPC <f1>  |               | general-describe-keybindings |
+| SPC <f2>  |               | which-key-show-top-level     |
+| SPC <f3>  |               | which-key-show-major-mode    |
+| SPC <f4>  |               | which-key-show-full-keymap   |
+| SPC <f5>  |               | undo-tree-visualize          |
+|           |               |                              |
+| C-'       | normal visual | avy go to char               |
+| C-"       | normal visual | avy go to word               |
+|           |               |                              |
+| J/K       | visual        | move visual block            |
+|           |               |                              |
+| SPC c     |               | run calculator               |
+|           |               |                              |
+| gc ...    | normal visual | evil commentary prefix       |
+|           |               |                              |
+| s         | operator      | evil-surround-edit           |
+| S         | operator      | evil-Surround-edit           |
+| S         | visual        | evil-surround-region         |
+| gS        | visual        | evil-Surround-region         |
+|           |               |                              |
+| SPC o a   |               | org agenda                   |
+| SPC o c   |               | org capture                  |
+| SPC o l   |               | org agenda list              |
+| SPC o s   |               | org search                   |
+|           |               |                              |
+| SPC p ... |               | projectile menu              |
+|           |               |                              |
+| SPC g ... |               | magit status                 |
+|           |               |                              |
+| SPC y ... |               | yasnippet insert snipped     |
+|           |               |                              |
+|-----------+---------------+------------------------------|
+** Evil mode
+I like VIM keys much more, so =evil-mode= is essential part of my configuration.
+
+#+begin_src elisp
+  (use-package evil
+    :diminish undo-tree-mode
+    :hook (after-init . evil-mode)
+    :custom
+    (evil-want-keybinding nil "Don't load evil-keybindings - required by evil-collection")
+    (evil-motion-state-modes nil "Use 'normal instead of 'motion state.")
+    (evil-emacs-state-modes nil "Use 'normal instead of 'emacs state.")
+    (evil-search-wrap t "Search wrap around the buffer.")
+    (evil-regexp-search t "Search with regexp.")
+    (evil-search-module 'evil-search "Search module to use.")
+    (evil-vsplit-window-right t "Like vim's 'splitright'.")
+    (evil-split-window-below t "Like vim's 'splitbelow'.")
+    (evil-want-C-u-scroll t "Enable C-u scroll.")
+    (evil-want-C-i-jump nil "Disable C-i jumps in jump list.")
+    :config
+    ;; Visually selected text gets replaced by the latest copy action
+    ;; Amazing hack lifted from: http://emacs.stackexchange.com/a/15054/12585
+    (fset 'evil-visual-update-x-selection 'ignore)
+
+    ;; Kill buffer without window
+    (evil-ex-define-cmd "bd[elete]" #'kill-this-buffer))
+#+end_src
+** Evil collection
+Vim-like keybindings everywhere in Emacs.
+
+#+begin_src elisp
+  (use-package evil-collection
+    :after evil
+    :custom
+    (evil-collection-setup-minibuffer t)
+    :config
+    (evil-collection-init))
+#+end_src
+** El General
+More convenient method for binding keys. Setup leader key definers.
+
+#+begin_src elisp
+  (use-package general
+    :config
+    (general-evil-setup)
+
+    (general-create-definer general-leader
+      :keymaps 'override
+      :states '(insert motion normal emacs)
+      :prefix "SPC"
+      :non-normal-prefix "M-SPC")
+    (general-create-definer general-major-leader
+      :states '(insert motion emacs)
+      :prefix ","
+      :non-normal-prefix "M-,")
+    (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode")))
+#+end_src
+** Reverse-im
+Use bindings while the non-default system layout is active.
+
+#+begin_src elisp
+  (use-package reverse-im
+    :custom
+    (reverse-im-modifiers '(control meta super))
+    :config
+    (reverse-im-activate "russian-computer"))
+#+end_src
+** Some global keybindings
+#+begin_src elisp
+  (general-leader
+   ""     nil
+   "<f1>" 'general-describe-keybindings
+   "c"    'calc)
+#+end_src
 * Essential settings
 ** Emacs variables that defined in C source code
 #+begin_src elisp
@@ -628,118 +740,6 @@ Save *scratch* buffer content.
     (custom-file (no-littering-expand-etc-file-name "custom.el"))
     :config
     (load custom-file nil t))
-#+end_src
-* Keybindings
-** Cheat sheet
-Some non-standard key bindings.
-
-|-----------+---------------+------------------------------|
-| Hotkey    | Mode          | Meaning                      |
-|-----------+---------------+------------------------------|
-| SPC <f1>  |               | general-describe-keybindings |
-| SPC <f2>  |               | which-key-show-top-level     |
-| SPC <f3>  |               | which-key-show-major-mode    |
-| SPC <f4>  |               | which-key-show-full-keymap   |
-| SPC <f5>  |               | undo-tree-visualize          |
-|           |               |                              |
-| C-'       | normal visual | avy go to char               |
-| C-"       | normal visual | avy go to word               |
-|           |               |                              |
-| J/K       | visual        | move visual block            |
-|           |               |                              |
-| SPC c     |               | run calculator               |
-|           |               |                              |
-| gc ...    | normal visual | evil commentary prefix       |
-|           |               |                              |
-| s         | operator      | evil-surround-edit           |
-| S         | operator      | evil-Surround-edit           |
-| S         | visual        | evil-surround-region         |
-| gS        | visual        | evil-Surround-region         |
-|           |               |                              |
-| SPC o a   |               | org agenda                   |
-| SPC o c   |               | org capture                  |
-| SPC o l   |               | org agenda list              |
-| SPC o s   |               | org search                   |
-|           |               |                              |
-| SPC p ... |               | projectile menu              |
-|           |               |                              |
-| SPC g ... |               | magit status                 |
-|           |               |                              |
-| SPC y ... |               | yasnippet insert snipped     |
-|           |               |                              |
-|-----------+---------------+------------------------------|
-** Evil mode
-I like VIM keys much more, so =evil-mode= is essential part of my configuration.
-
-#+begin_src elisp
-  (use-package evil
-    :diminish undo-tree-mode
-    :hook (after-init . evil-mode)
-    :custom
-    (evil-want-keybinding nil "Don't load evil-keybindings - required by evil-collection")
-    (evil-motion-state-modes nil "Use 'normal instead of 'motion state.")
-    (evil-emacs-state-modes nil "Use 'normal instead of 'emacs state.")
-    (evil-search-wrap t "Search wrap around the buffer.")
-    (evil-regexp-search t "Search with regexp.")
-    (evil-search-module 'evil-search "Search module to use.")
-    (evil-vsplit-window-right t "Like vim's 'splitright'.")
-    (evil-split-window-below t "Like vim's 'splitbelow'.")
-    (evil-want-C-u-scroll t "Enable C-u scroll.")
-    (evil-want-C-i-jump nil "Disable C-i jumps in jump list.")
-    :config
-    ;; Visually selected text gets replaced by the latest copy action
-    ;; Amazing hack lifted from: http://emacs.stackexchange.com/a/15054/12585
-    (fset 'evil-visual-update-x-selection 'ignore)
-
-    ;; Kill buffer without window
-    (evil-ex-define-cmd "bd[elete]" #'kill-this-buffer))
-#+end_src
-** Evil collection
-Vim-like keybindings everywhere in Emacs.
-
-#+begin_src elisp
-  (use-package evil-collection
-    :after evil
-    :custom
-    (evil-collection-setup-minibuffer t)
-    :config
-    (evil-collection-init))
-#+end_src
-** El General
-More convenient method for binding keys. Setup leader key definers.
-
-#+begin_src elisp
-  (use-package general
-    :config
-    (general-evil-setup)
-
-    (general-create-definer general-leader
-      :keymaps 'override
-      :states '(insert motion normal emacs)
-      :prefix "SPC"
-      :non-normal-prefix "M-SPC")
-    (general-create-definer general-major-leader
-      :states '(insert motion emacs)
-      :prefix ","
-      :non-normal-prefix "M-,")
-    (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode")))
-#+end_src
-** Reverse-im
-Use bindings while the non-default system layout is active.
-
-#+begin_src elisp
-  (use-package reverse-im
-    :custom
-    (reverse-im-modifiers '(control meta super))
-    :config
-    (reverse-im-activate "russian-computer"))
-#+end_src
-** Some global keybindings
-#+begin_src elisp
-  (general-leader
-   ""     nil
-   "<f1>" 'general-describe-keybindings
-   "c"    'calc)
 #+end_src
 * GUI
 ** Mouse
