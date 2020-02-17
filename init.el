@@ -1519,16 +1519,36 @@ If you experience stuttering, increase this.")
   "K" (concat ":m '<-2" (kbd "RET") "gv=gv"))
 
 ;; On-the-fly spell checker
-;; =hunspell= is must because of ability to query multiple dictionaries.
+;; On the fly spell checking. Disabled by default. =hunspell= is must because of ability to query multiple dictionaries.
+
+;; Related keybindings:
+;; | key          | mode   | command                              |
+;; |--------------+--------+--------------------------------------|
+;; | <leader> t S | global | Toggle flyspell on/off               |
+;; | <leader> S b | global | Spell check whole buffer.            |
+;; | z=           | normal | Correct previous word.               |
+;; | [s           | normal | Jump to the previous incorrect word. |
+;; | ]s           | normal | Jump to the next incorrect word.     |
 
 
 (use-package flyspell
   :ensure nil
   :diminish
+  :commands
+  (flyspell-mode flyspell-prog-mode flyspell-buffer flyspell-correct-wrapper)
+  :functions knopki/flyspell-or-flyspell-prog-mode
+  :preface
+  (defun knopki/flyspell-or-flyspell-prog-mode ()
+    "Enable/disable flyspell-mode or flyspell-prog-mode"
+    (interactive)
+    (if (eq flyspell-mode nil)
+        (if (derived-mode-p 'prog-mode) (flyspell-prog-mode) (flyspell-mode))
+      (flyspell-mode-off)))
+  :general
+  (general-leader
+    "t S" 'knopki/flyspell-or-flyspell-prog-mode
+    "S b" 'flyspell-buffer)
   :if (executable-find "hunspell")
-  :hook
-  (((text-mode outline-mode org-mode) . flyspell-mode)
-   (prog-mode . flyspell-prog-mode))
   :init
   (with-eval-after-load "ispell"
     (setq ispell-program-name "hunspell")
