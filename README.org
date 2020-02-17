@@ -1754,6 +1754,13 @@ Delete trailing whitespaces on buffer save.
     :hook (before-save . whitespace-cleanup))
 #+end_src
 ** Move visual block
+Move selection up and down.
+
+| key | mode   | command                   |
+|-----+--------+---------------------------|
+| =J= | visual | Move selected block up.   |
+| =K= | visual | Move selected block down. |
+
 #+begin_src elisp
   (general-vmap
     "J" (concat ":m '>+1" (kbd "RET") "gv=gv")

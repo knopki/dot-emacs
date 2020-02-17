@@ -1513,6 +1513,13 @@ If you experience stuttering, increase this.")
   :hook (before-save . whitespace-cleanup))
 
 ;; Move visual block
+;; Move selection up and down.
+
+;; | key | mode   | command                   |
+;; |-----+--------+---------------------------|
+;; | =J= | visual | Move selected block up.   |
+;; | =K= | visual | Move selected block down. |
+
 
 (general-vmap
   "J" (concat ":m '>+1" (kbd "RET") "gv=gv")
