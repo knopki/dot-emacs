@@ -2031,6 +2031,50 @@ If you experience stuttering, increase this.")
   :config
   (direnv-mode))
 
+;; LSP
+;; Language Server Protocol Support for Emacs
+;; TODO: keybindings
+
+
+(use-package lsp-mode
+  ;; :hook (lsp-mode . lsp-enable-which-key-integration)
+  :commands (lsp lsp-deffered)
+  :custom
+  (read-process-output-max (* 1024 1024) "Performace.")
+  (lsp-auto-guess-root t "Detect project root.")
+  (lsp-keep-workspace-alive nil "Auto-kill LSP server.")
+
+  ;; Python TODO: pyls-black pyls-mypy
+  (lsp-pyls-plugins-autopep8-enabled nil))
+
+
+
+;; Nice UI
+
+
+(use-package lsp-ui
+  :hook (lsp-mode . lsp-ui-mode)
+  :commands lsp-ui-mode)
+
+
+
+;; Company integration.
+
+
+(use-package company-lsp
+  :commands company-lsp
+  :custom
+  (company-lsp-cache-candidates 'auto))
+
+
+
+;; Ivy integration.
+
+
+(use-package lsp-ivy
+  :after lsp-mode
+  :commands lsp-ivy-workspace-symbol)
+
 ;; Emacs Lisp
 
 (use-package elisp-mode
@@ -2090,8 +2134,14 @@ If you experience stuttering, increase this.")
 (use-package python
   :ensure nil
   :defer t
-  :custom
-  (python-indent-offset 2))
+  :hook (python-mode . lsp-deferred))
+
+
+
+;; Live coding in Python.
+
+
+(use-package live-py-mode)
 
 ;; Javascript
 
