@@ -248,9 +248,11 @@ If you experience stuttering, increase this.")
 ;; Some global keybindings
 
 (general-leader
- ""     nil
- "<f1>" 'general-describe-keybindings
- "c"    'calc)
+  ""     nil
+  "<f1>" 'general-describe-keybindings
+  "ac"  'calc-dispatch
+  "ap"  'list-processes
+  "aP"  'proced)
 
 ;; Emacs variables that defined in C source code
 
@@ -1306,7 +1308,7 @@ If you experience stuttering, increase this.")
   :general
   (general-leader
    ;; Show top level key bindings
-   "<f2>" 'which-key-show-top-level
+   "hk" 'which-key-show-top-level
    ;; Show major mode key bindings
    "<f3>" 'which-key-show-major-mode
    ;; Show key bindings from any keymap
@@ -1587,7 +1589,7 @@ If you experience stuttering, increase this.")
   :hook (after-init . global-undo-tree-mode)
   :general
   (general-leader
-    "<f5>" 'undo-tree-visualize)
+    "au" 'undo-tree-visualize)
   :custom
   (undo-tree-visualizer-timestamps t "Display timestamps.")
   (undo-tree-enable-undo-in-region nil "Do not undo changes only in region.")
