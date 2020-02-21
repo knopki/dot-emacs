@@ -2160,6 +2160,14 @@ If you experience stuttering, increase this.")
 
 (use-package live-py-mode)
 
+
+
+;; Format buffer with =black=.
+
+
+(use-package python-black
+  :hook (python-mode . python-black-on-save-mode))
+
 ;; Javascript
 
 (use-package js
