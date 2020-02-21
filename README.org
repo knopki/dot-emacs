@@ -2293,9 +2293,20 @@ TODO: keybindings
     (read-process-output-max (* 1024 1024) "Performace.")
     (lsp-auto-guess-root t "Detect project root.")
     (lsp-keep-workspace-alive nil "Auto-kill LSP server.")
+    (lsp-diagnostic-package :flycheck)
 
     ;; Python TODO: pyls-black pyls-mypy
-    (lsp-pyls-plugins-autopep8-enabled nil))
+    (lsp-pyls-configuration-sources ["flake8"])
+    (lsp-pyls-plugins-autopep8-enabled nil)
+    (lsp-pyls-plugins-pycodestyle-enabled nil)
+    (lsp-pyls-plugins-pylint-enabled t)
+    (lsp-pyls-plugins-yapf-enabled nil)
+
+    :config
+    (lsp-register-custom-settings
+     '(("pyls.plugins.pyls_mypy.enabled" t t)
+       ("pyls.plugins.pyls_mypy.live_mode" nil t)
+       ("pyls.plugins.pyls_mypy.strict" t t))))
 #+end_src
 
 Nice UI
