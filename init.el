@@ -2026,10 +2026,16 @@ If you experience stuttering, increase this.")
 
 
 (use-package direnv
+  ;; Ensures that external dependencies are available before they are called.
+  :hook
+  ((find-file
+    flycheck-before-syntax-check
+    before-hack-local-variables) . direnv-update-environment)
   :custom
   (direnv-always-show-summary nil)
   :config
-  (direnv-mode))
+  (direnv-mode)
+  (advice-add 'prog-mode :before #'direnv-update-environment))
 
 ;; LSP
 ;; Language Server Protocol Support for Emacs
