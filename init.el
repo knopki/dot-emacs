@@ -2302,6 +2302,7 @@ If you experience stuttering, increase this.")
 
 (use-package nix-mode
   :mode ("\\.nix\\'" "\\.nix.in\\'")
+  :hook (nix-mode . (lambda () (electric-indent-local-mode -1)))
   :custom
   (nix-indent-function 'smie-indent-line))
 
