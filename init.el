@@ -2039,19 +2039,147 @@ If you experience stuttering, increase this.")
 
 ;; LSP
 ;; Language Server Protocol Support for Emacs
-;; TODO: keybindings
+
+;; | key         | mode   | command                     |
+;; |-------------+--------+-----------------------------|
+;; | =SPC m s s= | global | Start server                |
+;; | =SPC m s r= | global | Restart server              |
+;; | =SPC m s q= | global | Shutdown server             |
+;; | =SPC m s d= | global | Describe session            |
+;; | =SPC m s D= | global | Disconnect                  |
+;; |             |        |                             |
+;; | =SPC m = == | global | Format buffer               |
+;; | =SPC m = r= | global | Format region               |
+;; |             |        |                             |
+;; | =SPC m F a= | global | Add folder                  |
+;; | =SPC m F r= | global | Remove folder               |
+;; | =SPC m F b= | global | Un-blacklist folder         |
+;; |             |        |                             |
+;; | =SPC m T l= | global | Toggle lenses               |
+;; | =SPC m T L= | global | Toggle log io               |
+;; | =SPC m T h= | global | Toggle highlighting         |
+;; | =SPC m T s= | global | Toggle signatures           |
+;; | =SPC m T S= | global | Toggle sideline             |
+;; | =SPC m T d= | global | Toddle documentation popup  |
+;; | =SPC m T p= | global | Toggle signature help       |
+;; | =SPC m T f= | global | Toggle on type formatting   |
+;; | =SPC m T T= | global | Toggle treemacs integration |
+;; |             |        |                             |
+;; | =SPC m g g= | global | Find definition             |
+;; | =SPC m g r= | global | Find references             |
+;; | =SPC m g i= | global | Find implementations        |
+;; | =SPC m g d= | global | Find declarations           |
+;; | =SPC m g t= | global | Find type definitions       |
+;; | =SPC m g h= | global | Call hierarchy              |
+;; | =SPC m g a= | global | Find symbol in workspace    |
+;; | =SPC m g M= | global | Show navigation menu        |
+;; | =SPC m g e= | global | Show flycheck errors        |
+;; |             |        |                             |
+;; | =SPC m h h= | global | Describe symbol at point    |
+;; | =SPC m h s= | global | Signature help              |
+;; | =SPC m h g= | global | Doc popup                   |
+;; |             |        |                             |
+;; | =SPC m r r= | glboal | Rename                      |
+;; | =SPC m r o= | global | Organize imports            |
+;; |             |        |                             |
+;; | =SPC m a a= | global | Code actions                |
+;; | =SPC m a l= | global | Lens                        |
+;; | =SPC m a h= | global | Highlight symbol            |
+;; |             |        |                             |
+;; | =SPC m G g= | global | Peek definitions            |
+;; | =SPC m G r= | global | Peek references             |
+;; | =SPC m G i= | global | Peek implementations        |
+;; | =SPC m G s= | global | Peek workspace symbol       |
+;; | =SPC m G N= | global | Peek jump backward          |
+;; | =SPC m G n= | global | Peek jump forward           |
 
 
 (use-package lsp-mode
+  ;; TODO: enable after upgrade
   ;; :hook (lsp-mode . lsp-enable-which-key-integration)
   :commands (lsp lsp-deffered)
+  :general
+  ;; TODO: merge with =lsp-command-map= after upgrade
+  (general-leader
+    "m" '(nil :wk "LSP")
+    ;; sessions
+    "ms"  '(nil :wk "Sessions")
+    "mss" '(lsp :wk "Start server")
+    "msr" '(lsp-workspace-restart :wk "Restart server")
+    "msq" '(lsp-workspace-shutdown :wk "Shutdown server")
+    "msd" '(lsp-describe-session :wk "Describe session")
+    "msD" '(lsp-disconnect :wk "Disconnect")
+
+    ;; formatting
+    "m="  '(nil :wk "Formatting")
+    "m==" '((lambda ()
+              (interactive)
+              (cond
+               ((derived-mode-p 'python-mode) (python-black-buffer))
+               (lsp-format-buffer))) :wk "Format buffer")
+    "m=r" '(lsp-format-region :wk "Format region")
+
+    ;; folders
+    "mF"  '(nil :wk "Folders")
+    "mFa" '(lsp-workspace-folders-add :wk "Add folder")
+    "mFr" '(lsp-workspace-folders-remove :wk "Remove folder")
+    "mFb" '(lsp-workspace-blacklist-remove :wk "Un-blacklist folder")
+
+    ;; toggle
+    "mT"  '(nil :wk "Toggle")
+    "mTl" '(lsp-lens-mode :wk "Toggle lenses")
+    "mTL" '(lsp-toggle-trace-io :wk "Toggle log io")
+    "mTh" '(lsp-toggle-symbol-highlight :wk "Toggle highlighting")
+    "mTs" '(lsp-toggle-signature-auto-activate :wk "Toggle signature")
+    "mTS" '(lsp-ui-sideline-mode :wk "Toggle sideline")
+    "mTd" '(lsp-ui-doc-mode :wk "Toggle documentation popup")
+    "mTp" '(lsp-signature-mode :wk "Toggle signature help")
+    "mTf" '(lsp-toggle-on-type-formatting :wk "Toggle on type formatting")
+    "mTT" '(lsp-treemacs-sync-mode :wk "Toggle treemacs integration")
+
+    ;; goto
+    "mg"  '(nil :wk "Go To")
+    "mgg" '(lsp-find-definition :wk "Find definition")
+    "mgr" '(lsp-find-references :wk "Find references")
+    "mgi" '(lsp-find-implementation :wk "Find implementations")
+    "mgd" '(lsp-find-declaration :wk "Find declarations")
+    "mgt" '(lsp-find-type-definition :wl "Find type definition")
+    "mgh" '(lsp-treemacs-call-hierarchy :wk "Call hierarchy")
+    "mga" '(xref-find-apropos :wk "Find symbol in workspace")
+    "mgM" '(lsp-ui-imenu :wk "Show navigation menu")
+    "mge" '(lsp-ui-flycheck-list :wk "Show flyckeck errors")
+
+    ;; help
+    "mh"  '(nil :wk "Help")
+    "mhh" '(lsp-describe-thing-at-point :wk "Describe symbol at point")
+    "mhs" '(lsp-signature-activate :wk "Signature help")
+    "mhg" '(lsp-ui-doc-glance :wk "Doc popup")
+
+    ;; refactor
+    "mr"  '(nil :wk "Refactoring")
+    "mrr" '(lsp-rename :wk "Rename")
+    "mro" '(lsp-organize-imports :wk "Organize imports")
+
+    ;; actions
+    "ma"  '(nil :wk "Code actions")
+    "maa" '(lsp-execute-code-action :wk "Code actions")
+    "mal" '(lsp-avy-lens :wk "Lens")
+    "mah" '(lsp-document-highlight :wk "Highlight symbol")
+
+    ;; peek
+    "mG"  '(nil :wk "Peek")
+    "mGg" '(lsp-ui-peek-find-definitions :wk "Peek definitions")
+    "mGr" '(lsp-ui-peek-find-references :wk "Peek references")
+    "mGi" '(lsp-ui-peek-find-implementation :wk "Peek implementations")
+    "mGs" '(lsp-ui-peek-find-workspace-symbol :wk "Peek workspace symbol")
+    "mGN" '(lsp-ui-peek-jump-backward :wk "Jump backward")
+    "mGn" '(lsp-ui-peek-jump-forward :wk "Jump forward"))
   :custom
   (read-process-output-max (* 1024 1024) "Performace.")
   (lsp-auto-guess-root t "Detect project root.")
   (lsp-keep-workspace-alive nil "Auto-kill LSP server.")
   (lsp-diagnostic-package :flycheck)
 
-  ;; Python TODO: pyls-black pyls-mypy
   (lsp-pyls-configuration-sources ["flake8"])
   (lsp-pyls-plugins-autopep8-enabled nil)
   (lsp-pyls-plugins-pycodestyle-enabled nil)
@@ -2071,7 +2199,13 @@ If you experience stuttering, increase this.")
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode)
-  :commands lsp-ui-mode)
+  :commands lsp-ui-mode
+  :general
+  (:keymaps 'lsp-ui-peek-mode-map
+            "h" 'lsp-ui-peek--select-prev-file
+            "j" 'lsp-ui-peek--select-next
+            "k" 'lsp-ui-peek--select-prev
+            "l" 'lsp-ui-peek--select-next-file))
 
 
 
