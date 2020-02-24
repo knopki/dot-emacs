@@ -2000,16 +2000,16 @@ If you experience stuttering, increase this.")
 ;; | =SPC e x= | Explain error at point          |
 
 ;; Flycheck error list mode keybindings:
-;; | key             | command        |
-;; |-----------------+----------------|
-;; | =gj=/=C-j=/=]]= | Next error     |
-;; | =gk=/=C-k=/=[[= | Previous error |
-;; | =gr=            | Check source   |
-;; | =s=             | Set filter     |
-;; | =S=             | Reset filter   |
-;; | =x=             | Explain error  |
-;; | =RET=           | Go to error    |
-;; | =q=             | Quit window    |
+;; | key                 | command        |
+;; |---------------------+----------------|
+;; | =gj= / =C-j= / =]]= | Next error     |
+;; | =gk= / =C-k= / =[[= | Previous error |
+;; | =gr=                | Check source   |
+;; | =s=                 | Set filter     |
+;; | =S=                 | Reset filter   |
+;; | =x=                 | Explain error  |
+;; | =RET=               | Go to error    |
+;; | =q=                 | Quit window    |
 
 
 (use-package flycheck
