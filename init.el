@@ -2031,7 +2031,9 @@ If you experience stuttering, increase this.")
    (ediff-quit . winner-undo))
 
   :custom
-  (ediff-window-setup-function 'ediff-setup-windows-multiframe))
+  (ediff-window-setup-function 'ediff-setup-windows-plain)
+  (ediff-split-window-function 'split-window-horizontally)
+  (ediff-merge-split-window-function 'split-window-horizontally))
 
 ;; Magit
 ;; Awesome git frontend.
