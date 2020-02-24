@@ -465,7 +465,10 @@ More convenient method for binding keys. Setup leader key definers.
       :states '(insert motion emacs)
       :prefix ","
       :non-normal-prefix "M-,")
-    (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode")))
+    (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode"))
+    (general-leader
+      "e" '(nil :wk "Error management")
+      "t" '(nil :wk "Global toggles")))
 #+end_src
 ** Reverse-im
 Use bindings while the non-default system layout is active.
@@ -2227,9 +2230,48 @@ Minor mode to aggressively keep your code always indented.
 ** Flycheck
 On-the-fly syntax checker.
 
+Global keybindings:
+| key       | command                         |
+|-----------+---------------------------------|
+| =SPC t s= | Toggle flycheck mode            |
+| =SPC e b= | Check for errors                |
+| =SPC e c= | Clear errors                    |
+| =SPC e h= | Describe checker                |
+| =SPC e l= | Display list of errors          |
+| =SPC e s= | Set flycheck checker            |
+| =SPC e S= | Set flycheck checker executable |
+| =SPC e v= | Verify flycheck setup           |
+| =SPC e y= | Copy error to kill-ring         |
+| =SPC e x= | Explain error at point          |
+
+Flycheck error list mode keybindings:
+| key             | command        |
+|-----------------+----------------|
+| =gj=/=C-j=/=]]= | Next error     |
+| =gk=/=C-k=/=[[= | Previous error |
+| =gr=            | Check source   |
+| =s=             | Set filter     |
+| =S=             | Reset filter   |
+| =x=             | Explain error  |
+| =RET=           | Go to error    |
+| =q=             | Quit window    |
+
 #+begin_src elisp
   (use-package flycheck
     :hook (after-init . global-flycheck-mode)
+    :general
+    (general-leader
+      "ts" '(flycheck-mode :wk "Toggle flycheck mode")
+      "eb" '(flycheck-buffer :wk "Check for errors")
+      "ec" '(flycheck-clear :wk "Clear errors")
+      "eh" '(flycheck-describe-checker :wk "Describe checker")
+      "el" '(list-flycheck-errors :wk "Display list of errors")
+      "es" '(flycheck-select-checker :wk "Set flycheck checker")
+      "eS" '(flycheck-set-checker-executable :wk "Set flycheck checker executable")
+      "ev" '(flycheck-verify-setup :wk "Verify flycheck setup")
+      "ey" '(flycheck-copy-errors-as-kill :wk "Copy error to kill-ring")
+      "ex" '(flycheck-explain-error-at-point :wk "Explain error at point"))
+    ;; t s
     :custom
     (flycheck-emacs-lisp-load-path 'inherit "Inherit load paths from Emacs.")
     (flycheck-global-modes
