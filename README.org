@@ -2281,58 +2281,58 @@ Switch project environment on buffer switch. Sometimes switching is slow.
 ** LSP
 Language Server Protocol Support for Emacs
 
-| key         | mode   | command                     |
-|-------------+--------+-----------------------------|
-| =SPC m s s= | global | Start server                |
-| =SPC m s r= | global | Restart server              |
-| =SPC m s q= | global | Shutdown server             |
-| =SPC m s d= | global | Describe session            |
-| =SPC m s D= | global | Disconnect                  |
-|             |        |                             |
-| =SPC m = == | global | Format buffer               |
-| =SPC m = r= | global | Format region               |
-|             |        |                             |
-| =SPC m F a= | global | Add folder                  |
-| =SPC m F r= | global | Remove folder               |
-| =SPC m F b= | global | Un-blacklist folder         |
-|             |        |                             |
-| =SPC m T l= | global | Toggle lenses               |
-| =SPC m T L= | global | Toggle log io               |
-| =SPC m T h= | global | Toggle highlighting         |
-| =SPC m T s= | global | Toggle signatures           |
-| =SPC m T S= | global | Toggle sideline             |
-| =SPC m T d= | global | Toddle documentation popup  |
-| =SPC m T p= | global | Toggle signature help       |
-| =SPC m T f= | global | Toggle on type formatting   |
-| =SPC m T T= | global | Toggle treemacs integration |
-|             |        |                             |
-| =SPC m g g= | global | Find definition             |
-| =SPC m g r= | global | Find references             |
-| =SPC m g i= | global | Find implementations        |
-| =SPC m g d= | global | Find declarations           |
-| =SPC m g t= | global | Find type definitions       |
-| =SPC m g h= | global | Call hierarchy              |
-| =SPC m g a= | global | Find symbol in workspace    |
-| =SPC m g M= | global | Show navigation menu        |
-| =SPC m g e= | global | Show flycheck errors        |
-|             |        |                             |
-| =SPC m h h= | global | Describe symbol at point    |
-| =SPC m h s= | global | Signature help              |
-| =SPC m h g= | global | Doc popup                   |
-|             |        |                             |
-| =SPC m r r= | glboal | Rename                      |
-| =SPC m r o= | global | Organize imports            |
-|             |        |                             |
-| =SPC m a a= | global | Code actions                |
-| =SPC m a l= | global | Lens                        |
-| =SPC m a h= | global | Highlight symbol            |
-|             |        |                             |
-| =SPC m G g= | global | Peek definitions            |
-| =SPC m G r= | global | Peek references             |
-| =SPC m G i= | global | Peek implementations        |
-| =SPC m G s= | global | Peek workspace symbol       |
-| =SPC m G N= | global | Peek jump backward          |
-| =SPC m G n= | global | Peek jump forward           |
+| key     | mode   | command                     |
+|---------+--------+-----------------------------|
+| =, s s= | global | Start server                |
+| =, s r= | global | Restart server              |
+| =, s q= | global | Shutdown server             |
+| =, s d= | global | Describe session            |
+| =, s D= | global | Disconnect                  |
+|         |        |                             |
+| =, = == | global | Format buffer               |
+| =, = r= | global | Format region               |
+|         |        |                             |
+| =, F a= | global | Add folder                  |
+| =, F r= | global | Remove folder               |
+| =, F b= | global | Un-blacklist folder         |
+|         |        |                             |
+| =, T l= | global | Toggle lenses               |
+| =, T L= | global | Toggle log io               |
+| =, T h= | global | Toggle highlighting         |
+| =, T s= | global | Toggle signatures           |
+| =, T S= | global | Toggle sideline             |
+| =, T d= | global | Toddle documentation popup  |
+| =, T p= | global | Toggle signature help       |
+| =, T f= | global | Toggle on type formatting   |
+| =, T T= | global | Toggle treemacs integration |
+|         |        |                             |
+| =, g g= | global | Find definition             |
+| =, g r= | global | Find references             |
+| =, g i= | global | Find implementations        |
+| =, g d= | global | Find declarations           |
+| =, g t= | global | Find type definitions       |
+| =, g h= | global | Call hierarchy              |
+| =, g a= | global | Find symbol in workspace    |
+| =, g M= | global | Show navigation menu        |
+| =, g e= | global | Show flycheck errors        |
+|         |        |                             |
+| =, h h= | global | Describe symbol at point    |
+| =, h s= | global | Signature help              |
+| =, h g= | global | Doc popup                   |
+|         |        |                             |
+| =, r r= | glboal | Rename                      |
+| =, r o= | global | Organize imports            |
+|         |        |                             |
+| =, a a= | global | Code actions                |
+| =, a l= | global | Lens                        |
+| =, a h= | global | Highlight symbol            |
+|         |        |                             |
+| =, G g= | global | Peek definitions            |
+| =, G r= | global | Peek references             |
+| =, G i= | global | Peek implementations        |
+| =, G s= | global | Peek workspace symbol       |
+| =, G N= | global | Peek jump backward          |
+| =, G n= | global | Peek jump forward           |
 
 #+begin_src elisp
   (use-package lsp-mode
@@ -2341,80 +2341,80 @@ Language Server Protocol Support for Emacs
     :commands (lsp lsp-deffered)
     :general
     ;; TODO: merge with =lsp-command-map= after upgrade
-    (general-leader
-      "m" '(nil :wk "LSP")
+    (general-major-leader
+      :keymaps 'lsp-mode-map
       ;; sessions
-      "ms"  '(nil :wk "Sessions")
-      "mss" '(lsp :wk "Start server")
-      "msr" '(lsp-workspace-restart :wk "Restart server")
-      "msq" '(lsp-workspace-shutdown :wk "Shutdown server")
-      "msd" '(lsp-describe-session :wk "Describe session")
-      "msD" '(lsp-disconnect :wk "Disconnect")
+      "s"  '(nil :wk "Sessions")
+      "ss" '(lsp :wk "Start server")
+      "sr" '(lsp-workspace-restart :wk "Restart server")
+      "sq" '(lsp-workspace-shutdown :wk "Shutdown server")
+      "sd" '(lsp-describe-session :wk "Describe session")
+      "sD" '(lsp-disconnect :wk "Disconnect")
 
       ;; formatting
-      "m="  '(nil :wk "Formatting")
-      "m==" '((lambda ()
+      "="  '(nil :wk "Formatting")
+      "==" '((lambda ()
                 (interactive)
                 (cond
                  ((derived-mode-p 'python-mode) (python-black-buffer))
                  (lsp-format-buffer))) :wk "Format buffer")
-      "m=r" '(lsp-format-region :wk "Format region")
+      "=r" '(lsp-format-region :wk "Format region")
 
       ;; folders
-      "mF"  '(nil :wk "Folders")
-      "mFa" '(lsp-workspace-folders-add :wk "Add folder")
-      "mFr" '(lsp-workspace-folders-remove :wk "Remove folder")
-      "mFb" '(lsp-workspace-blacklist-remove :wk "Un-blacklist folder")
+      "F"  '(nil :wk "Folders")
+      "Fa" '(lsp-workspace-folders-add :wk "Add folder")
+      "Fr" '(lsp-workspace-folders-remove :wk "Remove folder")
+      "Fb" '(lsp-workspace-blacklist-remove :wk "Un-blacklist folder")
 
       ;; toggle
-      "mT"  '(nil :wk "Toggle")
-      "mTl" '(lsp-lens-mode :wk "Toggle lenses")
-      "mTL" '(lsp-toggle-trace-io :wk "Toggle log io")
-      "mTh" '(lsp-toggle-symbol-highlight :wk "Toggle highlighting")
-      "mTs" '(lsp-toggle-signature-auto-activate :wk "Toggle signature")
-      "mTS" '(lsp-ui-sideline-mode :wk "Toggle sideline")
-      "mTd" '(lsp-ui-doc-mode :wk "Toggle documentation popup")
-      "mTp" '(lsp-signature-mode :wk "Toggle signature help")
-      "mTf" '(lsp-toggle-on-type-formatting :wk "Toggle on type formatting")
-      "mTT" '(lsp-treemacs-sync-mode :wk "Toggle treemacs integration")
+      "T"  '(nil :wk "Toggle")
+      "Tl" '(lsp-lens-mode :wk "Toggle lenses")
+      "TL" '(lsp-toggle-trace-io :wk "Toggle log io")
+      "Th" '(lsp-toggle-symbol-highlight :wk "Toggle highlighting")
+      "Ts" '(lsp-toggle-signature-auto-activate :wk "Toggle signature")
+      "TS" '(lsp-ui-sideline-mode :wk "Toggle sideline")
+      "Td" '(lsp-ui-doc-mode :wk "Toggle documentation popup")
+      "Tp" '(lsp-signature-mode :wk "Toggle signature help")
+      "Tf" '(lsp-toggle-on-type-formatting :wk "Toggle on type formatting")
+      "TT" '(lsp-treemacs-sync-mode :wk "Toggle treemacs integration")
 
       ;; goto
-      "mg"  '(nil :wk "Go To")
-      "mgg" '(lsp-find-definition :wk "Find definition")
-      "mgr" '(lsp-find-references :wk "Find references")
-      "mgi" '(lsp-find-implementation :wk "Find implementations")
-      "mgd" '(lsp-find-declaration :wk "Find declarations")
-      "mgt" '(lsp-find-type-definition :wl "Find type definition")
-      "mgh" '(lsp-treemacs-call-hierarchy :wk "Call hierarchy")
-      "mga" '(xref-find-apropos :wk "Find symbol in workspace")
-      "mgM" '(lsp-ui-imenu :wk "Show navigation menu")
-      "mge" '(lsp-ui-flycheck-list :wk "Show flyckeck errors")
+      "g"  '(nil :wk "Go To")
+      "gg" '(lsp-find-definition :wk "Find definition")
+      "gr" '(lsp-find-references :wk "Find references")
+      "gi" '(lsp-find-implementation :wk "Find implementations")
+      "gd" '(lsp-find-declaration :wk "Find declarations")
+      "gt" '(lsp-find-type-definition :wl "Find type definition")
+      "gh" '(lsp-treemacs-call-hierarchy :wk "Call hierarchy")
+      "ga" '(xref-find-apropos :wk "Find symbol in workspace")
+      "gM" '(lsp-ui-imenu :wk "Show navigation menu")
+      "ge" '(lsp-ui-flycheck-list :wk "Show flyckeck errors")
 
       ;; help
-      "mh"  '(nil :wk "Help")
-      "mhh" '(lsp-describe-thing-at-point :wk "Describe symbol at point")
-      "mhs" '(lsp-signature-activate :wk "Signature help")
-      "mhg" '(lsp-ui-doc-glance :wk "Doc popup")
+      "h"  '(nil :wk "Help")
+      "hh" '(lsp-describe-thing-at-point :wk "Describe symbol at point")
+      "hs" '(lsp-signature-activate :wk "Signature help")
+      "hg" '(lsp-ui-doc-glance :wk "Doc popup")
 
       ;; refactor
-      "mr"  '(nil :wk "Refactoring")
-      "mrr" '(lsp-rename :wk "Rename")
-      "mro" '(lsp-organize-imports :wk "Organize imports")
+      "r"  '(nil :wk "Refactoring")
+      "rr" '(lsp-rename :wk "Rename")
+      "ro" '(lsp-organize-imports :wk "Organize imports")
 
       ;; actions
-      "ma"  '(nil :wk "Code actions")
-      "maa" '(lsp-execute-code-action :wk "Code actions")
-      "mal" '(lsp-avy-lens :wk "Lens")
-      "mah" '(lsp-document-highlight :wk "Highlight symbol")
+      "a"  '(nil :wk "Code actions")
+      "aa" '(lsp-execute-code-action :wk "Code actions")
+      "al" '(lsp-avy-lens :wk "Lens")
+      "ah" '(lsp-document-highlight :wk "Highlight symbol")
 
       ;; peek
-      "mG"  '(nil :wk "Peek")
-      "mGg" '(lsp-ui-peek-find-definitions :wk "Peek definitions")
-      "mGr" '(lsp-ui-peek-find-references :wk "Peek references")
-      "mGi" '(lsp-ui-peek-find-implementation :wk "Peek implementations")
-      "mGs" '(lsp-ui-peek-find-workspace-symbol :wk "Peek workspace symbol")
-      "mGN" '(lsp-ui-peek-jump-backward :wk "Jump backward")
-      "mGn" '(lsp-ui-peek-jump-forward :wk "Jump forward"))
+      "G"  '(nil :wk "Peek")
+      "Gg" '(lsp-ui-peek-find-definitions :wk "Peek definitions")
+      "Gr" '(lsp-ui-peek-find-references :wk "Peek references")
+      "Gi" '(lsp-ui-peek-find-implementation :wk "Peek implementations")
+      "Gs" '(lsp-ui-peek-find-workspace-symbol :wk "Peek workspace symbol")
+      "GN" '(lsp-ui-peek-jump-backward :wk "Jump backward")
+      "Gn" '(lsp-ui-peek-jump-forward :wk "Jump forward"))
     :custom
     (read-process-output-max (* 1024 1024) "Performace.")
     (lsp-auto-guess-root t "Detect project root.")
