@@ -1838,11 +1838,10 @@ If you experience stuttering, increase this.")
   :hook (magit-mode . magit-todos-mode)
   ;; TODO: remove after evil-collection updated with fix
   :general
-  (general-define-key
-   :keymaps '(magit-todos-section-map magit-todos-item-section-map)
-   "jT" nil
-   "jl" nil
-   "j" nil))
+  (:keymaps '(magit-todos-section-map magit-todos-item-section-map)
+            "jT" nil
+            "jl" nil
+            "j" nil))
 
 ;; Git Time Machine
 ;; Walk through git revisions of a file.
@@ -2015,9 +2014,7 @@ If you experience stuttering, increase this.")
 (use-package ivy-yasnippet
   :commands ivy-yasnippet--preview
   :general
-  (general-nmap
-    :prefix "SPC"
-    "y" 'ivy-yasnippet)
+  (general-leader "y" 'ivy-yasnippet)
   :config
   (advice-add #'ivy-yasnippet--preview :override #'ignore))
 

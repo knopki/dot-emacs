@@ -2082,11 +2082,10 @@ Show source files' TODOs (and FIXMEs, etc) in Magit status buffer.
     :hook (magit-mode . magit-todos-mode)
     ;; TODO: remove after evil-collection updated with fix
     :general
-    (general-define-key
-     :keymaps '(magit-todos-section-map magit-todos-item-section-map)
-     "jT" nil
-     "jl" nil
-     "j" nil))
+    (:keymaps '(magit-todos-section-map magit-todos-item-section-map)
+              "jT" nil
+              "jl" nil
+              "j" nil))
 #+end_src
 ** Git Time Machine
 Walk through git revisions of a file.
@@ -2259,9 +2258,7 @@ Integrate =yasnippet= into =ivy=.
   (use-package ivy-yasnippet
     :commands ivy-yasnippet--preview
     :general
-    (general-nmap
-      :prefix "SPC"
-      "y" 'ivy-yasnippet)
+    (general-leader "y" 'ivy-yasnippet)
     :config
     (advice-add #'ivy-yasnippet--preview :override #'ignore))
 #+end_src
