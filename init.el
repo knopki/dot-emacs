@@ -222,6 +222,7 @@ If you experience stuttering, increase this.")
 ;; Common prefixes:
 ;; | prefix  | meaning          |
 ;; |---------+------------------|
+;; | ~SPC b~ | Buffers          |
 ;; | ~SPC e~ | Error management |
 ;; | ~SPC m~ | Major mode       |
 ;; | ~SPC t~ | Global toggles   |
@@ -242,6 +243,7 @@ If you experience stuttering, increase this.")
     :non-normal-prefix "M-,")
   (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode"))
   (general-leader
+    "b" '(nil :wk "Buffers")
     "e" '(nil :wk "Error management")
     "t" '(nil :wk "Global toggles")))
 
@@ -1343,6 +1345,20 @@ If you experience stuttering, increase this.")
   ;; Ivy support
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable))
+
+;; Bookmarks
+;; Jump to bookmark.
+
+;; | key       | command          |
+;; |-----------+------------------|
+;; | ~SPC f b~ | Jump to bookmark |
+
+
+(use-package bookmark
+  :defer t
+  :general
+  (general-leader
+    "fb" 'bookmark-jump))
 
 ;; Avy
 ;; Jump to things in Emacs tree-style.

@@ -69,6 +69,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#which-key][Which key]]
   - [[#better-help][Better help]]
 - [[#navigation][Navigation]]
+  - [[#bookmarks][Bookmarks]]
   - [[#avy][Avy]]
 - [[#buffer-management][Buffer management]]
   - [[#unique-buffer-names][Unique buffer names]]
@@ -415,6 +416,7 @@ More convenient method for binding keys. Setup leader key definers.
 Common prefixes:
 | prefix  | meaning          |
 |---------+------------------|
+| ~SPC b~ | Buffers          |
 | ~SPC e~ | Error management |
 | ~SPC m~ | Major mode       |
 | ~SPC t~ | Global toggles   |
@@ -435,6 +437,7 @@ Common prefixes:
       :non-normal-prefix "M-,")
     (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode"))
     (general-leader
+      "b" '(nil :wk "Buffers")
       "e" '(nil :wk "Error management")
       "t" '(nil :wk "Global toggles")))
 #+end_src
@@ -1544,6 +1547,20 @@ prefix) in a popup.
     (counsel-describe-variable-function #'helpful-variable))
 #+end_src
 * Navigation
+** Bookmarks
+Jump to bookmark.
+
+| key       | command          |
+|-----------+------------------|
+| ~SPC f b~ | Jump to bookmark |
+
+#+begin_src elisp
+  (use-package bookmark
+    :defer t
+    :general
+    (general-leader
+      "fb" 'bookmark-jump))
+#+end_src
 ** Avy
 Jump to things in Emacs tree-style.
 
