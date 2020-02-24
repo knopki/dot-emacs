@@ -219,6 +219,13 @@ If you experience stuttering, increase this.")
 ;; El General
 ;; More convenient method for binding keys. Setup leader key definers.
 
+;; Common prefixes:
+;; | prefix  | meaning          |
+;; |---------+------------------|
+;; | ~SPC e~ | Error management |
+;; | ~SPC m~ | Major mode       |
+;; | ~SPC t~ | Global toggles   |
+
 
 (use-package general
   :config
@@ -1522,8 +1529,8 @@ If you experience stuttering, increase this.")
 
 ;; | key | mode   | command                   |
 ;; |-----+--------+---------------------------|
-;; | =J= | visual | Move selected block up.   |
-;; | =K= | visual | Move selected block down. |
+;; | ~J~ | visual | Move selected block up.   |
+;; | ~K~ | visual | Move selected block down. |
 
 
 (general-vmap
@@ -1534,13 +1541,13 @@ If you experience stuttering, increase this.")
 ;; On the fly spell checking. Disabled by default. =hunspell= is must because of ability to query multiple dictionaries.
 
 ;; Related keybindings:
-;; | key            | mode   | command                                                     |
-;; |----------------+--------+-------------------------------------------------------------|
-;; | =<leader> t S= | global | Toggle flyspell on/off                                      |
-;; | =<leader> S b= | global | Spell check whole buffer.                                   |
-;; | =z==           | normal | Correct previous word (ivy menu, access commands by =M-o=). |
-;; | =[s=           | normal | Jump to the previous incorrect word.                        |
-;; | =]s=           | normal | Jump to the next incorrect word.                            |
+;; | key       | mode   | command                                                     |
+;; |-----------+--------+-------------------------------------------------------------|
+;; | ~SPC t S= | global | Toggle flyspell on/off                                      |
+;; | ~SPC S b~ | global | Spell check whole buffer.                                   |
+;; | ~z=~      | normal | Correct previous word (ivy menu, access commands by =M-o=). |
+;; | ~[s~      | normal | Jump to the previous incorrect word.                        |
+;; | ~]s~      | normal | Jump to the next incorrect word.                            |
 
 
 (use-package flyspell
@@ -1988,28 +1995,28 @@ If you experience stuttering, increase this.")
 ;; Global keybindings:
 ;; | key       | command                         |
 ;; |-----------+---------------------------------|
-;; | =SPC t s= | Toggle flycheck mode            |
-;; | =SPC e b= | Check for errors                |
-;; | =SPC e c= | Clear errors                    |
-;; | =SPC e h= | Describe checker                |
-;; | =SPC e l= | Display list of errors          |
-;; | =SPC e s= | Set flycheck checker            |
-;; | =SPC e S= | Set flycheck checker executable |
-;; | =SPC e v= | Verify flycheck setup           |
-;; | =SPC e y= | Copy error to kill-ring         |
-;; | =SPC e x= | Explain error at point          |
+;; | ~SPC t s~ | Toggle flycheck mode            |
+;; | ~SPC e b~ | Check for errors                |
+;; | ~SPC e c~ | Clear errors                    |
+;; | ~SPC e h~ | Describe checker                |
+;; | ~SPC e l~ | Display list of errors          |
+;; | ~SPC e s~ | Set flycheck checker            |
+;; | ~SPC e S~ | Set flycheck checker executable |
+;; | ~SPC e v~ | Verify flycheck setup           |
+;; | ~SPC e y~ | Copy error to kill-ring         |
+;; | ~SPC e x~ | Explain error at point          |
 
 ;; Flycheck error list mode keybindings:
 ;; | key                 | command        |
 ;; |---------------------+----------------|
-;; | =gj= / =C-j= / =]]= | Next error     |
-;; | =gk= / =C-k= / =[[= | Previous error |
-;; | =gr=                | Check source   |
-;; | =s=                 | Set filter     |
-;; | =S=                 | Reset filter   |
-;; | =x=                 | Explain error  |
-;; | =RET=               | Go to error    |
-;; | =q=                 | Quit window    |
+;; | ~gj~ / ~C-j~ / ~]]~ | Next error     |
+;; | ~gk~ / ~C-k~ / ~[[~ | Previous error |
+;; | ~gr~                | Check source   |
+;; | ~s~                 | Set filter     |
+;; | ~S~                 | Reset filter   |
+;; | ~x~                 | Explain error  |
+;; | ~RET~               | Go to error    |
+;; | ~q~                 | Quit window    |
 
 
 (use-package flycheck

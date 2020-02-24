@@ -27,7 +27,6 @@ Clone repository to =~/.emacs.d= and run Emacs.
 - [[#dependencies][Dependencies]]
   - [[#icons][Icons]]
 - [[#keybindings][Keybindings]]
-  - [[#cheat-sheet][Cheat sheet]]
   - [[#evil-mode][Evil mode]]
   - [[#evil-collection][Evil collection]]
   - [[#el-general][El General]]
@@ -373,44 +372,6 @@ Dependency of many packages. Display nice icons.
                  '(gfm-mode all-the-icons-octicon "markdown" :face all-the-icons-lblue)))
 #+end_src
 * Keybindings
-** Cheat sheet
-Some non-standard key bindings.
-
-|-----------+---------------+------------------------------|
-| Hotkey    | Mode          | Meaning                      |
-|-----------+---------------+------------------------------|
-| SPC <f1>  |               | general-describe-keybindings |
-| SPC <f2>  |               | which-key-show-top-level     |
-| SPC <f3>  |               | which-key-show-major-mode    |
-| SPC <f4>  |               | which-key-show-full-keymap   |
-| SPC <f5>  |               | undo-tree-visualize          |
-|           |               |                              |
-| C-'       | normal visual | avy go to char               |
-| C-"       | normal visual | avy go to word               |
-|           |               |                              |
-| J/K       | visual        | move visual block            |
-|           |               |                              |
-| SPC c     |               | run calculator               |
-|           |               |                              |
-| gc ...    | normal visual | evil commentary prefix       |
-|           |               |                              |
-| s         | operator      | evil-surround-edit           |
-| S         | operator      | evil-Surround-edit           |
-| S         | visual        | evil-surround-region         |
-| gS        | visual        | evil-Surround-region         |
-|           |               |                              |
-| SPC o a   |               | org agenda                   |
-| SPC o c   |               | org capture                  |
-| SPC o l   |               | org agenda list              |
-| SPC o s   |               | org search                   |
-|           |               |                              |
-| SPC p ... |               | projectile menu              |
-|           |               |                              |
-| SPC g ... |               | magit status                 |
-|           |               |                              |
-| SPC y ... |               | yasnippet insert snipped     |
-|           |               |                              |
-|-----------+---------------+------------------------------|
 ** Evil mode
 I like VIM keys much more, so =evil-mode= is essential part of my configuration.
 
@@ -450,6 +411,13 @@ Vim-like keybindings everywhere in Emacs.
 #+end_src
 ** El General
 More convenient method for binding keys. Setup leader key definers.
+
+Common prefixes:
+| prefix  | meaning          |
+|---------+------------------|
+| ~SPC e~ | Error management |
+| ~SPC m~ | Major mode       |
+| ~SPC t~ | Global toggles   |
 
 #+begin_src elisp
   (use-package general
@@ -1764,8 +1732,8 @@ Move selection up and down.
 
 | key | mode   | command                   |
 |-----+--------+---------------------------|
-| =J= | visual | Move selected block up.   |
-| =K= | visual | Move selected block down. |
+| ~J~ | visual | Move selected block up.   |
+| ~K~ | visual | Move selected block down. |
 
 #+begin_src elisp
   (general-vmap
@@ -1776,13 +1744,13 @@ Move selection up and down.
 On the fly spell checking. Disabled by default. =hunspell= is must because of ability to query multiple dictionaries.
 
 Related keybindings:
-| key            | mode   | command                                                     |
-|----------------+--------+-------------------------------------------------------------|
-| =<leader> t S= | global | Toggle flyspell on/off                                      |
-| =<leader> S b= | global | Spell check whole buffer.                                   |
-| =z==           | normal | Correct previous word (ivy menu, access commands by =M-o=). |
-| =[s=           | normal | Jump to the previous incorrect word.                        |
-| =]s=           | normal | Jump to the next incorrect word.                            |
+| key       | mode   | command                                                     |
+|-----------+--------+-------------------------------------------------------------|
+| ~SPC t S= | global | Toggle flyspell on/off                                      |
+| ~SPC S b~ | global | Spell check whole buffer.                                   |
+| ~z=~      | normal | Correct previous word (ivy menu, access commands by =M-o=). |
+| ~[s~      | normal | Jump to the previous incorrect word.                        |
+| ~]s~      | normal | Jump to the next incorrect word.                            |
 
 #+begin_src elisp
   (use-package flyspell
@@ -2233,28 +2201,28 @@ On-the-fly syntax checker.
 Global keybindings:
 | key       | command                         |
 |-----------+---------------------------------|
-| =SPC t s= | Toggle flycheck mode            |
-| =SPC e b= | Check for errors                |
-| =SPC e c= | Clear errors                    |
-| =SPC e h= | Describe checker                |
-| =SPC e l= | Display list of errors          |
-| =SPC e s= | Set flycheck checker            |
-| =SPC e S= | Set flycheck checker executable |
-| =SPC e v= | Verify flycheck setup           |
-| =SPC e y= | Copy error to kill-ring         |
-| =SPC e x= | Explain error at point          |
+| ~SPC t s~ | Toggle flycheck mode            |
+| ~SPC e b~ | Check for errors                |
+| ~SPC e c~ | Clear errors                    |
+| ~SPC e h~ | Describe checker                |
+| ~SPC e l~ | Display list of errors          |
+| ~SPC e s~ | Set flycheck checker            |
+| ~SPC e S~ | Set flycheck checker executable |
+| ~SPC e v~ | Verify flycheck setup           |
+| ~SPC e y~ | Copy error to kill-ring         |
+| ~SPC e x~ | Explain error at point          |
 
 Flycheck error list mode keybindings:
 | key                 | command        |
 |---------------------+----------------|
-| =gj= / =C-j= / =]]= | Next error     |
-| =gk= / =C-k= / =[[= | Previous error |
-| =gr=                | Check source   |
-| =s=                 | Set filter     |
-| =S=                 | Reset filter   |
-| =x=                 | Explain error  |
-| =RET=               | Go to error    |
-| =q=                 | Quit window    |
+| ~gj~ / ~C-j~ / ~]]~ | Next error     |
+| ~gk~ / ~C-k~ / ~[[~ | Previous error |
+| ~gr~                | Check source   |
+| ~s~                 | Set filter     |
+| ~S~                 | Reset filter   |
+| ~x~                 | Explain error  |
+| ~RET~               | Go to error    |
+| ~q~                 | Quit window    |
 
 #+begin_src elisp
   (use-package flycheck
