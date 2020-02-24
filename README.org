@@ -1941,7 +1941,14 @@ Delete trailing whitespaces on buffer save.
 #+begin_src elisp
   (use-package whitespace
     :ensure nil
-    :hook (before-save . whitespace-cleanup))
+    :diminish
+    :commands (whitespace-mode global-whitespace-mode)
+    :general
+    (general-leader
+     "t w"   '(whitespace-mode :wk "Whitespace mode")
+     "t C-w" '(global-whitespace-mode :wk "Global whitespace mode"))
+    :custom
+    (show-trailing-whitespace t))
 #+end_src
 ** Move visual block
 Move selection up and down.

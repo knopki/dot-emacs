@@ -1736,7 +1736,14 @@ If you experience stuttering, increase this.")
 
 (use-package whitespace
   :ensure nil
-  :hook (before-save . whitespace-cleanup))
+  :diminish
+  :commands (whitespace-mode global-whitespace-mode)
+  :general
+  (general-leader
+   "t w"   '(whitespace-mode :wk "Whitespace mode")
+   "t C-w" '(global-whitespace-mode :wk "Global whitespace mode"))
+  :custom
+  (show-trailing-whitespace t))
 
 ;; Move visual block
 ;; Move selection up and down.
