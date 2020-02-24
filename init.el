@@ -1543,7 +1543,7 @@ If you experience stuttering, increase this.")
 ;; Related keybindings:
 ;; | key       | mode   | command                                                     |
 ;; |-----------+--------+-------------------------------------------------------------|
-;; | ~SPC t S= | global | Toggle flyspell on/off                                      |
+;; | ~SPC t S~ | global | Toggle flyspell on/off                                      |
 ;; | ~SPC S b~ | global | Spell check whole buffer.                                   |
 ;; | ~z=~      | normal | Correct previous word (ivy menu, access commands by =M-o=). |
 ;; | ~[s~      | normal | Jump to the previous incorrect word.                        |
