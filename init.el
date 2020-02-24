@@ -2082,56 +2082,56 @@ If you experience stuttering, increase this.")
 ;; LSP mode keybindings:
 ;; | key     | command                     |
 ;; |---------+-----------------------------|
-;; | =, s s= | Start server                |
-;; | =, s r= | Restart server              |
-;; | =, s q= | Shutdown server             |
-;; | =, s d= | Describe session            |
-;; | =, s D= | Disconnect                  |
+;; | ~​, s s~ | Start server                |
+;; | ~​, s r~ | Restart server              |
+;; | ~​, s q~ | Shutdown server             |
+;; | ~​, s d~ | Describe session            |
+;; | ~​, s D~ | Disconnect                  |
 ;; |         |                             |
-;; | =, = == | Format buffer               |
-;; | =, = r= | Format region               |
+;; | ~​, = =~ | Format buffer               |
+;; | ~​, = r~ | Format region               |
 ;; |         |                             |
-;; | =, F a= | Add folder                  |
-;; | =, F r= | Remove folder               |
-;; | =, F b= | Un-blacklist folder         |
+;; | ~​, F a~ | Add folder                  |
+;; | ~​, F r~ | Remove folder               |
+;; | ~​, F b~ | Un-blacklist folder         |
 ;; |         |                             |
-;; | =, T l= | Toggle lenses               |
-;; | =, T L= | Toggle log io               |
-;; | =, T h= | Toggle highlighting         |
-;; | =, T s= | Toggle signatures           |
-;; | =, T S= | Toggle sideline             |
-;; | =, T d= | Toddle documentation popup  |
-;; | =, T p= | Toggle signature help       |
-;; | =, T f= | Toggle on type formatting   |
-;; | =, T T= | Toggle treemacs integration |
+;; | ~​, T l~ | Toggle lenses               |
+;; | ~​, T L~ | Toggle log io               |
+;; | ~​, T h~ | Toggle highlighting         |
+;; | ~​, T s~ | Toggle signatures           |
+;; | ~​, T S~ | Toggle sideline             |
+;; | ~​, T d~ | Toddle documentation popup  |
+;; | ~​, T p~ | Toggle signature help       |
+;; | ~​, T f~ | Toggle on type formatting   |
+;; | ~​, T T~ | Toggle treemacs integration |
 ;; |         |                             |
-;; | =, g g= | Find definition             |
-;; | =, g r= | Find references             |
-;; | =, g i= | Find implementations        |
-;; | =, g d= | Find declarations           |
-;; | =, g t= | Find type definitions       |
-;; | =, g h= | Call hierarchy              |
-;; | =, g a= | Find symbol in workspace    |
-;; | =, g M= | Show navigation menu        |
-;; | =, g e= | Show flycheck errors        |
+;; | ~​, g g~ | Find definition             |
+;; | ~​, g r~ | Find references             |
+;; | ~​, g i~ | Find implementations        |
+;; | ~​, g d~ | Find declarations           |
+;; | ~​, g t~ | Find type definitions       |
+;; | ~​, g h~ | Call hierarchy              |
+;; | ~​, g a~ | Find symbol in workspace    |
+;; | ~​, g M~ | Show navigation menu        |
+;; | ~​, g e~ | Show flycheck errors        |
 ;; |         |                             |
-;; | =, h h= | Describe symbol at point    |
-;; | =, h s= | Signature help              |
-;; | =, h g= | Doc popup                   |
+;; | ~​, h h~ | Describe symbol at point    |
+;; | ~​, h s~ | Signature help              |
+;; | ~​, h g~ | Doc popup                   |
 ;; |         |                             |
-;; | =, r r= | Rename                      |
-;; | =, r o= | Organize imports            |
+;; | ~​, r r~ | Rename                      |
+;; | ~​, r o~ | Organize imports            |
 ;; |         |                             |
-;; | =, a a= | Code actions                |
-;; | =, a l= | Lens                        |
-;; | =, a h= | Highlight symbol            |
+;; | ~​, a a~ | Code actions                |
+;; | ~​, a l~ | Lens                        |
+;; | ~​, a h~ | Highlight symbol            |
 ;; |         |                             |
-;; | =, G g= | Peek definitions            |
-;; | =, G r= | Peek references             |
-;; | =, G i= | Peek implementations        |
-;; | =, G s= | Peek workspace symbol       |
-;; | =, G N= | Peek jump backward          |
-;; | =, G n= | Peek jump forward           |
+;; | ~​, G g~ | Peek definitions            |
+;; | ~​, G r~ | Peek references             |
+;; | ~​, G i~ | Peek implementations        |
+;; | ~​, G s~ | Peek workspace symbol       |
+;; | ~​, G N~ | Peek jump backward          |
+;; | ~​, G n~ | Peek jump forward           |
 
 
 (use-package lsp-mode
