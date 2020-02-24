@@ -2037,58 +2037,59 @@ If you experience stuttering, increase this.")
 ;; LSP
 ;; Language Server Protocol Support for Emacs
 
-;; | key     | mode   | command                     |
-;; |---------+--------+-----------------------------|
-;; | =, s s= | global | Start server                |
-;; | =, s r= | global | Restart server              |
-;; | =, s q= | global | Shutdown server             |
-;; | =, s d= | global | Describe session            |
-;; | =, s D= | global | Disconnect                  |
-;; |         |        |                             |
-;; | =, = == | global | Format buffer               |
-;; | =, = r= | global | Format region               |
-;; |         |        |                             |
-;; | =, F a= | global | Add folder                  |
-;; | =, F r= | global | Remove folder               |
-;; | =, F b= | global | Un-blacklist folder         |
-;; |         |        |                             |
-;; | =, T l= | global | Toggle lenses               |
-;; | =, T L= | global | Toggle log io               |
-;; | =, T h= | global | Toggle highlighting         |
-;; | =, T s= | global | Toggle signatures           |
-;; | =, T S= | global | Toggle sideline             |
-;; | =, T d= | global | Toddle documentation popup  |
-;; | =, T p= | global | Toggle signature help       |
-;; | =, T f= | global | Toggle on type formatting   |
-;; | =, T T= | global | Toggle treemacs integration |
-;; |         |        |                             |
-;; | =, g g= | global | Find definition             |
-;; | =, g r= | global | Find references             |
-;; | =, g i= | global | Find implementations        |
-;; | =, g d= | global | Find declarations           |
-;; | =, g t= | global | Find type definitions       |
-;; | =, g h= | global | Call hierarchy              |
-;; | =, g a= | global | Find symbol in workspace    |
-;; | =, g M= | global | Show navigation menu        |
-;; | =, g e= | global | Show flycheck errors        |
-;; |         |        |                             |
-;; | =, h h= | global | Describe symbol at point    |
-;; | =, h s= | global | Signature help              |
-;; | =, h g= | global | Doc popup                   |
-;; |         |        |                             |
-;; | =, r r= | glboal | Rename                      |
-;; | =, r o= | global | Organize imports            |
-;; |         |        |                             |
-;; | =, a a= | global | Code actions                |
-;; | =, a l= | global | Lens                        |
-;; | =, a h= | global | Highlight symbol            |
-;; |         |        |                             |
-;; | =, G g= | global | Peek definitions            |
-;; | =, G r= | global | Peek references             |
-;; | =, G i= | global | Peek implementations        |
-;; | =, G s= | global | Peek workspace symbol       |
-;; | =, G N= | global | Peek jump backward          |
-;; | =, G n= | global | Peek jump forward           |
+;; LSP mode keybindings:
+;; | key     | command                     |
+;; |---------+-----------------------------|
+;; | =, s s= | Start server                |
+;; | =, s r= | Restart server              |
+;; | =, s q= | Shutdown server             |
+;; | =, s d= | Describe session            |
+;; | =, s D= | Disconnect                  |
+;; |         |                             |
+;; | =, = == | Format buffer               |
+;; | =, = r= | Format region               |
+;; |         |                             |
+;; | =, F a= | Add folder                  |
+;; | =, F r= | Remove folder               |
+;; | =, F b= | Un-blacklist folder         |
+;; |         |                             |
+;; | =, T l= | Toggle lenses               |
+;; | =, T L= | Toggle log io               |
+;; | =, T h= | Toggle highlighting         |
+;; | =, T s= | Toggle signatures           |
+;; | =, T S= | Toggle sideline             |
+;; | =, T d= | Toddle documentation popup  |
+;; | =, T p= | Toggle signature help       |
+;; | =, T f= | Toggle on type formatting   |
+;; | =, T T= | Toggle treemacs integration |
+;; |         |                             |
+;; | =, g g= | Find definition             |
+;; | =, g r= | Find references             |
+;; | =, g i= | Find implementations        |
+;; | =, g d= | Find declarations           |
+;; | =, g t= | Find type definitions       |
+;; | =, g h= | Call hierarchy              |
+;; | =, g a= | Find symbol in workspace    |
+;; | =, g M= | Show navigation menu        |
+;; | =, g e= | Show flycheck errors        |
+;; |         |                             |
+;; | =, h h= | Describe symbol at point    |
+;; | =, h s= | Signature help              |
+;; | =, h g= | Doc popup                   |
+;; |         |                             |
+;; | =, r r= | Rename                      |
+;; | =, r o= | Organize imports            |
+;; |         |                             |
+;; | =, a a= | Code actions                |
+;; | =, a l= | Lens                        |
+;; | =, a h= | Highlight symbol            |
+;; |         |                             |
+;; | =, G g= | Peek definitions            |
+;; | =, G r= | Peek references             |
+;; | =, G i= | Peek implementations        |
+;; | =, G s= | Peek workspace symbol       |
+;; | =, G N= | Peek jump backward          |
+;; | =, G n= | Peek jump forward           |
 
 
 (use-package lsp-mode
