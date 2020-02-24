@@ -85,6 +85,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#whitespaces][Whitespaces]]
   - [[#move-visual-block][Move visual block]]
   - [[#macros][Macros]]
+  - [[#rectangles][Rectangles]]
   - [[#on-the-fly-spell-checker][On-the-fly spell checker]]
   - [[#undo-tree][Undo Tree]]
 - [[#productivity--task-management][Productivity & task management]]
@@ -444,12 +445,13 @@ Common prefixes:
       :non-normal-prefix "M-,")
     (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode"))
     (general-leader
+      "K" '(nil :wk "Macros")
+      "R" '(nil :wk "Rectangles")
       "a" '(nil :wk "Applications")
       "b" '(nil :wk "Buffers")
       "e" '(nil :wk "Error management")
       "f" '(nil :wk "Files")
       "j" '(nil :wk "Jump/join/split")
-      "K" '(nil :wk "Macros")
       "t" '(nil :wk "Global toggles")
       "u" '(universal-argument :wk "Universal argument")))
 #+end_src
@@ -2014,6 +2016,46 @@ Macros keybindings.
    "Krp" '(kmacro-cycle-ring-previous :wk "Move to prev macro in macro ring")
    "Krs" '(kmacro-swap-ring :wk "Swap first two elements in macro ring")
    "Kv"  '(kmacro-view-macro-repeat :wk "Display last macro"))
+#+end_src
+** Rectangles
+
+| key       | command                                                    |
+|-----------+------------------------------------------------------------|
+| ~SPC R !~ | Blank out the rect                                         |
+| ~SPC R c~ | Delete all whitespace following column in each line        |
+| ~SPC R d~ | Delete text in rect                                        |
+| ~SPC R e~ | Cycles through the rect's corners                          |
+| ~SPC R i~ | Copy rect into register                                    |
+| ~SPC R k~ | Delete rect and save it as last killed one                 |
+| ~SPC R l~ | Move N wide chars to the left                              |
+| ~SPC R m~ | Toggle the region as rect                                  |
+| ~SPC R n~ | Move N wide chars down                                     |
+| ~SPC R N~ | Insert numbers in front of rect                            |
+| ~SPC R o~ | Blank out rect, shifting text right                        |
+| ~SPC R p~ | Move N wide chars up                                       |
+| ~SPC R r~ | Move N wide chars to the right                             |
+| ~SPC R s~ | Replace rect contents with string on each line             |
+| ~SPC R t~ | Transpose region                                           |
+| ~SPC R y~ | Yank the last killed rect with upper left corner at point" |
+
+#+begin_src elisp
+  (general-leader
+    "R!" '(clear-rectangle :wk "Blank out the rect")
+    "Rc" '(close-rectangle :wk "Delete all whitespace following column in each line")
+    "Rd" '(delete-rectangle :wk "Delete text in rect")
+    "Re" '(rectangle-exchange-point-and-mark :wk "Cycles through the rect's corners")
+    "Ri" '(copy-rectangle-to-register :wk "Copy rect into register")
+    "Rk" '(kill-rectangle :wk "Delete rect and save it as last killed one")
+    "Rl" '(rectangle-left-char :wk "Move N wide chars to the left")
+    "Rm" '(rectangle-mark-mode :wk "Toggle the region as rect")
+    "Rn" '(rectangle-next-line :wk "Move N wide chars down")
+    "RN" '(rectangle-number-lines :wk "Insert numbers in front of rect")
+    "Ro" '(open-rectangle :wk "Blank out rect, shifting text right")
+    "Rp" '(rectangle-previous-line :wk "Move N wide chars up")
+    "Rr" '(rectangle-right-char :wk "Move N wide chars to the right")
+    "Rs" '(string-rectangle :wk "Replace rect contents with string on each line")
+    "Rt" '(transpose-regions :wk "Transpose region")
+    "Ry" '(yank-rectangle :wk "Yank the last killed rect with upper left corner at point"))
 #+end_src
 ** On-the-fly spell checker
 On the fly spell checking. Disabled by default. =hunspell= is must because of ability to query multiple dictionaries.
