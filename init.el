@@ -2104,7 +2104,7 @@ If you experience stuttering, increase this.")
   :ensure nil
   :diminish eldoc-mode
   :hook
-  (prog-mode . eldoc-mode)
+  ((prog-mode eval-expression-minibuffer-setup-hook) . eldoc-mode)
   :custom
   (global-eldoc-mode -1 "Disable global mode."))
 

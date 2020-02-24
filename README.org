@@ -2312,7 +2312,7 @@ Open github/gitlab/bitbucket page.
     :ensure nil
     :diminish eldoc-mode
     :hook
-    (prog-mode . eldoc-mode)
+    ((prog-mode eval-expression-minibuffer-setup-hook) . eldoc-mode)
     :custom
     (global-eldoc-mode -1 "Disable global mode."))
 #+end_src
