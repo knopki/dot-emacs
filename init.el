@@ -220,15 +220,17 @@ If you experience stuttering, increase this.")
 ;; More convenient method for binding keys. Setup leader key definers.
 
 ;; Common prefixes:
-;; | prefix  | meaning          |
-;; |---------+------------------|
-;; | ~SPC a~ | Applications     |
-;; | ~SPC b~ | Buffers          |
-;; | ~SPC e~ | Error management |
-;; | ~SPC f~ | Files            |
-;; | ~SPC j~ | Jump/join/split  |
-;; | ~SPC m~ | Major mode       |
-;; | ~SPC t~ | Global toggles   |
+;; | prefix  | meaning            |
+;; |---------+--------------------|
+;; | ~SPC a~ | Applications       |
+;; | ~SPC b~ | Buffers            |
+;; | ~SPC e~ | Error management   |
+;; | ~SPC f~ | Files              |
+;; | ~SPC j~ | Jump/join/split    |
+;; | ~SPC K~ | Macros             |
+;; | ~SPC m~ | Major mode         |
+;; | ~SPC t~ | Global toggles     |
+;; | ~SPC u~ | Universal argument |
 
 
 (use-package general
@@ -251,7 +253,9 @@ If you experience stuttering, increase this.")
     "e" '(nil :wk "Error management")
     "f" '(nil :wk "Files")
     "j" '(nil :wk "Jump/join/split")
-    "t" '(nil :wk "Global toggles")))
+    "K" '(nil :wk "Macros")
+    "t" '(nil :wk "Global toggles")
+    "u" '(universal-argument :wk "Universal argument")))
 
 ;; Reverse-im
 ;; Use bindings while the non-default system layout is active.
@@ -1757,6 +1761,53 @@ If you experience stuttering, increase this.")
 (general-vmap
   "J" (concat ":m '>+1" (kbd "RET") "gv=gv")
   "K" (concat ":m '<-2" (kbd "RET") "gv=gv"))
+
+;; Macros
+;; Macros keybindings.
+
+;; | key         | command                                        |
+;; |-------------+------------------------------------------------|
+;; | ~SPC K c a~ | Add the value of numeric prefix                |
+;; | ~SPC K c c~ | Insert current value of counter then increment |
+;; | ~SPC K c C~ | Set value of counter                           |
+;; | ~SPC K c f~ | Set the format of counter                      |
+;; | ~SPC K e b~ | Bind last macro to key                         |
+;; | ~SPC K e e~ | Edit last keyboard macro                       |
+;; | ~SPC K e l~ | Edit most recent 300 keystrokes as macro       |
+;; | ~SPC K e n~ | Name last macro                                |
+;; | ~SPC K e r~ | Store the last macro in register               |
+;; | ~SPC K e s~ | Step edit and execute last macro               |
+;; | ~SPC K k "~ | Record keyboard input                          |
+;; | ~SPC K K "~ | End macro if currently defined or call last    |
+;; | ~SPC K r L~ | Display current head of macro ring             |
+;; | ~SPC K r d~ | Delete current macro from ring                 |
+;; | ~SPC K r l~ | Execute second macro in macro ring             |
+;; | ~SPC K r n~ | Move to next macro in macro ring               |
+;; | ~SPC K r p~ | Move to prev macro in macro ring               |
+;; | ~SPC K r s~ | Swap first two elements in macro ring          |
+;; | ~SPC K v "~ | Display last macro"                            |
+
+
+(general-leader
+ "Kca" '(kmacro-add-counter :wk "Add the value of numeric prefix")
+ "Kcc" '(kmacro-insert-counter :wk "Insert current value of counter then increment")
+ "KcC" '(kmacro-set-counter :wk "Set value of counter")
+ "Kcf" '(kmacro-set-format :wk "Set the format of counter")
+ "Keb" '(kmacro-bind-to-key :wk "Bind last macro to key")
+ "Kee" '(kmacro-edit-macro-repeat :wk "Edit last keyboard macro")
+ "Kel" '(kmacro-edit-lossage :wk "Edit most recent 300 keystrokes as macro")
+ "Ken" '(kmacro-name-last-macro :wk "Name last macro")
+ "Ker" '(kmacro-to-register :wk "Store the last macro in register")
+ "Kes" '(kmacro-step-edit-macro :wk "Step edit and execute last macro")
+ "Kk"  '(kmacro-start-macro-or-insert-counter :wk "Record keyboard input")
+ "KK"  '(kmacro-end-or-call-macro :wk "End macro if currently defined or call last")
+ "KrL" '(kmacro-view-ring-2nd :wk "Display current head of macro ring")
+ "Krd" '(kmacro-delete-ring-head :wk "Delete current macro from ring")
+ "Krl" '(kmacro-call-ring-2nd-repeat :wk "Execute second macro in macro ring")
+ "Krn" '(kmacro-cycle-ring-next :wk "Move to next macro in macro ring")
+ "Krp" '(kmacro-cycle-ring-previous :wk "Move to prev macro in macro ring")
+ "Krs" '(kmacro-swap-ring :wk "Swap first two elements in macro ring")
+ "Kv"  '(kmacro-view-macro-repeat :wk "Display last macro"))
 
 ;; On-the-fly spell checker
 ;; On the fly spell checking. Disabled by default. =hunspell= is must because of ability to query multiple dictionaries.
