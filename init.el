@@ -1443,10 +1443,6 @@ If you experience stuttering, increase this.")
                                :height 1.25)
         " ")
      "Project: "))
-  (initial-buffer-choice '(lambda ()
-                            (ibuffer)
-                            (get-buffer "*Ibuffer*"))
-                         "Show list of buffers on startup.")
   :config
   (add-to-list 'ibuffer-never-show-predicates "^\\*helpful"))
 
