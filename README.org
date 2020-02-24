@@ -78,6 +78,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#projectile][Projectile]]
   - [[#projectile-ivy-integration][Projectile Ivy integration]]
 - [[#file-management][File management]]
+  - [[#dired][Dired]]
 - [[#editing][Editing]]
   - [[#simple][Simple]]
   - [[#delete-selection][Delete selection]]
@@ -416,8 +417,11 @@ More convenient method for binding keys. Setup leader key definers.
 Common prefixes:
 | prefix  | meaning          |
 |---------+------------------|
+| ~SPC a~ | Applications     |
 | ~SPC b~ | Buffers          |
 | ~SPC e~ | Error management |
+| ~SPC f~ | Files            |
+| ~SPC j~ | Jump/join/split  |
 | ~SPC m~ | Major mode       |
 | ~SPC t~ | Global toggles   |
 
@@ -437,8 +441,11 @@ Common prefixes:
       :non-normal-prefix "M-,")
     (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode"))
     (general-leader
+      "a" '(nil :wk "Applications")
       "b" '(nil :wk "Buffers")
       "e" '(nil :wk "Error management")
+      "f" '(nil :wk "Files")
+      "j" '(nil :wk "Jump/join/split")
       "t" '(nil :wk "Global toggles")))
 #+end_src
 ** Reverse-im
@@ -1556,6 +1563,7 @@ Jump to bookmark.
 
 #+begin_src elisp
   (use-package bookmark
+    :ensure nil
     :defer t
     :general
     (general-leader
@@ -1699,6 +1707,166 @@ More advanced Ivy integration.
     (define-obsolete-function-alias 'counsel-more-chars 'ivy-more-chars "26.3"))
 #+end_src
 * File management
+** Dired
+Standard file manager.
+
+Global keys:
+| key       | commandard                             |
+|-----------+----------------------------------------|
+| ~​SPC a d~ | Start =dired=                          |
+| ~SPC f j~ | Jump to =dired= buffer                 |
+| ~SPC j d~ | Jump to =dired= buffer                 |
+| ~SPC j D~ | Jump to =dired= buffer in other window |
+
+Mode keys:
+| key           | commandard                                             |
+|---------------+--------------------------------------------------------|
+| ~q~           | Quit                                                   |
+| ~j~           | Next line                                              |
+| ~k~           | Previous line                                          |
+|               |                                                        |
+| ~#~           | Flag auto save files                                   |
+| ~.~           | Flag numerical backupd for deletion                    |
+| ~~~           | Flag backups for deletion                              |
+|               |                                                        |
+| ~A~           | Flag all matches for regexp in all marked files        |
+| ~B~           | Byte compile marked files                              |
+| ~C~           | Copy all marked files                                  |
+| ~D~           | Delete marked files                                    |
+| ~gG~          | Change group of marked files                           |
+| ~H~           | Create hardlinks of marked files                       |
+| ~L~           | Load marked Elisp files                                |
+| ~M~           | Chmod marked files                                     |
+| ~O~           | Chown marked files                                     |
+| ~P~           | Print marked files                                     |
+| ~Q~           | Find regexp and replace in marked files                |
+| ~R~           | Rename marked files                                    |
+| ~S~           | Symlink marked files                                   |
+| ~T~           | Touch marked files                                     |
+| ~X~           | Run shell command on marked files                      |
+| ~Z~           | (Un)compress marked files                              |
+| ~c~           | Compress marked files to archive                       |
+| ~!~           | Run shell command on marked files                      |
+| ~&~           | Run async shell command on marked files                |
+|               |                                                        |
+| ~=~           | Dired diff                                             |
+|               |                                                        |
+| ~M-C-?~       | Unmark all files                                       |
+| ~M-C-d~       | Go down in tree                                        |
+| ~M-C-u~       | Go up in tree                                          |
+| ~M-C-n~       | Go to the next subdirectory                            |
+| ~M-C-p~       | Go to the previous subdirectory                        |
+|               |                                                        |
+| ~M-{~         | Go to previous marked file                             |
+| ~M-}~         | To to the next marked file                             |
+|               |                                                        |
+| ~%u~          | Rename all marked files to upper case                  |
+| ~%l~          | Rename all marked files to downcase                    |
+| ~%d~          | Mark all files that contains regexp for deletion       |
+| ~%g~          | Mark all files that contains regexp                    |
+| ~%m~          | Mark all files that contains regexp                    |
+| ~%r~          | Mark all files with regexp in name                     |
+| ~%C~          | Copy files whose names contains regexp                 |
+| ~%H~          | Hardlink files whose names contans regexp              |
+| ~%R~          | Rename files whose names contains regexp               |
+| ~%S~          | Symlink files whose names contains regexp              |
+| ~%&~          | Flag for deletion all 'garbage' files                  |
+|               |                                                        |
+| ~**~          | Mark executables                                       |
+| ~*/~          | Mark directories                                       |
+| ~*@~          | Mark symlinks                                          |
+| ~*%~          | Mark all files matching regexp                         |
+| ~*.~          | Mark all files with extension                          |
+| ~*c~          | Change old mark to new marks                           |
+| ~*s~          | Mark subdir files                                      |
+| ~*m~          | Mark file at point                                     |
+| ~*u~          | Unmark file at point                                   |
+| ~*?~ ~*!~ ~U~ | Unmark all files                                       |
+| ~* <delete>~  | Unmark backward                                        |
+| ~* C-n~       | Next marked file                                       |
+| ~* C-p~       | Previous marked file                                   |
+| ~*t~          | Reverse marks                                          |
+|               |                                                        |
+| ~a~           | Visit file/directory under cursor                      |
+| ~d~           | Flag file for deletion                                 |
+| ~gf~ ~C-m~    | Visit file/directory on the current line               |
+| ~gr~          | Revert buffer                                          |
+| ~i~           | Edit with Wdired or make it read only                  |
+| ~I~           | Insert this subdirectory into the same dired buffer    |
+| ~J~           | GO to line describing file FILE in this Dired buffer   |
+| ~K~           | Kill all marked lines (not files)                      |
+| ~r~           | Redisplay all marked files                             |
+| ~m~           | Mark the file at point in the Dired buffer             |
+| ~t~           | Reverse mark                                           |
+| ~u~           | Unmark file at point                                   |
+| ~W~           | Open file in www browser                               |
+| ~x~           | Delete the files flagged for deletion                  |
+| ~gy~          | Print file type                                        |
+| ~Y~           | Copy names of marked files into kill ring              |
+| ~+~           | Create a directory                                     |
+|               |                                                        |
+| ~RET~         | Open file/directory                                    |
+| ~S-RET~       | Open file/directory in other window                    |
+| ~gO~          | Find file in other window                              |
+| ~go~          | View file                                              |
+|               |                                                        |
+| ~o~           | Toggle sorting by date                                 |
+|               |                                                        |
+| ~gj~ ~]]~ ~>~ | Go to next directory line                              |
+| ~gk~ ~[[~ ~<~ | Go to previous directory line                          |
+| ~^~ ~-~       | Run dired on parent directory                          |
+| ~SPC~         | Move down lines then position at filename              |
+|               |                                                        |
+| ~g$~          | (Un)hide the current subdir and move to next dir       |
+| ~M-$~         | Hide all subdirs, leaving only their header lines      |
+| ~(~           | Toggle visibility of detailed indo in current buffer   |
+|               |                                                        |
+| ~M-s a C-s~   | Search for a string through all marked files           |
+| ~M-s a M-C-s~ | Search for a regexp through all marked files           |
+| ~M-s f C-s~   | Search for a string only in file names                 |
+| ~M-s f M-C-s~ | Search for a regexp only in file names                 |
+|               |                                                        |
+| ~g?~          | Summarize basic commands and show recent errors        |
+| ~<delete>~    | Unmark backward                                        |
+|               |                                                        |
+| ~C-t d~       | Display thumbs of all marked files                     |
+| ~C-t t~       | Tag marked files                                       |
+| ~C-t r~       | Remove tag for selected files                          |
+| ~C-t j~       | Jump to thumbnail buffer                               |
+| ~C-t i~       | Display current image file                             |
+| ~C-t x~       | Display file at point in external viewer               |
+| ~C-t a~       | Append thumbs to thumb buffer                          |
+| ~C-t .~       | Display thumb for current file                         |
+| ~C-t c~       | Add comment to current of marked files                 |
+| ~C-t f~       | Use regexp to mark files with matching tag             |
+| ~C-t C-t~     | Toogle thumbs in front of file names                   |
+| ~C-t e~       | Edit comment and tags of current or marked image files |
+|               |                                                        |
+| ~;d~          | Decrypt marked files                                   |
+| ~;v~          | Verify marked files                                    |
+| ~;s~          | Sign marked files                                      |
+| ~;e~          | Encrypt marked files                                   |
+|               |                                                        |
+| ~TAB~         |                                                        |
+
+#+begin_src elisp
+  (use-package dired-x
+    :ensure nil
+    :general
+    (general-leader
+      "ad" 'dired
+      "fj" 'dired-jump
+      "jd" 'dired-jump
+      "jD" 'dired-jump-other-window)
+    ;; (general-define-key
+    ;;  :state 'normal
+    ;;  :keymap 'dired-mode-map
+    ;;  "n" 'evil-ex-search-next
+    ;;  "N" 'evil-ex-search-previous)
+    :commands (dired-jump
+               dired-jump-other-window
+               dired-omit-mode))
+#+end_src
 * Editing
 ** Simple
 #+begin_src elisp
