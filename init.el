@@ -1923,6 +1923,34 @@ If you experience stuttering, increase this.")
 ;; Undo Tree
 ;; Treat undo history as a branching tree of changes.
 
+;; =undo-tree-mode= and =global-undo-tree-mode= keybindings:
+;; | key               | command                               |
+;; |-------------------+---------------------------------------|
+;; | ~SPC a u~ ~C-x u~ | Run Undo Tree Visualizer              |
+;; | ~C-_~ ~C-/~       | Undo tree undo                        |
+;; | ~M-_~ ~M-/~       | Undo tree redo                        |
+;; | ~C-x r u~         | Save current buffer state to register |
+;; | ~C-x r U~         | Load buffer state from register       |
+
+;; =undo-tree-visualizer= keybindings:
+;; | key                    | command                                |
+;; |------------------------+----------------------------------------|
+;; | ~<up>~ ~k~ ~p~ ~C-p~   | Undo changes                           |
+;; | ~<down>~ ~j~ ~n~ ~C-n~ | Redo changes                           |
+;; | ~<left>~ ~h~ ~b~ ~C-b~ | Switch to previous undo-tree branch    |
+;; | ~<right> ~l~ ~f~ ~C-f~ | Switch to next undo-tree branch        |
+;; | ~C-<up>~ ~M-{~         | Undo changes up to last branch point   |
+;; | ~C-<down>~ ~M-}~       | Redo changes down to next branch point |
+;; | ~t~                    | Toggle display of time-stamps          |
+;; | ~d~                    | Toggle diff display                    |
+;; | ~s~                    | Toggle keyboard selection mode         |
+;; | ~q~                    | Quit undo-tree-visualizer              |
+;; | ~C-q~                  | Abort undo-tree-visualizer             |
+;; | ~<~                    | Scroll left                            |
+;; | ~>~                    | Scroll right                           |
+;; | ~<pgup>~ ~M-v~         | Scroll up                              |
+;; | ~<pgdown>~ ~C-v~       | Scroll down                            |
+
 
 (use-package undo-tree
   :diminish
