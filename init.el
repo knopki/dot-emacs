@@ -219,18 +219,12 @@ If you experience stuttering, increase this.")
 ;; El General
 ;; More convenient method for binding keys. Setup leader key definers.
 
-;; Common prefixes:
-;; | prefix  | meaning            |
-;; |---------+--------------------|
-;; | ~SPC a~ | Applications       |
-;; | ~SPC b~ | Buffers            |
-;; | ~SPC e~ | Error management   |
-;; | ~SPC f~ | Files              |
-;; | ~SPC j~ | Jump/join/split    |
-;; | ~SPC K~ | Macros             |
-;; | ~SPC m~ | Major mode         |
-;; | ~SPC t~ | Global toggles     |
-;; | ~SPC u~ | Universal argument |
+;; =SPC= is the leader key with =M-SPC= alternative in some states.
+
+;; =​,= is the major mode leader key with =M-,= alternative in some states. Aliased
+;; by =SPC m=.
+
+;; =SPC u= is the universal argument instead of standard =C-u=.
 
 
 (use-package general
@@ -247,16 +241,7 @@ If you experience stuttering, increase this.")
     :prefix ","
     :non-normal-prefix "M-,")
   (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode"))
-  (general-leader
-    "K" '(nil :wk "Macros")
-    "R" '(nil :wk "Rectangles")
-    "a" '(nil :wk "Applications")
-    "b" '(nil :wk "Buffers")
-    "e" '(nil :wk "Error management")
-    "f" '(nil :wk "Files")
-    "j" '(nil :wk "Jump/join/split")
-    "t" '(nil :wk "Global toggles")
-    "u" '(universal-argument :wk "Universal argument")))
+  (general-leader "u" '(universal-argument :wk "Universal argument")))
 
 ;; Reverse-im
 ;; Use bindings while the non-default system layout is active.
@@ -270,12 +255,44 @@ If you experience stuttering, increase this.")
 
 ;; Some global keybindings
 
+;; Common prefixes:
+;; | prefix  | meaning          |
+;; |---------+------------------|
+;; | ~SPC a~ | Applications     |
+;; | ~SPC b~ | Buffers          |
+;; | ~SPC e~ | Error management |
+;; | ~SPC f~ | Files            |
+;; | ~SPC j~ | Jump/join/split  |
+;; | ~SPC K~ | Macros           |
+;; | ~SPC m~ | Major mode       |
+;; | ~SPC t~ | Global toggles   |
+
+
 (general-leader
-  ""     nil
-  "<f1>" 'general-describe-keybindings
-  "ac"  'calc-dispatch
-  "ap"  'list-processes
-  "aP"  'proced)
+  "" nil
+  "K" '(nil :wk "Macros")
+  "R" '(nil :wk "Rectangles")
+  "a"  '(nil :wk "Applications")
+  "b" '(nil :wk "Buffers")
+  "e" '(nil :wk "Error management")
+  "f" '(nil :wk "Files")
+  "j" '(nil :wk "Jump/join/split")
+  "t" '(nil :wk "Global toggles"))
+
+
+
+;; Application:
+;; | key       | command                 |
+;; |-----------+-------------------------|
+;; | ~SPC a c~ | Calculator              |
+;; | ~SPC a p~ | List Emacs subprocesses |
+;; | ~SPC a P~ | List system processes   |
+
+
+(general-leader
+  "ac" '(calc-dispatch :wk "Calculator")
+  "ap" '(list-processes :wk "List subprocesses")
+  "aP" '(proced :wk "List system processes"))
 
 ;; Emacs variables that defined in C source code
 
