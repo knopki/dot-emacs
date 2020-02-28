@@ -1412,6 +1412,21 @@ If you experience stuttering, increase this.")
     "C-'" 'evil-avy-goto-char-timer
     "C-\"" 'evil-avy-goto-word-0))
 
+;; Keybindings
+
+(general-leader
+  "TAB"    '(mode-line-other-buffer :wk "Alternate buffer")
+  "bd"     '(kill-this-buffer :wk "Kill this buffer")
+  "be"     '(erase-buffer :wk "Erase buffer")
+  "bn"     '(next-buffer :wk "Next buffer")
+  "bN C-i" '(make-indirect-buffer :wk "Create indirect buffer")
+  "bNi"    '(clone-indirect-buffer :wk "Indirect buffer from current")
+  "bNI"    '(clone-indirect-buffer-other-window
+             :wk "Indirect buffer from current in other window")
+  "bp"     '(previous-buffer :wk "Previous buffer")
+  "bx"     '(kill-buffer-and-window :wk "Kill buffer with window")
+  "bw"     '(read-only-mode :wk "Read only buffer"))
+
 ;; Unique buffer names
 
 (use-package uniquify
