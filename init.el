@@ -95,7 +95,8 @@ If you experience stuttering, increase this.")
 ;; Update GPG keyring for GNU ELPA.
 
 
-(use-package gnu-elpa-keyring-update)
+(use-package gnu-elpa-keyring-update
+  :commands (gnu-elpa-keyring-update))
 
 ;; Benchmarking
 ;; Enable startup benchmarking if started with =EMACS_BENCHMARK= environment
@@ -184,8 +185,9 @@ If you experience stuttering, increase this.")
 
 
 (use-package evil
-  :diminish undo-tree-mode
   :hook (after-init . evil-mode)
+  :commands (evil-ex-define-cmd)
+  :defer .1
   :custom
   (evil-want-keybinding nil "Don't load evil-keybindings - required by evil-collection")
   (evil-motion-state-modes nil "Use 'normal instead of 'motion state.")
@@ -202,19 +204,12 @@ If you experience stuttering, increase this.")
   ;; Amazing hack lifted from: http://emacs.stackexchange.com/a/15054/12585
   (fset 'evil-visual-update-x-selection 'ignore)
 
-  ;; Kill buffer without window
-  (evil-ex-define-cmd "bd[elete]" #'kill-this-buffer))
-
-;; Evil collection
-;; Vim-like keybindings everywhere in Emacs.
-
-
-(use-package evil-collection
-  :after evil
-  :custom
-  (evil-collection-setup-minibuffer t)
-  :config
-  (evil-collection-init))
+  ;; Vim-like keybindings everywhere in Emacs.
+  (use-package evil-collection
+    :custom
+    (evil-collection-setup-minibuffer t)
+    :config
+    (evil-collection-init)))
 
 ;; El General
 ;; More convenient method for binding keys. Setup leader key definers.
@@ -228,6 +223,7 @@ If you experience stuttering, increase this.")
 
 
 (use-package general
+  :commands (general-leader general-major-leader)
   :config
   (general-evil-setup)
 
@@ -466,7 +462,8 @@ If you experience stuttering, increase this.")
 
 (use-package recentf
   :ensure nil
-  :hook (after-init . recentf-mode)
+  :commands (recentf-open-files recentf-save-list)
+  :hook (after-find-file . recentf-mode)
   :init
   ;; Save recent list some times
   (run-at-time t (* 5 60) 'recentf-save-list)
@@ -492,7 +489,7 @@ If you experience stuttering, increase this.")
 
 (use-package savehist
   :ensure nil
-  :hook (after-init . savehist-mode)
+  :hook (pre-command . savehist-mode)
   :custom
   (enable-recursive-minibuffers t "Allow minibuffer commands while in minibuffer.")
   (savehist-additional-variables
@@ -510,7 +507,7 @@ If you experience stuttering, increase this.")
 (use-package autorevert
   :ensure nil
   :diminish
-  :hook (after-init . global-auto-revert-mode)
+  :hook (pre-command . global-auto-revert-mode)
   :custom
   (auto-revert-check-vc-info t "Update version control.")
   (auto-revert-verbose nil "Silent auto revert."))
@@ -536,7 +533,7 @@ If you experience stuttering, increase this.")
 
 
 (use-package persistent-scratch
-  :hook (after-init . persistent-scratch-autosave-mode)
+  :hook (after-find-file . persistent-scratch-autosave-mode)
   :config
   (persistent-scratch-setup-default))
 
@@ -603,7 +600,7 @@ If you experience stuttering, increase this.")
 (use-package winner
   :ensure nil
   :commands (winner-undo winner-redo)
-  :hook (after-init . winner-mode)
+  :hook (after-find-file . winner-mode)
   :custom
   (winner-boring-buffers '("*Apropos*"
                            "*Buffer List*"
@@ -643,6 +640,7 @@ If you experience stuttering, increase this.")
 
 
 (use-package doom-modeline
+  :diminish
   :hook (after-init . doom-modeline-mode)
   :custom
   (doom-modeline-minor-modes t "Display minor modes.")
@@ -654,6 +652,7 @@ If you experience stuttering, increase this.")
 
 
 (use-package minions
+  :diminish
   :hook (doom-modeline-mode . minions-mode))
 
 
@@ -663,7 +662,7 @@ If you experience stuttering, increase this.")
 
 (use-package nyan-mode
   :diminish nyan-mode
-  :hook (after-init . nyan-mode)
+  :hook (doom-modeline-mode . nyan-mode)
   :custom (nyan-bar-length 16 "Bar length."))
 
 
@@ -697,9 +696,8 @@ If you experience stuttering, increase this.")
 (use-package evil-goggles
   :diminish evil-goggles-mode
   :after evil
-  :defer 2
+  :hook (pre-command . evil-goggles-mode)
   :config
-  (evil-goggles-mode)
   (evil-goggles-use-diff-faces))
 
 ;; Prescient
@@ -720,7 +718,7 @@ If you experience stuttering, increase this.")
 
 (use-package ivy
   :diminish ivy-mode
-  :hook (after-init . ivy-mode)
+  :hook (pre-command . ivy-mode)
   :preface
   (defun my-ivy-format-function-arrow (cands)
     "Transform CANDS into a string for minibuffer."
@@ -1217,7 +1215,7 @@ If you experience stuttering, increase this.")
   :diminish company-mode
   :defines (company-dabbrev-ignore-case company-dabbrev-downcase)
   :commands company-abort
-  :hook (prog-mode . company-mode)
+  :hook ((pre-command after-find-file) . company-mode)
   :bind
   (:map company-active-map
         ("M-RET" . company-complete-selection)
@@ -1357,7 +1355,7 @@ If you experience stuttering, increase this.")
 
 (use-package which-key
   :diminish which-key-mode
-  :hook (after-init . which-key-mode)
+  :hook (pre-command . (lambda () (which-key-mode +1)))
   :general
   (general-leader
     "hk" '(which-key-show-top-level :wk "Show top level keybindings"))
@@ -1372,7 +1370,7 @@ If you experience stuttering, increase this.")
 ;; Better help
 
 (use-package helpful
-  :defer 2
+  :commands (helpful--read-symbol)
   :bind
   (:map help-mode-map
         ("f" . #'helpful-callable)
@@ -1406,7 +1404,7 @@ If you experience stuttering, increase this.")
 
 
 (use-package avy
-  :commands (avy-goto-word-1)
+  :commands (avy-goto-word-1 evil-avy-goto-char-timer evil-avy-goto-word-0)
   :general
   (general-mmap
     "C-'" 'evil-avy-goto-char-timer
@@ -1426,6 +1424,10 @@ If you experience stuttering, increase this.")
   "bp"     '(previous-buffer :wk "Previous buffer")
   "bx"     '(kill-buffer-and-window :wk "Kill buffer with window")
   "bw"     '(read-only-mode :wk "Read only buffer"))
+
+;; Kill buffer without window
+(eval-after-load 'evil-mode
+  (evil-ex-define-cmd "bd[elete]" #'kill-this-buffer))
 
 ;; Unique buffer names
 
@@ -1524,7 +1526,12 @@ If you experience stuttering, increase this.")
 
 (use-package projectile
   :diminish projectile-mode
-  :hook (after-init . projectile-mode)
+  :commands (projectile-project-root
+             projectile-project-name
+             projectile-project-p
+             projectile-locate-dominating-file)
+  :hook
+  ((after-find-file dired-before-readin minibuffer-setup) . projectile-mode)
   :general
   (general-leader
     "p" '(:keymap projectile-command-map :package projectile))
@@ -1544,7 +1551,7 @@ If you experience stuttering, increase this.")
 
 (use-package counsel-projectile
   :after (projectile)
-  :hook (after-init . counsel-projectile-mode)
+  :hook (pre-command . counsel-projectile-mode)
   :custom
   (counsel-projectile-rg-initial-input
    '(projectile-symbol-or-selection-at-point)
@@ -1790,9 +1797,7 @@ If you experience stuttering, increase this.")
   :general
   (general-leader
    "t w"   '(whitespace-mode :wk "Whitespace mode")
-   "t C-w" '(global-whitespace-mode :wk "Global whitespace mode"))
-  :custom
-  (show-trailing-whitespace t))
+   "t C-w" '(global-whitespace-mode :wk "Global whitespace mode")))
 
 ;; Move visual block
 ;; Move selection up and down.
@@ -1981,7 +1986,7 @@ If you experience stuttering, increase this.")
 
 (use-package undo-tree
   :diminish
-  :hook (after-init . global-undo-tree-mode)
+  :hook (after-find-file . global-undo-tree-mode)
   :general
   (general-leader
     "au" 'undo-tree-visualize)
@@ -2184,8 +2189,7 @@ If you experience stuttering, increase this.")
   :defer t
   :after magit
   :hook
-  (prog-mode . diff-hl-mode)
-  (org-mode . diff-hl-mode)
+  ((prog-mode org-mode) . diff-hl-mode)
   (dired-mode . diff-hl-dired-mode)
   (magit-post-refresh . diff-hl-magit-post-refresh))
 
@@ -2211,6 +2215,7 @@ If you experience stuttering, increase this.")
 
 
 (use-package magit
+  :commands (magit-file-delete)
   :general
   (general-leader
     "g" 'magit-status)
@@ -2265,15 +2270,28 @@ If you experience stuttering, increase this.")
 
 ;; Git related modes
 
-(use-package gitattributes-mode)
-(use-package gitconfig-mode)
-(use-package gitignore-mode)
+(use-package gitattributes-mode
+  :mode ("/\\.gitattributes\\'"
+         "/info/attributes\\'"
+         "/git/attributes\\'"))
+(use-package gitconfig-mode
+  :mode ("/\\.gitconfig\\'"
+         "/\\.git/config\\'"
+         "/modules/.*/config\\'"
+         "/git/config\\'"
+         "/\\.gitmodules\\'"
+         "/etc/gitconfig\\'"))
+(use-package gitignore-mode
+  :mode ("/\\.gitignore\\'"
+         "/info/exclude\\'"
+         "/git/ignore\\'"))
 
 ;; Eldoc
 
 (use-package eldoc
   :ensure nil
   :diminish eldoc-mode
+  :defer 2
   :hook
   ((prog-mode eval-expression-minibuffer-setup-hook) . eldoc-mode)
   :custom
@@ -2293,6 +2311,8 @@ If you experience stuttering, increase this.")
 
 (use-package paren
   :ensure nil
+  :defer 2
+  :hook (prog-mode . show-paren-mode)
   :custom
   (show-paren-mode t "Enable show matching parens."))
 
@@ -2300,6 +2320,7 @@ If you experience stuttering, increase this.")
 
 (use-package elec-pair
   :ensure nil
+  :defer 2
   :hook (prog-mode . electric-pair-mode)
   :custom
   (electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit))
@@ -2315,11 +2336,12 @@ If you experience stuttering, increase this.")
 
 
 (use-package hl-todo
+  :defer 2
   :hook (prog-mode . hl-todo-mode))
 
 ;; Evil commentary
 ;; =gc= operator, like =vim-commentary=.
-
+;; TODO: maybe switch to evil-nerd-commenter
 
 (use-package evil-commentary
   :after evil
@@ -2351,7 +2373,8 @@ If you experience stuttering, increase this.")
 
 (use-package aggressive-indent
   :diminish
-  :hook ((after-init . global-aggressive-indent-mode)
+  :defer 2
+  :hook ((prog-mode . global-aggressive-indent-mode)
          ;; FIXME: Disable in big files due to the performance issues
          ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
          (find-file . (lambda ()
@@ -2407,7 +2430,7 @@ If you experience stuttering, increase this.")
 
 
 (use-package flycheck
-  :hook (after-init . global-flycheck-mode)
+  :hook (after-find-file . global-flycheck-mode)
   :general
   (general-leader
     "ts" '(flycheck-mode :wk "Toggle flycheck mode")
@@ -2437,7 +2460,15 @@ If you experience stuttering, increase this.")
 
 (use-package yasnippet
   :diminish yas-minor-mode
-  :hook (after-init . yas-global-mode))
+  :defer 2
+  :commands (yas-minor-mode-on
+             yas-expand
+             yas-expand-snippet
+             yas-lookup-snippet
+             yas-insert-snippet
+             yas-new-snippet
+             yas-visit-snippet-file)
+  :hook ((text-mode prog-mode conf-mode snippet-mode) . yas-minor-mode))
 
 (use-package yasnippet-snippets
   :after yasnippet)
@@ -2727,7 +2758,8 @@ If you experience stuttering, increase this.")
 ;; Live coding in Python.
 
 
-(use-package live-py-mode)
+(use-package live-py-mode
+  :commands (live-py-mode))
 
 
 
