@@ -1998,7 +1998,7 @@ If you experience stuttering, increase this.")
 
 ;; Core
 
-(use-package org
+(use-package org-plus-contrib
   :ensure nil
   :hook
   (org-mode . visual-line-mode)
@@ -2101,6 +2101,10 @@ If you experience stuttering, increase this.")
   (org-confirm-babel-evaluate nil "Evaluate babel without confirmation.")
   (org-src-fontify-natively t "Fontify code in code blocks.")
   (org-src-tab-acts-natively t "Indent on tab in code blocks like in code.")
+  (org-babel-load-languages '((emacs-lisp . t)
+                              (org . nil)
+                              (python . nil)
+                              (sh . nil)))
   :config
   ;; Add new template
   (add-to-list 'org-structure-template-alist '("n" . "note"))
@@ -2109,22 +2113,7 @@ If you experience stuttering, increase this.")
   (run-with-idle-timer 30 t 'org-save-all-org-buffers)
 
   ;; Set up hooks for clock persistence.
-  (org-clock-persistence-insinuate)
-
-
-  (defvar load-language-list '((emacs-lisp . t)
-                               (shell . t)
-                               (python . t)
-                               (js . t)
-                               (css . t)))
-
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((emacs-lisp . t)
-     (shell . t)
-     (js . t)
-     (css . t)
-     (python . t))))
+  (org-clock-persistence-insinuate))
 
 ;; Evil
 ;; Evil support in org-mode.
