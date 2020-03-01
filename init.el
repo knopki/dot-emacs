@@ -1998,8 +1998,8 @@ If you experience stuttering, increase this.")
 
 ;; Core
 
-(use-package org-plus-contrib
-  :ensure nil
+(use-package org
+  :ensure org-plus-contrib
   :hook
   (org-mode . visual-line-mode)
   (org-mode . org-indent-mode)
