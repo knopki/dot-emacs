@@ -507,7 +507,7 @@ If you experience stuttering, increase this.")
 (use-package autorevert
   :ensure nil
   :diminish
-  :hook (pre-command . global-auto-revert-mode)
+  :hook (after-init . global-auto-revert-mode)
   :custom
   (auto-revert-check-vc-info t "Update version control.")
   (auto-revert-verbose nil "Silent auto revert."))
@@ -1550,8 +1550,8 @@ If you experience stuttering, increase this.")
 
 
 (use-package counsel-projectile
+  :defer t
   :after (projectile)
-  :hook (pre-command . counsel-projectile-mode)
   :custom
   (counsel-projectile-rg-initial-input
    '(projectile-symbol-or-selection-at-point)
@@ -2176,7 +2176,6 @@ If you experience stuttering, increase this.")
 
 (use-package diff-hl
   :defer t
-  :after magit
   :hook
   ((prog-mode org-mode) . diff-hl-mode)
   (dired-mode . diff-hl-dired-mode)

@@ -706,7 +706,7 @@ Revert buffer of file change on disk.
   (use-package autorevert
     :ensure nil
     :diminish
-    :hook (pre-command . global-auto-revert-mode)
+    :hook (after-init . global-auto-revert-mode)
     :custom
     (auto-revert-check-vc-info t "Update version control.")
     (auto-revert-verbose nil "Silent auto revert."))
@@ -1754,8 +1754,8 @@ More advanced Ivy integration.
 
 #+begin_src elisp
   (use-package counsel-projectile
+    :defer t
     :after (projectile)
-    :hook (pre-command . counsel-projectile-mode)
     :custom
     (counsel-projectile-rg-initial-input
      '(projectile-symbol-or-selection-at-point)
@@ -2384,7 +2384,6 @@ Highlights uncommitted changes on the fringe.
 #+begin_src elisp
   (use-package diff-hl
     :defer t
-    :after magit
     :hook
     ((prog-mode org-mode) . diff-hl-mode)
     (dired-mode . diff-hl-dired-mode)
