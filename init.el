@@ -644,7 +644,8 @@ If you experience stuttering, increase this.")
   :hook (after-init . doom-modeline-mode)
   :custom
   (doom-modeline-minor-modes t "Display minor modes.")
-  (doom-modeline-unicode-fallback t "Use unicode when no icons."))
+  (doom-modeline-unicode-fallback t "Use unicode when no icons.")
+  (doom-modeline-window-width-limit fill-column "The limit of the window width"))
 
 
 
@@ -654,16 +655,6 @@ If you experience stuttering, increase this.")
 (use-package minions
   :diminish
   :hook (doom-modeline-mode . minions-mode))
-
-
-
-;; Nyan Mode is an analog indicator of your position in the buffer.
-
-
-(use-package nyan-mode
-  :diminish nyan-mode
-  :hook (doom-modeline-mode . nyan-mode)
-  :custom (nyan-bar-length 16 "Bar length."))
 
 
 

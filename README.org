@@ -843,7 +843,8 @@ Use Doom modeline.
     :hook (after-init . doom-modeline-mode)
     :custom
     (doom-modeline-minor-modes t "Display minor modes.")
-    (doom-modeline-unicode-fallback t "Use unicode when no icons."))
+    (doom-modeline-unicode-fallback t "Use unicode when no icons.")
+    (doom-modeline-window-width-limit fill-column "The limit of the window width"))
 #+end_src
 
 Hide minor modes to menu.
@@ -852,15 +853,6 @@ Hide minor modes to menu.
   (use-package minions
     :diminish
     :hook (doom-modeline-mode . minions-mode))
-#+end_src
-
-Nyan Mode is an analog indicator of your position in the buffer.
-
-#+begin_src elisp
-  (use-package nyan-mode
-    :diminish nyan-mode
-    :hook (doom-modeline-mode . nyan-mode)
-    :custom (nyan-bar-length 16 "Bar length."))
 #+end_src
 
 Hide modeline when needed.
