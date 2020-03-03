@@ -718,6 +718,7 @@ If you experience stuttering, increase this.")
 
 (use-package ivy
   :diminish ivy-mode
+  :defer t
   :hook (pre-command . ivy-mode)
   :preface
   (defun my-ivy-format-function-arrow (cands)
@@ -1552,6 +1553,7 @@ If you experience stuttering, increase this.")
 (use-package counsel-projectile
   :defer t
   :after (projectile)
+  :hook (after-init . counsel-projectile-mode)
   :custom
   (counsel-projectile-rg-initial-input
    '(projectile-symbol-or-selection-at-point)
