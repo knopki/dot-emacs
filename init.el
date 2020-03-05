@@ -638,6 +638,8 @@ If you experience stuttering, increase this.")
 ;; Modeline
 ;; Use Doom modeline.
 
+;; TODO: set smaller font face after package upgrade
+
 
 (use-package doom-modeline
   :diminish
@@ -645,7 +647,10 @@ If you experience stuttering, increase this.")
   :custom
   (doom-modeline-minor-modes t "Display minor modes.")
   (doom-modeline-unicode-fallback t "Use unicode when no icons.")
-  (doom-modeline-window-width-limit fill-column "The limit of the window width"))
+  (doom-modeline-buffer-file-name-style 'buffer-name "Just show unique buffer name.")
+  (doom-modeline-window-width-limit fill-column "The limit of the window width")
+  (doom-modeline-project-detection 'project)
+  (doom-modeline-env-load-string "♻"))
 
 
 
