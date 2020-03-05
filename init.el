@@ -600,7 +600,7 @@ If you experience stuttering, increase this.")
 (use-package winner
   :ensure nil
   :commands (winner-undo winner-redo)
-  :hook (after-find-file . winner-mode)
+  :hook (after-init . winner-mode)
   :custom
   (winner-boring-buffers '("*Apropos*"
                            "*Buffer List*"
