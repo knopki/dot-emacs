@@ -187,11 +187,7 @@ If you experience stuttering, increase this.")
 ;; | key        | describe                                                                 |
 ;; |------------+--------------------------------------------------------------------------|
 ;; | ~m~        | Set the marker denoted by CHAR to position POS                           |
-;; | ~&~        | Repeat last substitute command                                           |
-;; | ~g&~       | Repeat last substitute command on the whole buffer                       |
 ;; | ~g8~ ~ga~  | Print info on cursor position (on screen and within buffer)              |
-;; | ~gf~       | Find FILENAME, guessing a default from text around point                 |
-;; | ~gF~       | Opens the file at point and goes to line-number                          |
 ;; | ~gx~       | Ask a WWW browser to load the URL at or before point                     |
 ;; | ~g;~       | Go to the point where the last edit was made in the current buffer       |
 ;; | ~g,~       | Go back to more recent changes after M-x goto-last-change have been used |
@@ -2011,6 +2007,8 @@ If you experience stuttering, increase this.")
 ;; | ~>~   | Shift text from BEG to END to the right                                 |
 ;; | ~u~   | Undo some previous changes                                              |
 ;; | ~C-r~ | Redo some changes                                                       |
+;; | ~&~   | Repeat last substitute command                                          |
+;; | ~g&~  | Repeat last substitute command on the whole buffer                      |
 
 ;; Some motion state keybindings:
 ;; | key | describe                                          |
