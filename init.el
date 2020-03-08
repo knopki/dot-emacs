@@ -201,7 +201,6 @@ If you experience stuttering, increase this.")
 ;; | ~za~       | Open or close a fold under point                                         |
 ;; | ~zr~       | Open all folds                                                           |
 ;; | ~zm~       | Close all folds                                                          |
-;; | ~ZZ~       | Saves the current buffer and closes the window                           |
 ;; | ~ZQ~       | Closes the current window, current frame, Emacs                          |
 ;; | ~[escape]~ | Switch to normal state without recording current command                 |
 
@@ -336,23 +335,12 @@ If you experience stuttering, increase this.")
 ;; Some evil commands:
 ;; | command                  | describe                                                  |
 ;; |--------------------------+-----------------------------------------------------------|
-;; | ~e[dit]~                 | Open FILE                                                 |
-;; | ~w[rite]~                | Save the current buff, from BEG to END, to FILE-OR-APPEND |
-;; | ~wa[ll]~                 | Saves all buffers visiting a file                         |
-;; | ~sav[eas]~               | Save the current buffer to FILENAME                       |
-;; | ~b[uffer]~               | Switches to another buffer                                |
-;; | ~bn[ext]~                | Goes to the count-th next buffer in the buffer list       |
-;; | ~bp[revious]~ ~bN[ext]~  | Goes to the count-th prev buffer in the buffer list       |
-;; | ~buffers~ ~ls~           | Switch to the Buffer Menu                                 |
-;; | ~files~                  | Shows the file-list                                       |
-;; | ~go[to]~                 | Go to POSITION in the buffer                              |
 ;; | ~q[uit]~                 | Closes the current window, current frame, Emacs           |
 ;; | ~wq~                     | Saves the current buffer and closes the window            |
 ;; | ~quita[ll]~ ~qa[ll]~     | Exits Emacs, asking for saving                            |
 ;; | ~cq[uit]~                | Exits Emacs without saving, with an non-zero error code   |
 ;; | ~wqa[ll]~ ~xa[ll]~       | Save all buffers and exit Emacs                           |
 ;; | ~x[it]~ ~exi[t]~         | Saves the current buffer and closes the window            |
-;; | ~bd[elete]~ ~bw[ipeout]~ | Deletes a buffer                                          |
 ;; | ~g[lobal]~               | The Ex global command                                     |
 ;; | ~v[global]~              | The Ex vglobal command                                    |
 ;; | ~norm[al]~               | The Ex normal command                                     |
@@ -1596,7 +1584,13 @@ If you experience stuttering, increase this.")
     "C-'" 'evil-avy-goto-char-timer
     "C-\"" 'evil-avy-goto-word-0))
 
-;; Keybindings
+;; Keybindings and commands
+;; Some normal state keybindings:
+;; | key  | describe                                                 |
+;; |------+----------------------------------------------------------|
+;; | ~gf~ | Find FILENAME, guessing a default from text around point |
+;; | ~gF~ | Opens the file at point and goes to line-number          |
+;; | ~ZZ~ | Saves the current buffer and closes the window           |
 
 ;; Global keybindings:
 ;; | key                    | command                                                    |
@@ -1611,6 +1605,21 @@ If you experience stuttering, increase this.")
 ;; | ~SPC b p~              | Previous buffer                                            |
 ;; | ~SPC b x~              | Kill buffer with window                                    |
 ;; | ~SPC b w~              | Make buffer read only                                      |
+
+;; Some evil commands:
+;; | command                  | describe                                                  |
+;; |--------------------------+-----------------------------------------------------------|
+;; | ~e[dit]~                 | Open FILE                                                 |
+;; | ~w[rite]~                | Save the current buff, from BEG to END, to FILE-OR-APPEND |
+;; | ~wa[ll]~                 | Saves all buffers visiting a file                         |
+;; | ~sav[eas]~               | Save the current buffer to FILENAME                       |
+;; | ~b[uffer]~               | Switches to another buffer                                |
+;; | ~bn[ext]~                | Goes to the count-th next buffer in the buffer list       |
+;; | ~bp[revious]~ ~bN[ext]~  | Goes to the count-th prev buffer in the buffer list       |
+;; | ~buffers~ ~ls~           | Switch to the Buffer Menu                                 |
+;; | ~files~                  | Shows the file-list                                       |
+;; | ~go[to]~                 | Go to POSITION in the buffer                              |
+;; | ~bd[elete]~ ~bw[ipeout]~ | Deletes a buffer                                          |
 
 
 (general-leader
