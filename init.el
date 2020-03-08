@@ -183,6 +183,196 @@ If you experience stuttering, increase this.")
 ;; Evil mode
 ;; I like VIM keys much more, so =evil-mode= is essential part of my configuration.
 
+;; Some normal state keybindings:
+;; | key        | describe                                                                 |
+;; |------------+--------------------------------------------------------------------------|
+;; | ~m~        | Set the marker denoted by CHAR to position POS                           |
+;; | ~&~        | Repeat last substitute command                                           |
+;; | ~g&~       | Repeat last substitute command on the whole buffer                       |
+;; | ~g8~ ~ga~  | Print info on cursor position (on screen and within buffer)              |
+;; | ~gf~       | Find FILENAME, guessing a default from text around point                 |
+;; | ~gF~       | Opens the file at point and goes to line-number                          |
+;; | ~gx~       | Ask a WWW browser to load the URL at or before point                     |
+;; | ~g;~       | Go to the point where the last edit was made in the current buffer       |
+;; | ~g,~       | Go back to more recent changes after M-x goto-last-change have been used |
+;; | ~zo~       | Open fold at point                                                       |
+;; | ~zO~       | Open fold at point recursively                                           |
+;; | ~zc~       | Close fold at point                                                      |
+;; | ~za~       | Open or close a fold under point                                         |
+;; | ~zr~       | Open all folds                                                           |
+;; | ~zm~       | Close all folds                                                          |
+;; | ~ZZ~       | Saves the current buffer and closes the window                           |
+;; | ~ZQ~       | Closes the current window, current frame, Emacs                          |
+;; | ~[escape]~ | Switch to normal state without recording current command                 |
+
+;; Some motion state keybindings:
+;; | key     | describe                                                                |
+;; |---------+-------------------------------------------------------------------------|
+;; | ~0~     | Move the cursor to the beginning of the current line                    |
+;; | ~b~     | Move the cursor to the beginning of the COUNT-th previous word          |
+;; | ~B~     | Move the cursor to the beginning of the COUNT-th previous WORD          |
+;; | ~e~     | Move the cursor to the end of the COUNT-th next word                    |
+;; | ~E~     | Move the cursor to the end of the COUNT-th next WORD                    |
+;; | ~f~     | Move to the next COUNT'th occurrence of CHAR                            |
+;; | ~F~     | Move to the previous COUNT'th occurrence of CHAR                        |
+;; | ~G~     | Go to the first non-blank character of line COUNT                       |
+;; | ~h~     | Move cursor to the left by COUNT characters                             |
+;; | ~H~     | Move the cursor to line COUNT from the top of the window                |
+;; |         | on the first non-blank character                                        |
+;; | ~j~     | Move the cursor COUNT lines down                                        |
+;; | ~k~     | Move the cursor COUNT lines up                                          |
+;; | ~l~     | Move cursor to the right by COUNT characters                            |
+;; | ~K~     | Look up the keyword at point                                            |
+;; | ~L~     | Move the cursor to line COUNT from the bottom of the window             |
+;; |         | on the first non-blank character                                        |
+;; | ~M~     | Move the cursor to the middle line in the window                        |
+;; |         | on the first non-blank character                                        |
+;; | ~n~     | Repeat the last search                                                  |
+;; | ~N~     | Repeat the last search in the opposite direction                        |
+;; | ~t~     | Move before the next COUNT'th occurrence of CHAR                        |
+;; | ~T~     | Move before the previous COUNT'th occurrence of CHAR                    |
+;; | ~w~     | Move the cursor to the beginning of the COUNT-th next word              |
+;; | ~W~     | Move the cursor to the beginning of the COUNT-th next WORD              |
+;; | ~gn~    | Select next match                                                       |
+;; | ~gN~    | Select next match                                                       |
+;; | ~gd~    | Go to definition or first occurrence of symbol under point              |
+;; | ~ge~    | Move the cursor to the end of the COUNT-th previous word                |
+;; | ~gE~    | Move the cursor to the end of the COUNT-th previous WORD                |
+;; | ~gg~    | Go to the first non-blank character of line COUNT                       |
+;; | ~gj~    | Move the cursor COUNT screen lines down                                 |
+;; | ~gk~    | Move the cursor COUNT screen lines up                                   |
+;; | ~g0~    | Move the cursor to the first character of the current screen line       |
+;; | ~g_~    | Move the cursor to the last non-blank character of the current line     |
+;; | ~g^~    | Move the cursor to the first non blank character                        |
+;; |         | of the current screen line                                              |
+;; | ~gm~    | Move the cursor to the middle of the current visual line                |
+;; | ~g$~    | Move the cursor to the last character of the current screen line        |
+;; | ~g C-]~ | Jump to tag under point                                                 |
+;; | ~{~     | Move to the beginning of the COUNT-th previous paragraph                |
+;; | ~}~     | Move to the end of the COUNT-th next paragraph                          |
+;; | ~#~     | Search backward for symbol under point                                  |
+;; | ~g#~    | Search backward for unbounded symbol                                    |
+;; | ~$~     | Move the cursor to the end of the current line                          |
+;; | ~%~     | Find the next item in this line after or under the cursor               |
+;; |         | and jump to the corresponding one                                       |
+;; | ~`~     | Go to the marker specified by CHAR                                      |
+;; | ~'~     | Go to the line of the marker specified by CHAR                          |
+;; | ~(~     | Move to the previous COUNT-th beginning of a sentence or paragraph      |
+;; | ~)~     | Move to the next COUNT-th beginning of a sentence or end of a paragraph |
+;; | ~]]~    | Move the cursor to the beginning of the COUNT-th next section           |
+;; | ~][~    | Move the cursor to the end of the COUNT-th next section                 |
+;; | ~[[~    | Move the cursor to the beginning of the COUNT-th previous section       |
+;; | ~[]~    | Move the cursor to the end of the COUNT-th previous section             |
+;; | ~[(~    | Go to [count] previous unmatched '('                                    |
+;; | ~])~    | Go to [count] next unmatched ')'                                        |
+;; | ~[{~    | Go to [count] previous unmatched '{'                                    |
+;; | ~]}~    | Go to [count] next unmatched '}'                                        |
+;; | ~]s~    | Go to the COUNT'th spelling mistake after point                         |
+;; | ~[s~    | Go to the COUNT'th spelling mistake preceding point                     |
+;; | ~*~     | Search forward for symbol under point                                   |
+;; | ~g*~    | Search forward for unbounded symbol under point                         |
+;; | ~​,~     | Repeat the last find COUNT times in the opposite direction              |
+;; | ~/~     | Search forward for user-entered text                                    |
+;; | ~;~     | Repeat the last find COUNT times                                        |
+;; | ~?~     | Search backward for user-entered text                                   |
+;; | ~\vert~     | Go to column COUNT on the current line                                  |
+;; | ~^~     | Move the cursor to the first non-blank character of the current line    |
+;; | ~+~     | Move the cursor COUNT lines down on the first non-blank character       |
+;; | ~_~     | Move the cursor COUNT-1 lines down on the first non-blank character     |
+;; | ~-~     | Move the cursor COUNT lines up on the first non-blank character         |
+;; | ~C-6~   | Switch to current windows last open buffer                              |
+;; | ~C-]~   | Jump to tag under point                                                 |
+;; | ~C-b~   | Scrolls the window COUNT pages upwards                                  |
+;; | ~C-e~   | Scrolls the window COUNT lines downwards                                |
+;; | ~C-f~   | Scrolls the window COUNT pages downwards                                |
+;; | ~C-o~   | Go to older position in jump list                                       |
+;; | ~C-y~   | Scrolls the window COUNT lines upwards                                  |
+;; | ~C-u~   | Scrolls the window and the cursor COUNT lines upwards                   |
+;; | ~C-d~   | Scrolls the window and the cursor COUNT lines downwards                 |
+;; | ~C-i~   | Go to newer position in jump list                                       |
+;; | ~RET~   | Move the cursor COUNT lines down                                        |
+;; | ~\~     | Execute the next command in Emacs state                                 |
+;; | ~z^~    | Scrolls the line right below the window                                 |
+;; |         | or line COUNT to the top of the window                                  |
+;; | ~z+~    | Scrolls the line right below the window                                 |
+;; |         | or line COUNT to the top of the window                                  |
+;; | ~zt~    | Scrolls line number COUNT to the top of the window                      |
+;; | ~zz~    | Scrolls line number COUNT to the center of the window                   |
+;; | ~zb~    | Scrolls line number COUNT to the bottom of the window                   |
+;; | ~v~     | Characterwise selection                                                 |
+;; | ~V~     | Linewise selection                                                      |
+;; | ~C-v~   | Blockwise selection                                                     |
+;; | ~gv~    | Restore previous selection                                              |
+;; | ~C-^~   | Switches to another buffer                                              |
+;; | ~zl~    | Scrolls the window COUNT columns to the right                           |
+;; | ~zh~    | Scrolls the window COUNT columns to the left                            |
+;; | ~zL~    | Scrolls the window COUNT half-screenwidths to the right                 |
+;; | ~zH~    | Scrolls the window COUNT half-screenwidths to the left                  |
+;; | ~C-z~   | Enable Emacs state. Disable with negative ARG                           |
+
+;; Working with text objects:
+;; | key         | describe                          |
+;; |-------------+-----------------------------------|
+;; | ~w~         | Select a word                     |
+;; | ~W~        | Select a WORD                     |
+;; | ~s~         | Select a sentence                 |
+;; | ~p~         | Select a paragraph                |
+;; | ~b~ ~(~ ~)~ | Select a parenthesis              |
+;; | ~[~ ~]~     | Select a square bracket           |
+;; | ~B~ ~{~ ~}~ | Select a curly bracket ("brace")  |
+;; | ~<~ ~>~     | Select an angle bracket           |
+;; | ~'~         | Select a single-quoted expression |
+;; | ~"~         | Select a double-quoted expression |
+;; | ~`~         | Select a back-quoted expression   |
+;; | ~t~         | Select a tag block                |
+;; | ~o~         | Select a symbol                   |
+
+;; Some visual state keybindings:
+;; | key | describe                                                         |
+;; |-----+------------------------------------------------------------------|
+;; | ~o~ | Put the mark where point is now, and point where the mark is now |
+;; | ~O~ | Rearrange corners in Visual Block mode                           |
+
+;; Some evil commands:
+;; | command                  | describe                                                  |
+;; |--------------------------+-----------------------------------------------------------|
+;; | ~e[dit]~                 | Open FILE                                                 |
+;; | ~w[rite]~                | Save the current buff, from BEG to END, to FILE-OR-APPEND |
+;; | ~wa[ll]~                 | Saves all buffers visiting a file                         |
+;; | ~sav[eas]~               | Save the current buffer to FILENAME                       |
+;; | ~b[uffer]~               | Switches to another buffer                                |
+;; | ~bn[ext]~                | Goes to the count-th next buffer in the buffer list       |
+;; | ~bp[revious]~ ~bN[ext]~  | Goes to the count-th prev buffer in the buffer list       |
+;; | ~buffers~ ~ls~           | Switch to the Buffer Menu                                 |
+;; | ~files~                  | Shows the file-list                                       |
+;; | ~go[to]~                 | Go to POSITION in the buffer                              |
+;; | ~q[uit]~                 | Closes the current window, current frame, Emacs           |
+;; | ~wq~                     | Saves the current buffer and closes the window            |
+;; | ~quita[ll]~ ~qa[ll]~     | Exits Emacs, asking for saving                            |
+;; | ~cq[uit]~                | Exits Emacs without saving, with an non-zero error code   |
+;; | ~wqa[ll]~ ~xa[ll]~       | Save all buffers and exit Emacs                           |
+;; | ~x[it]~ ~exi[t]~         | Saves the current buffer and closes the window            |
+;; | ~bd[elete]~ ~bw[ipeout]~ | Deletes a buffer                                          |
+;; | ~g[lobal]~               | The Ex global command                                     |
+;; | ~v[global]~              | The Ex vglobal command                                    |
+;; | ~norm[al]~               | The Ex normal command                                     |
+;; | ~registers~              | Shows the contents of all registers                       |
+;; | ~marks~                  | Shows all marks                                           |
+;; | ~delm[arks]~             | Delete all marks                                          |
+;; | ~ju[mps]~                | Display the contents of the jump list                     |
+;; | ~noh[lsearch]~           | Disable the active search highlightings                   |
+;; | ~f[ile]~                 | Shows basic file information                              |
+;; | ~=~                      | Print the last line number                                |
+;; | ~!~                      | Execute a shell command                                   |
+;; | ~@:~                     | Repeats the last ex command                               |
+;; | ~mak[e]~                 | Call a build command in the current directory             |
+;; | ~cc~                     | Go to error number COUNT                                  |
+;; | ~cfir[st]~ ~cr[ewind]~   | Restart at the first error                                |
+;; | ~cn[ext]~                | Visit next error and corresponding source code            |
+;; | ~cp[revious]~            | Visit previous error and corresponding source code        |
+;; | ~set-initial-state~      | Set initial state for the current major mode to STATE     |
+;; | ~show-digraphs~          | Shows a list of all available digraphs                    |
+
 
 (use-package evil
   :hook (after-init . evil-mode)
@@ -198,7 +388,6 @@ If you experience stuttering, increase this.")
   (evil-vsplit-window-right t "Like vim's 'splitright'.")
   (evil-split-window-below t "Like vim's 'splitbelow'.")
   (evil-want-C-u-scroll t "Enable C-u scroll.")
-  (evil-want-C-i-jump nil "Disable C-i jumps in jump list.")
   :config
   ;; Visually selected text gets replaced by the latest copy action
   ;; Amazing hack lifted from: http://emacs.stackexchange.com/a/15054/12585
@@ -1409,6 +1598,21 @@ If you experience stuttering, increase this.")
 
 ;; Keybindings
 
+;; Global keybindings:
+;; | key                    | command                                                    |
+;; |------------------------+------------------------------------------------------------|
+;; | ~SPC TAB~              | Switch between last two buffers                            |
+;; | ~SPC b d~ ~:bd[elete]~ | Kill this buffer (without window)                          |
+;; | ~SPC b e~              | Erase buffer                                               |
+;; | ~SPC b n~              | Next buffer                                                |
+;; | ~SPC b N C-i~          | Create indirect buffer                                     |
+;; | ~SPC b N i~            | Indirect buffer cloned from current buffer                 |
+;; | ~SPC b N I~            | Indirect buffer cloned from current buffer in other window |
+;; | ~SPC b p~              | Previous buffer                                            |
+;; | ~SPC b x~              | Kill buffer with window                                    |
+;; | ~SPC b w~              | Make buffer read only                                      |
+
+
 (general-leader
   "TAB"    '(mode-line-other-buffer :wk "Alternate buffer")
   "bd"     '(kill-this-buffer :wk "Kill this buffer")
@@ -1752,6 +1956,98 @@ If you experience stuttering, increase this.")
              dired-jump-other-window
              dired-omit-mode))
 
+;; Editing keybindings and commands
+;; Some normal state keybindings:
+;; | key   | describe                                                                |
+;; |-------+-------------------------------------------------------------------------|
+;; | ~a~   | Switch to Insert state just after point                                 |
+;; | ~A~   | Switch to Insert state at the end of the current line                   |
+;; | ~c~   | Change text from BEG to END with TYPE                                   |
+;; | ~C~   | Change to end of line                                                   |
+;; | ~d~   | Delete text from BEG to END with TYPE                                   |
+;; | ~D~   | Delete to end of line                                                   |
+;; | ~i~   | Switch to Insert state just before point                                |
+;; | ~I~   | Switch to insert state at beginning of current line                     |
+;; | ~J~   | Join the selected lines                                                 |
+;; | ~o~   | Insert a new line below point and switch to Insert state                |
+;; | ~O~   | Insert a new line above point and switch to Insert state                |
+;; | ~p~   | Pastes the latest yanked text behind point                              |
+;; | ~P~   | Pastes the latest yanked text before the cursor position                |
+;; | ~r~   | Replace text from BEG to END with CHAR                                  |
+;; | ~R~   | Enable Replace state. Disable with negative ARG                         |
+;; | ~s~   | Change a charactr                                                       |
+;; | ~S~   | Change whole line                                                       |
+;; | ~x~   | Delete text from BEG to END with TYPE                                   |
+;; | ~X~   | Delete previous character                                               |
+;; | ~y~   | Saves the characters in motion into the kill-ring                       |
+;; | ~Y~   | Saves whole lines into the kill-ring                                    |
+;; | ~gi~  | Switch to Insert state at previous insertion point                      |
+;; | ~gJ~  | Join the selected lines without changing whitespace                     |
+;; | ~gq~  | Fill text and move point to the end of the filled region                |
+;; | ~gw~  | Fill text                                                               |
+;; | ~gu~  | Convert text to lower case                                              |
+;; | ~gU~  | Convert text to upper case                                              |
+;; | ~g?~  | ROT13 encrypt text                                                      |
+;; | ~g~~  | Invert case of text                                                     |
+;; | ~C-n~ | Same as evil-paste-pop but with negative argument                       |
+;; | ~C-p~ | Replace the just-yanked stretch of killed text with a different stretch |
+;; | ~C-t~ | Pop back to where M-. was last invoked                                  |
+;; | ~C-.~ | Replace the just repeated command with a previously executed command    |
+;; | ~M-.~ | Same as evil-repeat-pop, but with negative COUNT                        |
+;; | ~.~   | Repeat the last editing command with count replaced by COUNT            |
+;; | ~"~   | Use REGISTER for the next command                                       |
+;; | ~~~   | Invert case of character                                                |
+;; | ~=~   | Indent text                                                             |
+;; | ~<~   | Shift text from BEG to END to the left                                  |
+;; | ~>~   | Shift text from BEG to END to the right                                 |
+;; | ~u~   | Undo some previous changes                                              |
+;; | ~C-r~ | Redo some changes                                                       |
+
+;; Some motion state keybindings:
+;; | key | describe                                          |
+;; |-----+---------------------------------------------------|
+;; | ~y~ | Saves the characters in motion into the kill-ring |
+;; | ~Y~ | Saves whole lines into the kill-ring              |
+
+
+;; Some visual state keybindings:
+;; | key | describe                                 |
+;; |-----+------------------------------------------|
+;; | ~A~ | Switch to Insert state just after point  |
+;; | ~I~ | Switch to Insert state just before point |
+;; | ~J~ | Move selected block up                   |
+;; | ~K~ | Move selected block down                 |
+;; | ~R~ | Change text from BEG to END with TYPE    |
+;; | ~u~ | Convert text to lower case               |
+;; | ~U~ | Convert text to upper case               |
+
+;; Some evil commands:
+;; | command        | describe                                                |
+;; |----------------+---------------------------------------------------------|
+;; | ~r[ead]~       | Inserts the contents of FILE below curr line/line COUNT |
+;; | ~c[hange]~     | Change text from BEG to END with TYPE                   |
+;; | ~co[py]~ ~t~   | Copy lines in BEG END below line given by ADDRESS       |
+;; | ~m[ove]~       | Move lines in BEG END below line given by ADDRESS       |
+;; | ~d[elete]~     | The Ex delete command                                   |
+;; | ~y[ank]~       | The Ex yank command                                     |
+;; | ~j[oin]~       | Join the selected lines with optional COUNT and BANG    |
+;; | ~le[ft]~       | Right-align lines in the region at WIDTH columns        |
+;; | ~ri[ght]~      | Right-align lines in the region at WIDTH columns        |
+;; | ~ce[nter]~     | Centers lines in the region between WIDTH columns       |
+;; | ~s[ubstitute]~ | The Ex substitute command                               |
+;; | ~&~            | Repeat last substitute command                          |
+;; | ~&&~           | Same with last flags                                    |
+;; | ~~~            | Same with last search pattern                           |
+;; | ~~&~           | Same with last search pattern and last flags            |
+;; | ~<~            | Shift text from BEG to END to the left                  |
+;; | ~>~            | Shift text from BEG to END to the right                 |
+;; | ~sor[t]~       | The Ex sort command                                     |
+
+
+(general-vmap
+  "J" (concat ":m '>+1" (kbd "RET") "gv=gv")
+  "K" (concat ":m '<-2" (kbd "RET") "gv=gv"))
+
 ;; Simple
 
 (use-package simple
@@ -1797,22 +2093,16 @@ If you experience stuttering, increase this.")
    "t w"   '(whitespace-mode :wk "Whitespace mode")
    "t C-w" '(global-whitespace-mode :wk "Global whitespace mode")))
 
-;; Move visual block
-;; Move selection up and down.
-
-;; | key | mode   | command                   |
-;; |-----+--------+---------------------------|
-;; | ~J~ | visual | Move selected block up.   |
-;; | ~K~ | visual | Move selected block down. |
-
-
-(general-vmap
-  "J" (concat ":m '>+1" (kbd "RET") "gv=gv")
-  "K" (concat ":m '<-2" (kbd "RET") "gv=gv"))
-
 ;; Macros
 ;; Macros keybindings.
 
+;; Normal state keybindings:
+;; | key | command                                   |
+;; |-----+-------------------------------------------|
+;; | ~q~ | Record a keyboard macro into REGISTER     |
+;; | ~@~ | Execute keyboard macro MACRO, COUNT times  |
+
+;; Global keybindings:
 ;; | key         | command                                        |
 ;; |-------------+------------------------------------------------|
 ;; | ~SPC K c a~ | Add the value of numeric prefix                |
@@ -1901,13 +2191,14 @@ If you experience stuttering, increase this.")
 ;; On the fly spell checking. Disabled by default. =hunspell= is must because of ability to query multiple dictionaries.
 
 ;; Related keybindings:
-;; | key       | mode   | command                                                     |
-;; |-----------+--------+-------------------------------------------------------------|
-;; | ~SPC t S~ | global | Toggle flyspell on/off                                      |
-;; | ~SPC S b~ | global | Spell check whole buffer.                                   |
-;; | ~z=~      | normal | Correct previous word (ivy menu, access commands by =M-o=). |
-;; | ~[s~      | normal | Jump to the previous incorrect word.                        |
-;; | ~]s~      | normal | Jump to the next incorrect word.                            |
+;; | key       | mode   | command                                           |
+;; |-----------+--------+---------------------------------------------------|
+;; | ~SPC t S~ | global | Toggle flyspell on/off                            |
+;; | ~SPC S b~ | global | Spell check whole buffer.                         |
+;; | ~z=~      | normal | Check spelling of word under or before the cursor |
+;; |           |        | (ivy menu, access commands by =M-o=)              |
+;; | ~[s~      | normal | Jump to the previous incorrect word.              |
+;; | ~]s~      | normal | Jump to the next incorrect word.                  |
 
 
 (use-package flyspell
@@ -2733,6 +3024,11 @@ If you experience stuttering, increase this.")
   :commands (nix-format-buffer))
 
 ;; Python
+;; Some normal state keybindings:
+;; | key  | describe                                 |
+;; |------+------------------------------------------|
+;; | ~gz~ | Switch to inferior Python process buffer |
+
 
 (use-package python
   :ensure nil
