@@ -313,7 +313,7 @@ If you experience stuttering, increase this.")
 ;; | key         | describe                          |
 ;; |-------------+-----------------------------------|
 ;; | ~w~         | Select a word                     |
-;; | ~W~        | Select a WORD                     |
+;; | ~W~         | Select a WORD                     |
 ;; | ~s~         | Select a sentence                 |
 ;; | ~p~         | Select a paragraph                |
 ;; | ~b~ ~(~ ~)~ | Select a parenthesis              |
