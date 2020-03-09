@@ -1,7 +1,7 @@
 #+TITLE: My Emacs configuration
 #+AUTHOR: Sergey Korolev
 #+EMAIL: korolev.srg@gmail.com
-#+PROPERTY: header-args:elisp :tangle "init.el" :comments org
+#+PROPERTY: header-args:elisp :tangle "init.el" :tangle-mode (identity #o444) :comments org
 #+OPTIONS: ^:{}
 
 * About                                                            :noexport:
