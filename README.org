@@ -2564,12 +2564,6 @@ Treat undo history as a branching tree of changes.
     (org-mode . org-indent-mode)
     (org-indent-mode . (lambda () (diminish 'org-indent-mode)))
     :custom-face (org-ellipsis ((t (:foreground nil))))
-    :general
-    (general-leader
-      "o a" 'org-agenda
-      "o c" 'counsel-org-capture
-      "o l" 'org-agenda-list
-      "o s" 'org-search-view)
     :custom
     (org-modules '(org-checklist org-habit) "Always load modules.")
 
@@ -2677,10 +2671,391 @@ Treat undo history as a branching tree of changes.
 *** Evil
 Evil support in org-mode.
 
+Global keybindings for =org-mode=
+| key           | describe                       |
+|---------------+--------------------------------|
+| =SPC a o \#=  | org agenda list stuck projects |
+| =SPC a o /=   | org occur in agenda files      |
+| =SPC a o a=   | org agenda list                |
+| =SPC a o c=   | org capture                    |
+| =SPC a o e=   | org store agenda views         |
+| =SPC a o l=   | org store link                 |
+| =SPC a o m=   | org tags view                  |
+| =SPC a o o=   | org agenda                     |
+| =SPC a o s=   | org search view                |
+| =SPC a o t=   | org todo list                  |
+| =SPC a o f i= | org feed goto inbox            |
+| =SPC a o f u= | org feed update all            |
+| =SPC a o C c= | org cancel clock               |
+| =SPC a o C g= | org goto last clocked-in clock |
+| =SPC a o C i= | org clock in                   |
+| =SPC a o C I= | org clock in last              |
+| =SPC a o C j= | org jump to current clock      |
+| =SPC a o C o= | org clock out                  |
+| =SPC a o C r= | org resolve clocks             |
+| =SPC C c=     | org capture                    |
+
+=org-mode= normal state map:
+| key       | describe                                                                |
+|-----------+-------------------------------------------------------------------------|
+| =​, '=     | call a special editor for the element at point                          |
+| =​, c=     | capture                                                                 |
+| =​, L=     | Cycle at point right, depending on context                              |
+| =​, H=     | Cycle at point left, depending on context                               |
+| =​, J=     | Cycle at point down, depending on context                               |
+| =​, K=     | Cycle at point up, depending on context                                 |
+| =​, C-L=   | Switch to next TODO set                                                 |
+| =​, C-H=   | Switch to previous TODO set                                             |
+| =​, C-J=   | Change timestamps synchronously down in CLOCK log lines                 |
+| =​, C-K=   | Change timestamps synchronously up in CLOCK log lines                   |
+| =​, *=     | Compute table, or change heading status of lines                        |
+| =​, -=     | Insert separator line in table or modify bullet status of line          |
+| =​, \#=    | Update the statistics cookie, either from TODO or from checkboxes       |
+| =​, RET=   | Call org-table-hline-and-move or org-insert-heading dep. on context     |
+| =​, M-RET= | Insert a new heading or wrap a region in a table                        |
+| =​, A=     | The dispatcher for attachment commands                                  |
+| =​, a=     | Dispatch agenda commands to collect entries to the agenda buffer        |
+| =​, b p=   | Jump to the previous source block                                       |
+| =​, b n=   | Jump to the next source block                                           |
+| =​, b e=   | Execute maybe                                                           |
+| =​, b o=   | Open results of source block at point                                   |
+| =​, b v=   | Expand the current source code block                                    |
+| =​, b u=   | Go to the beginning of the current code block                           |
+| =​, b g=   | Go to a named source-code block                                         |
+| =​, b r=   | Go to a named result                                                    |
+| =​, b b=   | Execute source code blocks in a buffer                                  |
+| =​, b s=   | Execute source code blocks in a subtree                                 |
+| =​, b d=   | Wrap or split the code in the region or on the point                    |
+| =​, b t=   | Write code blocks to source-specific files                              |
+| =​, b f=   | Extract the bodies of source code blocks in FILE                        |
+| =​, b c=   | Check for misspelled header arguments in the current code block         |
+| =​, b j=   | Insert a header argument selecting from lists of common args and values |
+| =​, b l=   | Load the body of the current source-code block                          |
+| =​, b i=   | Add all named source blocks defined in FILE to library-of-babel         |
+| =​, b I=   | Display information on the current source block                         |
+| =​, b z=   | Switch to the session of the current code block                         |
+| =​, b Z=   | Switch to code buffer and display session                               |
+| =​, b a=   | Generate a sha1 hash based on the value of INFO                         |
+| =​, b x=   | Read key sequence and execute the command in edit buffer                |
+| =​, C c=   | Cancel the running clock by removing the start timestamp                |
+| =​, C d=   | Show subtree times in the entire buffer                                 |
+| =​, C e=   | Evaluate a time range by computing the difference between start and end |
+| =​, C g=   | Go to the currently clocked-in entry/to the most recently clocked one   |
+| =​, C i=   | Start the clock on the current item                                     |
+| =​, C I=   | Clock in the last closed clocked item                                   |
+| =​, C j=   | When an Org clock is running, jump to it                                |
+| =​, C o=   | Stop the currently running clock                                        |
+| =​, C R=   | Update or create a table containing a report about clocked time         |
+| =​, C r=   | Resolve all currently open Org clocks                                   |
+| =​, d d=   | Insert the "DEADLINE:" string with a timestamp to make a deadline       |
+| =​, d s=   | Insert the SCHEDULED: string with a timestamp to schedule a TODO item   |
+| =​, d t=   | Prompt for a date/time and insert a time stamp                          |
+| =​, d T=   | Insert an inactive time stamp                                           |
+| =​, e e=   | Export dispatcher for Org mode                                          |
+| =​, f i=   | Go to the inbox that captures the feed named FEED                       |
+| =​, f u=   | Get inbox items from all feeds in org-feed-alist                        |
+| =​, i b=   | Insert a block structure of the type #+begin_foo/#+end_foo              |
+| =​, i d=   | Insert a drawer at point                                                |
+| =​, i e=   | Set the effort property of the current entry                            |
+| =​, i f=   | Insert a new footnote                                                   |
+| =​, i h=   | Insert a new heading or an item with the same depth at point            |
+| =​, i H=   | Insert a new heading with same level as current, after current subtree  |
+| =​, i i=   | Insert a new item at the current level                                  |
+| =​, i l=   | Insert a link.  At the prompt, enter the link                           |
+| =​, i n=   | Add a note to the current entry                                         |
+| =​, i p=   | In the current entry, set PROPERTY to VALUE                             |
+| =​, i s=   | Insert a new subheading and demote it                                   |
+| =​, i t=   | Set the tags for the current visible entry                              |
+| =​, p=     | Change the priority of an item                                          |
+| =​, s a=   | Toggle the archive tag for the current headline                         |
+| =​, s A=   | Move the current subtree to the archive                                 |
+| =​, s b=   | Create indirect buffer and narrow it to current subtree                 |
+| =​, s d=   | Cut the current subtree into the clipboard                              |
+| =​, s h=   | Promote the entire subtree                                              |
+| =​, s j=   | Move the current subtree down past ARG headlines of the same level      |
+| =​, s k=   | Move the current subtree up past ARG headlines of the same level        |
+| =​, s l=   | Demote the entire subtree                                               |
+| =​, s n=   | Narrow buffer to the current subtree                                    |
+| =​, s N=   | Remove restrictions (narrowing) from current buffer                     |
+| =​, s r=   | Move the entry or entries at point to another heading                   |
+| =​, s s=   | Create a sparse tree, prompt for the details                            |
+| =​, s S=   | Call org-sort-entries, org-table-sort-lines or org-sort-list            |
+| =​, T c=   | Toggle the checkbox in the current line                                 |
+| =​, T e=   | Toggle the composition display of entities as UTF8 characters           |
+| =​, T i=   | Toggle the display of inline images                                     |
+| =​, T l=   | Toggle the literal or descriptive display of links                      |
+| =​, T t=   | Make a compact tree which shows all headlines marked with TODO          |
+| =​, T T=   | Change the TODO state of an item                                        |
+| =​, T x=   | Preview LaTeX formulas                                                  |
+| =​, t a=   | Align the table at point by aligning all vertical bars                  |
+| =​, t b=   | Blank the current table field or active region                          |
+| =​, t c=   | Convert from org-mode table to table.el and back                        |
+| =​, t e=   | Replace the table field value by the result of a calculation            |
+| =​, t E=   | Export table to a file, with configurable format                        |
+| =​, t f=   | Show info about the current field, and highlight any reference at point |
+| =​, t h=   | Go to the previous field in the table                                   |
+| =​, t H=   | Move column to the left                                                 |
+| =​, t I=   | Import FILE as a table                                                  |
+| =​, t j=   | Go to the next row (same column) in the current table                   |
+| =​, t J=   | Move table row down                                                     |
+| =​, t K=   | Move table row up                                                       |
+| =​, t l=   | Go to the next field in the current table, creating new lines as needed |
+| =​, t L=   | Move column to the right                                                |
+| =​, t n=   | Move column to the right                                                |
+| =​, t N=   | Use the table.el package to insert a new table                          |
+| =​, t r=   | Recalculate the current table line by applying all stored formulas      |
+| =​, t s=   | Sort table lines according to the column at point                       |
+| =​, t w=   | Wrap several fields in a column like a paragraph                        |
+| =​, t d c= | Delete a column from the table                                          |
+| =​, t d r= | Delete the current row or horizontal line from the table                |
+| =​, t i c= | Insert a new column into the table                                      |
+| =​, t i h= | Insert a horizontal-line below the current line into the table          |
+| =​, t i H= | Insert a hline and move to the row below that line                      |
+| =​, t i r= | Insert a new row above the current line into the table                  |
+| =​, t f=   | Toggle the formula debugger in tables                                   |
+| =​, t o=   | Toggle the display of Row/Column numbers in tables                      |
+
+Basic:
+| key   | description                                                         |
+|-------+---------------------------------------------------------------------|
+| =TAB= | TAB-action and visibility cycling for Org mode                      |
+| =0=   | Go to the beginning of the current visible line                     |
+| =$=   | Like evil-org-end-of-line but makes org-special-ctrl-a work in evil |
+| =I=   | Insert at beginning of line                                         |
+| =A=   | Append at end of line before ellipses if present                    |
+| =o=   | Clever insertion of org item below                                  |
+| =O=   | Clever insertion of org item above                                  |
+| =d=   | Like evil-delete, but realigns tags and numbered lists              |
+| =x=   | Combine evil-delete-char with org-delete-char                       |
+| =X=   | Combine evil-delete-char with org-delete-previous-char              |
+| =(=   | Go to end of sentence, or end of table field                        |
+| =)=   | Go to beginning of sentence, or beginning of table field            |
+| ={=   | Move backward to start of previous paragraph or equivalent          |
+| =}=   | Move forward to beginning of next paragraph or equivalent           |
+
+Operators:
+| key | description                         |
+|-----+-------------------------------------|
+| =<= | Promote all headings in marked area |
+| =>= | Demote all headings in marked area  |
+
+Examples:
+- =>>= to promote a heading
+- =>ar= to promote a tree
+- =<(= to swap a table column with the one on the left
+- =vie2>= to move a table column two places to the right
+
+Navigation:
+| key  | description       |
+|------+-------------------|
+| =gh= | parent of element |
+| =gj= | next element      |
+| =gk= | previous element  |
+| =gl= | first subelement  |
+| =gH= | top-level heading |
+
+Text objects:
+| key         | explanation                          |
+|-------------+--------------------------------------|
+| =ae= / =ie= | Select an org (inner) object         |
+| =aE= / =iE= | Select an org (inner) element        |
+| =ar= / =ir= | Select recursive org (inner) element |
+| =aR= / =iR= | Select an org (inner) subtree        |
+
+- =ae/ie= select the smallest object or element at point. Can be repeated to
+  select adjacent objects / elements
+- =aE/iE= select the smallest element at point. Elements build up the structure
+  of the document, so there is always an element at any point. Can be repeated
+  to select adjacent elements
+- =ar/ir= select smallest element that is a container of other elements. Can be
+  repeated to select greater elements
+
+Examples:
+- =vae= to select a paragraph
+- =daR= to delete a subtree
+- =yiR= to yank the contents of a subtree
+
+Calendar:
+| evil key          | emacs key                | explanation           |
+|-------------------+--------------------------+-----------------------|
+| =M-h= / =M-l=     | =S-left= / =S-right=     | next / previous day   |
+| =M-j= / =M-k=     | =S-down= / =S-up=        | next / previous week  |
+| =M-S-h= / =M-S-l= | =M-S-left= / =M-S-right= | next / previous month |
+| =M-S-j= / =M-S-k= | =M-S-down= / =M-S-up=    | next / previous year  |
+| =C-f= / =C-b=     | =M-v= / =C-v=            | scroll down /up       |
+
+Additional:
+| key         | On headings       | On tables         |
+|-------------+-------------------+-------------------|
+| =M-h=       | promote heading   | move column left  |
+| =M-l=       | demote heading    | move column right |
+| =M-k=       | move subtree up   | move column up    |
+| =M-j=       | move subtree down | move column down  |
+| =M-H= =<aR= | promote subtree   | delete column     |
+| =M-L= =>aR= | demote subtree    | insert column     |
+| =M-K=       | move heading up   | delete row        |
+| =M-J=       | move heading down | insert row        |
+
+Shift:
+| key | explanation        |
+|-----+--------------------|
+| =H= | previous todo item |
+| =L= | next todo item     |
+| =J= | decrease priority  |
+| =K= | increase priority  |
+
+Todo:
+| key   | explanation                                                                |
+|-------+----------------------------------------------------------------------------|
+| =t=   | Change the TODO state of an item                                           |
+| =T=   | Insert a new heading with the same level and TODO state as current heading |
+| =M-t= | Insert a new subheading with TODO keyword or checkbox and demote it        |
+
+Heading:
+| key   | explanation                                                  |
+|-------+--------------------------------------------------------------|
+| =O=   | Insert a new heading or an item with the same depth at point |
+| =M-o= | Insert a new subheading and demote it                        |
+
+Tables:
+| key           | explanation                    |
+|---------------+--------------------------------|
+| =(=           | previous table cell            |
+| =)=           | next table cell                |
+| ={=           | beginning of table             |
+| =}=           | end of table                   |
+| =M-h= / =M-l= | move table column left / right |
+| =M-k= / =M-j= | move table column up / down    |
+| =vae=         | select table cell              |
+| =vaE=         | select table row               |
+| =var=         | select whole table             |
+
+=org-agenda-mode= normal state map:
+| key     | explanation                                                      |
+|---------+------------------------------------------------------------------|
+| =, a=   | Dispatch agenda commands to collect entries to the agenda buffer |
+|         |                                                                  |
+| =, C c= | Cancel the currently running clock                               |
+| =, C i= | Start the clock on the currently selected item                   |
+| =, C j= | Jump to the currently clocked in task within the agenda          |
+| =, C o= | Stop the currently running clock                                 |
+|         |                                                                  |
+| =, d += | Add day to schedule date of task                                 |
+| =, d -= | Remove date from schedule date of task                           |
+| =, d d= | Add deadline                                                     |
+| =, d D= | Remove deadline                                                  |
+| =, d s= | Schedule                                                         |
+| =, d S= | Unschedule                                                       |
+| =, d t= | Change the date of this item                                     |
+|         |                                                                  |
+| =, f c= | Filter lines in the agenda buffer that have a specific category  |
+| =, f d= | Remove all filters from the current agenda buffer                |
+| =, f h= | Keep only those lines that are descendants from the same top     |
+| =, f r= | org-agenda-filter-by-tag-refine                                  |
+| =, f t= | Keep only those lines in the agenda buffer that have a tag       |
+| =, f x= | Filter agenda entries by regular expressions                     |
+|         |                                                                  |
+| =, h := | Set tags for the current headline                                |
+| =, h A= | Archive the entry/subtree belonging to the current agenda entry  |
+| =, h k= | Kill the entry/subtree belonging to the current agenda entry     |
+| =, h p= | Set the priority of line at point, also in Org file              |
+| =, h r= | Refile the item at point                                         |
+| =, h t= | Cycle TODO state of line at point, also in Org file              |
+|         |                                                                  |
+| =, i e= | Set the effort property for the current headline                 |
+| =, i p= | Set a property for the current headline                          |
+| =, i t= | Set tags for the current headline                                |
+|         |                                                                  |
+| =, s r= | Refile the item at point                                         |
+|         |                                                                  |
+| =, t a= | Toggle inclusion of items in trees marked with :ARCHIVE:         |
+| =, t d= | Toggle diary inclusion in an agenda buffer                       |
+| =, t f= | Toggle follow mode in an agenda buffer                           |
+| =, t i= | Add overlays, showing issues with clocking                       |
+| =, t l= | Toggle log mode in an agenda buffer                              |
+| =, t r= | Toggle clocktable mode in an agenda buffer                       |
+|         |                                                                  |
+| =, v d= | Switch to daily view for agenda                                  |
+| =, v m= | Switch to monthly view for agenda                                |
+| =, v n= | Go forward in time by the current span                           |
+| =, v p= | Go backward in time by the current span                          |
+| =, v r= | Switch to default view for agenda                                |
+| =, v t= | Switch to fortnightly view for agenda                            |
+| =, v w= | Switch to weekly view for agenda                                 |
+| =, v y= | Switch to yearly view for agenda                                 |
+
+Normal agenda evil keys:
+| evil key              | explanation                                              |
+|-----------------------+----------------------------------------------------------|
+| =TAB= =S-RET=         | go to the corresponding entry at point                   |
+| =RET=                 | go to the Org mode file which contains the item at point |
+| =M-RET=               | Display Org file and center around the item              |
+| =j= =k=               | next, previous line line                                 |
+| =gj= =gk= =C-j= =C-k= | next, previous item item                                 |
+| =[= =]=               | previous, next week                                      |
+| =J= =K=               | down, up priority                                        |
+| =H= =L=               | modify date to earlier, later                            |
+| =t=                   | cycle TODO keywords                                      |
+| =M-j= =M-k=           | drag line forward, backward                              |
+| =C-H= =C-L=           | previous, next keyword                                   |
+| =u=                   | undo                                                     |
+| =dd=                  | delete item                                              |
+| =da=                  | ask and archive item                                     |
+| =dA=                  | archive item                                             |
+| =ct=                  | set tags                                                 |
+| =ce=                  | set effort                                               |
+| =cT=                  | set timer                                                |
+| =i=                   | insert entry in diary                                    |
+| =a=                   | add note                                                 |
+| =A=                   | append to agenda                                         |
+| =C=                   | capture                                                  |
+| =m=                   | mark                                                     |
+| =*=                   | toggle all marks                                         |
+| =%=                   | mark regexp                                              |
+| =M=                   | remove all marks                                         |
+| =x=                   | execute action on marks                                  |
+| =gr=                  | refresh agenda                                           |
+| =gR=                  | refresh all agendas                                      |
+| =ZQ=                  | exit agenda                                              |
+| =ZZ=                  | quit agenda                                              |
+| =z=                   | tweak display                                            |
+| =ZD=                  | dim blocked tasks                                        |
+| =sc=                  | filter by category                                       |
+| =sr=                  | filter by regexp                                         |
+| =se=                  | filter by effort                                         |
+| =st=                  | filter by tag                                            |
+| =s^=                  | filter by top headline                                   |
+| =su=                  | remove all filters                                       |
+| =ss=                  | filter/limit interactively                               |
+| =S=                   | remove all filters                                       |
+| =I=                   | clock in                                                 |
+| =O=                   | clock out                                                |
+| =cg=                  | jump to the currently clocked in task within the agenda  |
+| =cc=                  | cancel the current running clock                         |
+| =cr=                  | toggle clocktable mode in an agenda buffer               |
+| =.=                   | go to today's date                                       |
+| =gc=                  | pop up calendar                                          |
+| =gC=                  | pop up date converter                                    |
+| =p=                   | pop up date selector                                     |
+| =gh=                  | pop up holiday calendar                                  |
+| =gm=                  | pop up phases of the moon                                |
+| =gs=                  | pop up sunrise/sunset times                              |
+| =gt=                  | pop up tag list                                          |
+| =p=                   | Change the date of this item                             |
+| =P=                   | Display the flagging note in the other window            |
+| =+= =-=               | manipulate the query by adding a search                  |
+|                       | term with positive or negative selection                 |
+
 #+begin_src elisp
   (use-package evil-org
     :diminish
     :after (:all (org evil))
+    :commands (evil-org-mode evil-org-recompute-clocks evil-org-key-theme)
+    :preface
+    (defmacro local/org-emphasize (fname char)
+      "Make function for setting the emphasis in org mode"
+      `(defun ,fname () (interactive)
+              (org-emphasize ,char)))
     :hook
     (org-mode . evil-org-mode)
     (evil-org-mode . (lambda () (evil-org-set-key-theme)))
@@ -2690,12 +3065,281 @@ Evil support in org-mode.
                          (evil-org-agenda-set-keys)))
     :general
     (:keymaps 'org-src-mode-map [remap evil-write] 'org-edit-src-save)
+    (general-leader
+      "ao"   '(nil :wk "org")
+      "ao#"  '(org-agenda-list-stuck-projects :wk "list stuck projects")
+      "ao/"  '(org-occur-in-agenda-files :wk "occur in agenda files")
+      "aoa"  '(org-agenda-list :wk "agenda list")
+      "aoc"  '(org-capture :wk "capture")
+      "aoe"  '(org-store-agenda-views :wk "store agenda views")
+      "aol"  '(org-store-link :wk "store link")
+      "aom"  '(org-tags-view :wk "tags view")
+      "aoo"  '(org-agenda :wk "agenda")
+      "aos"  '(org-search-view :wk "search view")
+      "aot"  'org-todo-list
+
+      "aof"  '(nil :wk "feeds")
+      "aofi" '(org-feed-goto-inbox :wk "goto inbox")
+      "aofu" '(org-feed-update-all :wk "update all")
+
+      "aoC"  '(nil :wk "clock")
+      "aoCc" '(org-clock-cancel :wk "cancel")
+      "aoCg" '(org-clock-goto :wk "goto last clocked-in clock")
+      "aoCi" '(org-clock-in :wk "clock in")
+      "aoCI" '(org-clock-in-last :wk "clock in last")
+      "aoCj" '((lambda () (interactive)
+                 (org-clock-jump-to-current-clock)) :wk "jump to current")
+      "aoCo" '(org-clock-out :wk "clock out")
+      "aoCr" '(org-resolve-clocks :wk "resolve clocks")
+
+      "Cc" 'org-capture)
+    (general-major-leader
+      :keymaps 'org-mode-map
+      "'"  '(org-edit-special :wk "edit element at point")
+      "c"  '(org-capture :wk "capture")
+
+      ;; More cycling options (timestamps, headlines, items, properties)
+      "L" '(org-shiftright :wk "cycle right")
+      "H" '(org-shiftleft :wk "cycle left")
+      "J" '(org-shiftdown :wk "cycle down")
+      "K" '(org-shiftup :wk "cycle up")
+
+      ;; Change between todo sets
+      "C-L" '(org-shiftcontrolright :wk "switch to next todo")
+      "C-H" '(org-shiftcontrolleft :wk "switch to prev todo")
+      "C-J" '(org-shiftcontroldown :wk "timestamp down")
+      "C-K" '(org-shiftcontrolup :wk "timestamp up")
+
+      ;; Multi-purpose keys
+      "*" '(org-ctrl-c-star :wk "compute table/change heading")
+      "-" '(org-ctrl-c-minus :wk "insert separator/modify bullet")
+      "#" '(org-update-statistics-cookies :wk "update stats cookie")
+      "RET"   '(org-ctrl-c-ret :wk "table-hline-and-move/insert-heading")
+      "M-RET" '(org-meta-return :wk "new heading/wrap a region")
+
+      "A"  '(org-attach :wk "attachments")
+
+      "a"  '(org-agenda :wk "agenda")
+
+      "b"  '(nil :wk "babel")
+      "bp" '(org-babel-previous-src-block :wk "jump to prev src block")
+      "bn" '(org-babel-next-src-block :wk "jump to next src block")
+      "be" '(org-babel-execute-maybe :wk "exec maybe")
+      "bo" '(org-babel-open-src-block-result :wk "open results of src block")
+      "bv" '(org-babel-expand-src-block :wk "expand src block")
+      "bu" '(org-babel-goto-src-block-head :wk "goto beginning of src block")
+      "bg" '(org-babel-goto-named-src-block :wk "goto named src block")
+      "br" '(org-babel-goto-named-result :wk "goto named result")
+      "bb" '(org-babel-execute-buffer :wk "exec buffer src blocks")
+      "bs" '(org-babel-execute-subtree :wk "exec subtree src blocks")
+      "bd" '(org-babel-demarcate-block :wk "wrap/split code")
+      "bt" '(org-babel-tangle :wk "tangle buffer")
+      "bf" '(org-babel-tangle-file :wk "tangle to file")
+      "bc" '(org-babel-check-src-block :wk "check src block")
+      "bj" '(org-babel-insert-header-arg :wk "insert header arg")
+      "bl" '(org-babel-load-in-session :wk "load in session")
+      "bi" '(org-babel-lob-ingest :wk "add file blocks to library")
+      "bI" '(org-babel-view-src-block-info :wk "view src block info")
+      "bz" '(org-babel-switch-to-session :wk "switch to session")
+      "bZ" '(org-babel-switch-to-session-with-code :wk "switch to session w/ code")
+      "ba" '(org-babel-sha1-hash :wk "gen sha1 hash")
+      "bx" '(org-babel-do-key-sequence-in-edit-buffer :wk "read key seq and exec")
+
+      "C"  '(nil :wk "clocks")
+      "Cc" '(org-clock-cancel :wk "cancel clock")
+      "Cd" '(org-clock-display :wk "show timers")
+      "Ce" '(org-evaluate-time-range :wk "evaluate time range")
+      "Cg" '(org-clock-goto :wk "goto current")
+      "Ci" '(org-clock-in :wk "start clock on current item")
+      "CI" '(org-clock-in-last :wl "start last clock")
+      "Cj" '((lambda () (interactive)
+               (org-clock-jump-to-current-clock)) :wk "jump to current")
+      "Co" '(org-clock-out :wk "stop current clock")
+      "CR" '(org-clock-report :wk "update report")
+      "Cr" '(org-resolve-clocks :wk "resolve all")
+
+      "d"  '(nil :wk "dates")
+      "dd" '(org-deadline :wk "set deadline")
+      "ds" '(org-schedule :wk "set scheduled")
+      "dt" '(org-time-stamp :wk "add timestamp")
+      "dT" '(org-time-stamp-inactive :wk "add inactive timestamp")
+
+      "e"  '(nil :wk "export")
+      "ee" '(org-export-dispatch :wk "export dispatcher")
+
+      "f"  '(nil :wk "feeds")
+      "fi" '(org-feed-goto-inbox :wk "goto inbox")
+      "fu" '(org-feed-update-all :wk "update all")
+
+      "i"  '(nil :wk "insert")
+      "ib" '(org-insert-structure-template :wk "block structure of type")
+      "id" '(org-insert-drawer :wk "drawer at point")
+      "ie" '(org-set-effort :wk "set effort")
+      "if" '(org-footnote-new :wk "footnote")
+      "ih" '(org-insert-heading :wk "heading")
+      "iH" '(org-insert-heading-after-current :wk "heading with same level")
+      "ii" '(org-insert-item :wk "item on current level")
+      "il" '(org-insert-link :wk "link")
+      "in" '(org-add-note :wk "note")
+      "ip" '(org-set-property :wk "set property")
+      "is" '(org-insert-subheading :wk "subheading and demote it")
+      "it" '(org-set-tags-command :wk "set tags")
+
+      "iD" '(nil :wk "download")
+      ;; TODO: org-download
+
+      "p"  '(org-priority :wk "change priority")
+
+      "s"  '(nil :wk "subtrees")
+      "sa" '(org-toggle-archive-tag :wk "toggle archive")
+      "sA" '(org-archive-subtree :wk "move to archive")
+      "sb" '(org-tree-to-indirect-buffer :wk "create indirect buffer")
+      "sd" '(org-cut-subtree :wk "cut to clipboard")
+      "sh" '(org-promote-subtree :wk "promote")
+      "sj" '(org-move-subtree-down :wk "move down")
+      "sk" '(org-move-subtree-up :wk "move up")
+      "sl" '(org-demote-subtree :wk "demote subtree")
+      "sn" '(org-narrow-to-subtree :wk "narrow buffer")
+      "sN" '(widen :wk "widen buffer")
+      "sr" '(org-refile :wk "refile")
+      "ss" '(org-sparse-tree :wk "create sparse tree")
+      "sS" '(org-sort :wk "sort")
+
+      "T"  '(nil :wk "toggles")
+      "Tc" '(org-toggle-checkbox :wk "checkbox")
+      "Te" '(org-toggle-pretty-entities :wk "pretty entities")
+      "Ti" '(org-toggle-inline-images :wk "inline images")
+      "Tl" '(org-toggle-link-display :wk "link display")
+      "Tt" '(org-show-todo-tree :wk "todo tree")
+      "TT" '(org-todo :wk "change todo state")
+      "Tx" '(org-latex-preview :wk "preview latex")
+
+      "t"  '(nil :wk "tables")
+      "ta" '(org-table-align :wk "align")
+      "tb" '(org-table-blank-field :wk "blank field")
+      "tc" '(org-table-convert :wk "convert table.el")
+      "te" '(org-table-eval-formula :wk "replace by calculation")
+      "tE" '(org-table-export :wk "export")
+      "tf" '(org-table-field-info :wk "field info")
+      "th" '(org-table-previous-field :wk "goto prev field")
+      "tH" '(org-table-move-column-left :wk "move column left")
+      "tI" '(org-table-import :wk "import file")
+      "tj" '(org-table-next-row :wk "goto next row")
+      "tJ" '(org-table-move-row-down :wk "move row down")
+      "tK" '(org-table-move-row-up :wk "move row up")
+      "tl" '(org-table-next-field :wk "goto next field")
+      "tL" '(org-table-move-column-right :wk "move column right")
+      "tn" '(org-table-create :wk "create table")
+      "tN" '(org-table-create-with-table.el :wk "create table.el")
+      "tr" '(org-table-recalculate :wk "recalculate line")
+      "ts" '(org-table-sort-lines :wk "sort by column")
+      "tw" '(org-table-wrap-region :wk "wrap region")
+
+      "td"  '(nil :wk "delete")
+      "tdc" '(org-table-delete-column :wk "column")
+      "tdr" '(org-table-kill-row :wk "row")
+
+      "ti"  '(nil :wk "insert")
+      "tic" '(org-table-insert-column :wk "column")
+      "tih" '(org-table-insert-hline :wk "hline")
+      "tiH" '(org-table-hline-and-move :wk "hline and jump after")
+      "tir" '(org-table-insert-row :wk "row above")
+
+      "tt"  '(nil :wk "toggle")
+      "ttf" '(org-table-toggle-formula-debugger :wk "formula debugger")
+      "tto" '(org-table-toggle-coordinate-overlays :wk "row/column numbers")
+
+      "x"  '(nil :wk "text")
+      "xb" (local/org-emphasize local/org-bold ?*)
+      "xc" (local/org-emphasize local/org-code ?~)
+      "xi" (local/org-emphasize local/org-italic ?/)
+      "xo" 'org-open-at-point
+      "xr" (local/org-emphasize local/org-clear ? )
+      "xs" (local/org-emphasize local/org-strike-through ?+)
+      "xu" (local/org-emphasize local/org-underline ?_)
+      "xv" (local/org-emphasize local/org-verbatim ?=))
+    (general-major-leader
+      :keymaps 'org-agenda-mode-map
+      "a"  '(org-agenda :wk "agenda")
+
+      "C"  '(nil :wk "clocks")
+      "Cc" '(org-agenda-clock-cancel :wk "cancel")
+      "Ci" '(org-agenda-clock-in :wk "start")
+      "Cj" '(org-agenda-clock-goto :wk "jump to current")
+      "Co" '(org-agenda-clock-out :wk "stop")
+
+      "d"  '(nil :wk "dates")
+      "d+" '(org-agenda-do-date-later :wk "date +1")
+      "d-" '(org-agenda-do-date-earlier :wk "date -1")
+      "dd" '(org-agenda-deadline :wk "add deadline")
+      "dD" '((lambda () (interactive)
+              (let ((current-prefix-arg '(4)))
+                (call-interactively 'org-agenda-deadline))) :wk "remove deadline")
+      "ds" '(org-agenda-schedule :wk "schedule")
+      "dS" '((lambda () (interactive)
+              (let ((current-prefix-arg '(4)))
+                (call-interactively 'org-agenda-schedule))) :wk "unschedule")
+      "dt" '(org-agenda-date-prompt :wk "change date")
+
+      "f"  '(nil :wk "filter")
+      "fc" '(org-agenda-filter-by-category :wk "by category")
+      "fd" '(org-agenda-filter-remove-all :wk "remove")
+      "fh" '(org-agenda-filter-by-top-headline :wk "same descendants")
+      "fr" 'org-agenda-filter-by-tag-refine
+      "ft" '(org-agenda-filter-by-tag "by tag")
+      "fx" '(org-agenda-filter-by-regexp :wk "by regexp")
+
+      "h"  '(nil :wk "headline")
+      "h:" '(org-agenda-set-tags :wk "set tags")
+      "hA" '(org-agenda-archive-default :wk "archive")
+      "hk" '(org-agenda-kill :wk "kill")
+      "hp" '(org-agenda-priority :wk "set priority")
+      "hr" '(org-agenda-refile :wk "refile")
+      "ht" '(org-agenda-todo :wk "cycle state")
+
+      "i"  '(nil :wk "insert")
+      "ie" '(org-agenda-set-effort :wk "effort")
+      "ip" '(org-agenda-set-property :wk "property")
+      "it" '(org-agenda-set-tags :wk "tags")
+
+      "s"  '(nil :wk "subtrees")
+      "sr" '(org-agenda-refile :wk "refile")
+
+      "t"  '(nil :wk "toggles")
+      "ta" '(org-agenda-archives-mode :wk "show archive")
+      "td" '(org-agenda-toggle-diary :wk "show diary")
+      "tf" '(org-agenda-follow-mode :wk "follow")
+      "ti" '(org-agenda-show-clocking-issues :wk "show issues/clocks")
+      "tl" '(org-agenda-log-mode :wk "log mode")
+      "tr" '(org-agenda-clockreport-mode :wk "clocktable")
+
+      "v"  '(nil :wk "view")
+      "vd" '(org-agenda-day-view :wk "daily")
+      "vm" '(org-agenda-month-view :wk "monthly")
+      "vn" '(org-agenda-later :wk "forward in plan")
+      "vp" '(org-agenda-earlier :wk "go backward")
+      "vr" '(org-agenda-reset-view :wk "reset")
+      "vt" '(org-agenda-fortnight-view :wk "fortnight")
+      "vw" '(org-agenda-week-view :wk "weekly")
+      "vy" '(org-agenda-year-view :wk "yearly"))
+    (general-major-leader
+      :keymaps 'org-capture-mode-map
+      "c" 'org-capture-finalize
+      "k" 'org-capture-kill
+      "a" 'org-capture-kill
+      "r" 'org-capture-refile)
+    (general-major-leader
+      :keymaps 'org-src-mode-map
+      "c" 'org-edit-src-exit
+      "k" 'org-edit-src-abort
+      "a" 'org-edit-src-abort)
     :custom
     (evil-org-key-theme
      '(navigation insert return textobjects additional shift todo heading calendar)
      "Key themes to enable.")
     (evil-org-retain-visual-state-on-shift t "<> should retain selection in visual mode."))
 #+end_src
+
 *** Org Bullets
 Replace bullets with unicode characters.
 
