@@ -384,176 +384,176 @@ I like VIM keys much more, so =evil-mode= is essential part of my configuration.
 Some normal state keybindings:
 | key        | describe                                                                 |
 |------------+--------------------------------------------------------------------------|
-| ~m~        | Set the marker denoted by CHAR to position POS                           |
-| ~g8~ ~ga~  | Print info on cursor position (on screen and within buffer)              |
-| ~gx~       | Ask a WWW browser to load the URL at or before point                     |
-| ~g;~       | Go to the point where the last edit was made in the current buffer       |
-| ~g,~       | Go back to more recent changes after M-x goto-last-change have been used |
-| ~zo~       | Open fold at point                                                       |
-| ~zO~       | Open fold at point recursively                                           |
-| ~zc~       | Close fold at point                                                      |
-| ~za~       | Open or close a fold under point                                         |
-| ~zr~       | Open all folds                                                           |
-| ~zm~       | Close all folds                                                          |
-| ~ZQ~       | Closes the current window, current frame, Emacs                          |
-| ~[escape]~ | Switch to normal state without recording current command                 |
+| =m=        | Set the marker denoted by CHAR to position POS                           |
+| =g8= =ga=  | Print info on cursor position (on screen and within buffer)              |
+| =gx=       | Ask a WWW browser to load the URL at or before point                     |
+| =g;=       | Go to the point where the last edit was made in the current buffer       |
+| =g,=       | Go back to more recent changes after M-x goto-last-change have been used |
+| =zo=       | Open fold at point                                                       |
+| =zO=       | Open fold at point recursively                                           |
+| =zc=       | Close fold at point                                                      |
+| =za=       | Open or close a fold under point                                         |
+| =zr=       | Open all folds                                                           |
+| =zm=       | Close all folds                                                          |
+| =ZQ=       | Closes the current window, current frame, Emacs                          |
+| =[escape]= | Switch to normal state without recording current command                 |
 
 Some motion state keybindings:
 | key     | describe                                                                |
 |---------+-------------------------------------------------------------------------|
-| ~0~     | Move the cursor to the beginning of the current line                    |
-| ~b~     | Move the cursor to the beginning of the COUNT-th previous word          |
-| ~B~     | Move the cursor to the beginning of the COUNT-th previous WORD          |
-| ~e~     | Move the cursor to the end of the COUNT-th next word                    |
-| ~E~     | Move the cursor to the end of the COUNT-th next WORD                    |
-| ~f~     | Move to the next COUNT'th occurrence of CHAR                            |
-| ~F~     | Move to the previous COUNT'th occurrence of CHAR                        |
-| ~G~     | Go to the first non-blank character of line COUNT                       |
-| ~h~     | Move cursor to the left by COUNT characters                             |
-| ~H~     | Move the cursor to line COUNT from the top of the window                |
+| =0=     | Move the cursor to the beginning of the current line                    |
+| =b=     | Move the cursor to the beginning of the COUNT-th previous word          |
+| =B=     | Move the cursor to the beginning of the COUNT-th previous WORD          |
+| =e=     | Move the cursor to the end of the COUNT-th next word                    |
+| =E=     | Move the cursor to the end of the COUNT-th next WORD                    |
+| =f=     | Move to the next COUNT'th occurrence of CHAR                            |
+| =F=     | Move to the previous COUNT'th occurrence of CHAR                        |
+| =G=     | Go to the first non-blank character of line COUNT                       |
+| =h=     | Move cursor to the left by COUNT characters                             |
+| =H=     | Move the cursor to line COUNT from the top of the window                |
 |         | on the first non-blank character                                        |
-| ~j~     | Move the cursor COUNT lines down                                        |
-| ~k~     | Move the cursor COUNT lines up                                          |
-| ~l~     | Move cursor to the right by COUNT characters                            |
-| ~K~     | Look up the keyword at point                                            |
-| ~L~     | Move the cursor to line COUNT from the bottom of the window             |
+| =j=     | Move the cursor COUNT lines down                                        |
+| =k=     | Move the cursor COUNT lines up                                          |
+| =l=     | Move cursor to the right by COUNT characters                            |
+| =K=     | Look up the keyword at point                                            |
+| =L=     | Move the cursor to line COUNT from the bottom of the window             |
 |         | on the first non-blank character                                        |
-| ~M~     | Move the cursor to the middle line in the window                        |
+| =M=     | Move the cursor to the middle line in the window                        |
 |         | on the first non-blank character                                        |
-| ~n~     | Repeat the last search                                                  |
-| ~N~     | Repeat the last search in the opposite direction                        |
-| ~t~     | Move before the next COUNT'th occurrence of CHAR                        |
-| ~T~     | Move before the previous COUNT'th occurrence of CHAR                    |
-| ~w~     | Move the cursor to the beginning of the COUNT-th next word              |
-| ~W~     | Move the cursor to the beginning of the COUNT-th next WORD              |
-| ~gn~    | Select next match                                                       |
-| ~gN~    | Select next match                                                       |
-| ~gd~    | Go to definition or first occurrence of symbol under point              |
-| ~ge~    | Move the cursor to the end of the COUNT-th previous word                |
-| ~gE~    | Move the cursor to the end of the COUNT-th previous WORD                |
-| ~gg~    | Go to the first non-blank character of line COUNT                       |
-| ~gj~    | Move the cursor COUNT screen lines down                                 |
-| ~gk~    | Move the cursor COUNT screen lines up                                   |
-| ~g0~    | Move the cursor to the first character of the current screen line       |
-| ~g_~    | Move the cursor to the last non-blank character of the current line     |
-| ~g^~    | Move the cursor to the first non blank character                        |
+| =n=     | Repeat the last search                                                  |
+| =N=     | Repeat the last search in the opposite direction                        |
+| =t=     | Move before the next COUNT'th occurrence of CHAR                        |
+| =T=     | Move before the previous COUNT'th occurrence of CHAR                    |
+| =w=     | Move the cursor to the beginning of the COUNT-th next word              |
+| =W=     | Move the cursor to the beginning of the COUNT-th next WORD              |
+| =gn=    | Select next match                                                       |
+| =gN=    | Select next match                                                       |
+| =gd=    | Go to definition or first occurrence of symbol under point              |
+| =ge=    | Move the cursor to the end of the COUNT-th previous word                |
+| =gE=    | Move the cursor to the end of the COUNT-th previous WORD                |
+| =gg=    | Go to the first non-blank character of line COUNT                       |
+| =gj=    | Move the cursor COUNT screen lines down                                 |
+| =gk=    | Move the cursor COUNT screen lines up                                   |
+| =g0=    | Move the cursor to the first character of the current screen line       |
+| =g_=    | Move the cursor to the last non-blank character of the current line     |
+| =g^=    | Move the cursor to the first non blank character                        |
 |         | of the current screen line                                              |
-| ~gm~    | Move the cursor to the middle of the current visual line                |
-| ~g$~    | Move the cursor to the last character of the current screen line        |
-| ~g C-]~ | Jump to tag under point                                                 |
-| ~{~     | Move to the beginning of the COUNT-th previous paragraph                |
-| ~}~     | Move to the end of the COUNT-th next paragraph                          |
-| ~#~     | Search backward for symbol under point                                  |
-| ~g#~    | Search backward for unbounded symbol                                    |
-| ~$~     | Move the cursor to the end of the current line                          |
-| ~%~     | Find the next item in this line after or under the cursor               |
+| =gm=    | Move the cursor to the middle of the current visual line                |
+| =g$=    | Move the cursor to the last character of the current screen line        |
+| =g C-]= | Jump to tag under point                                                 |
+| ={=     | Move to the beginning of the COUNT-th previous paragraph                |
+| =}=     | Move to the end of the COUNT-th next paragraph                          |
+| =#=     | Search backward for symbol under point                                  |
+| =g#=    | Search backward for unbounded symbol                                    |
+| =$=     | Move the cursor to the end of the current line                          |
+| =%=     | Find the next item in this line after or under the cursor               |
 |         | and jump to the corresponding one                                       |
-| ~`~     | Go to the marker specified by CHAR                                      |
-| ~'~     | Go to the line of the marker specified by CHAR                          |
-| ~(~     | Move to the previous COUNT-th beginning of a sentence or paragraph      |
-| ~)~     | Move to the next COUNT-th beginning of a sentence or end of a paragraph |
-| ~]]~    | Move the cursor to the beginning of the COUNT-th next section           |
-| ~][~    | Move the cursor to the end of the COUNT-th next section                 |
-| ~[[~    | Move the cursor to the beginning of the COUNT-th previous section       |
-| ~[]~    | Move the cursor to the end of the COUNT-th previous section             |
-| ~[(~    | Go to [count] previous unmatched '('                                    |
-| ~])~    | Go to [count] next unmatched ')'                                        |
-| ~[{~    | Go to [count] previous unmatched '{'                                    |
-| ~]}~    | Go to [count] next unmatched '}'                                        |
-| ~]s~    | Go to the COUNT'th spelling mistake after point                         |
-| ~[s~    | Go to the COUNT'th spelling mistake preceding point                     |
-| ~*~     | Search forward for symbol under point                                   |
-| ~g*~    | Search forward for unbounded symbol under point                         |
-| ~​,~     | Repeat the last find COUNT times in the opposite direction              |
-| ~/~     | Search forward for user-entered text                                    |
-| ~;~     | Repeat the last find COUNT times                                        |
-| ~?~     | Search backward for user-entered text                                   |
-| ~\vert~     | Go to column COUNT on the current line                                  |
-| ~^~     | Move the cursor to the first non-blank character of the current line    |
-| ~+~     | Move the cursor COUNT lines down on the first non-blank character       |
-| ~_~     | Move the cursor COUNT-1 lines down on the first non-blank character     |
-| ~-~     | Move the cursor COUNT lines up on the first non-blank character         |
-| ~C-6~   | Switch to current windows last open buffer                              |
-| ~C-]~   | Jump to tag under point                                                 |
-| ~C-b~   | Scrolls the window COUNT pages upwards                                  |
-| ~C-e~   | Scrolls the window COUNT lines downwards                                |
-| ~C-f~   | Scrolls the window COUNT pages downwards                                |
-| ~C-o~   | Go to older position in jump list                                       |
-| ~C-y~   | Scrolls the window COUNT lines upwards                                  |
-| ~C-u~   | Scrolls the window and the cursor COUNT lines upwards                   |
-| ~C-d~   | Scrolls the window and the cursor COUNT lines downwards                 |
-| ~C-i~   | Go to newer position in jump list                                       |
-| ~RET~   | Move the cursor COUNT lines down                                        |
-| ~\~     | Execute the next command in Emacs state                                 |
-| ~z^~    | Scrolls the line right below the window                                 |
+| =`=     | Go to the marker specified by CHAR                                      |
+| ='=     | Go to the line of the marker specified by CHAR                          |
+| =(=     | Move to the previous COUNT-th beginning of a sentence or paragraph      |
+| =)=     | Move to the next COUNT-th beginning of a sentence or end of a paragraph |
+| =]]=    | Move the cursor to the beginning of the COUNT-th next section           |
+| =][=    | Move the cursor to the end of the COUNT-th next section                 |
+| =[[=    | Move the cursor to the beginning of the COUNT-th previous section       |
+| =[]=    | Move the cursor to the end of the COUNT-th previous section             |
+| =[(=    | Go to [count] previous unmatched '('                                    |
+| =])=    | Go to [count] next unmatched ')'                                        |
+| =[{=    | Go to [count] previous unmatched '{'                                    |
+| =]}=    | Go to [count] next unmatched '}'                                        |
+| =]s=    | Go to the COUNT'th spelling mistake after point                         |
+| =[s=    | Go to the COUNT'th spelling mistake preceding point                     |
+| =*=     | Search forward for symbol under point                                   |
+| =g*=    | Search forward for unbounded symbol under point                         |
+| =​,=     | Repeat the last find COUNT times in the opposite direction              |
+| =/=     | Search forward for user-entered text                                    |
+| =;=     | Repeat the last find COUNT times                                        |
+| =?=     | Search backward for user-entered text                                   |
+| =\vert=     | Go to column COUNT on the current line                                  |
+| =^=     | Move the cursor to the first non-blank character of the current line    |
+| =+=     | Move the cursor COUNT lines down on the first non-blank character       |
+| =_=     | Move the cursor COUNT-1 lines down on the first non-blank character     |
+| =-=     | Move the cursor COUNT lines up on the first non-blank character         |
+| =C-6=   | Switch to current windows last open buffer                              |
+| =C-]=   | Jump to tag under point                                                 |
+| =C-b=   | Scrolls the window COUNT pages upwards                                  |
+| =C-e=   | Scrolls the window COUNT lines downwards                                |
+| =C-f=   | Scrolls the window COUNT pages downwards                                |
+| =C-o=   | Go to older position in jump list                                       |
+| =C-y=   | Scrolls the window COUNT lines upwards                                  |
+| =C-u=   | Scrolls the window and the cursor COUNT lines upwards                   |
+| =C-d=   | Scrolls the window and the cursor COUNT lines downwards                 |
+| =C-i=   | Go to newer position in jump list                                       |
+| =RET=   | Move the cursor COUNT lines down                                        |
+| =\=     | Execute the next command in Emacs state                                 |
+| =z^=    | Scrolls the line right below the window                                 |
 |         | or line COUNT to the top of the window                                  |
-| ~z+~    | Scrolls the line right below the window                                 |
+| =z+=    | Scrolls the line right below the window                                 |
 |         | or line COUNT to the top of the window                                  |
-| ~zt~    | Scrolls line number COUNT to the top of the window                      |
-| ~zz~    | Scrolls line number COUNT to the center of the window                   |
-| ~zb~    | Scrolls line number COUNT to the bottom of the window                   |
-| ~v~     | Characterwise selection                                                 |
-| ~V~     | Linewise selection                                                      |
-| ~C-v~   | Blockwise selection                                                     |
-| ~gv~    | Restore previous selection                                              |
-| ~C-^~   | Switches to another buffer                                              |
-| ~zl~    | Scrolls the window COUNT columns to the right                           |
-| ~zh~    | Scrolls the window COUNT columns to the left                            |
-| ~zL~    | Scrolls the window COUNT half-screenwidths to the right                 |
-| ~zH~    | Scrolls the window COUNT half-screenwidths to the left                  |
-| ~C-z~   | Enable Emacs state. Disable with negative ARG                           |
+| =zt=    | Scrolls line number COUNT to the top of the window                      |
+| =zz=    | Scrolls line number COUNT to the center of the window                   |
+| =zb=    | Scrolls line number COUNT to the bottom of the window                   |
+| =v=     | Characterwise selection                                                 |
+| =V=     | Linewise selection                                                      |
+| =C-v=   | Blockwise selection                                                     |
+| =gv=    | Restore previous selection                                              |
+| =C-^=   | Switches to another buffer                                              |
+| =zl=    | Scrolls the window COUNT columns to the right                           |
+| =zh=    | Scrolls the window COUNT columns to the left                            |
+| =zL=    | Scrolls the window COUNT half-screenwidths to the right                 |
+| =zH=    | Scrolls the window COUNT half-screenwidths to the left                  |
+| =C-z=   | Enable Emacs state. Disable with negative ARG                           |
 
 Working with text objects:
 | key         | describe                          |
 |-------------+-----------------------------------|
-| ~w~         | Select a word                     |
-| ~W~         | Select a WORD                     |
-| ~s~         | Select a sentence                 |
-| ~p~         | Select a paragraph                |
-| ~b~ ~(~ ~)~ | Select a parenthesis              |
-| ~[~ ~]~     | Select a square bracket           |
-| ~B~ ~{~ ~}~ | Select a curly bracket ("brace")  |
-| ~<~ ~>~     | Select an angle bracket           |
-| ~'~         | Select a single-quoted expression |
-| ~"~         | Select a double-quoted expression |
-| ~`~         | Select a back-quoted expression   |
-| ~t~         | Select a tag block                |
-| ~o~         | Select a symbol                   |
+| =w=         | Select a word                     |
+| =W=         | Select a WORD                     |
+| =s=         | Select a sentence                 |
+| =p=         | Select a paragraph                |
+| =b= =(= =)= | Select a parenthesis              |
+| =[= =]=     | Select a square bracket           |
+| =B= ={= =}= | Select a curly bracket ("brace")  |
+| =<= =>=     | Select an angle bracket           |
+| ='=         | Select a single-quoted expression |
+| ="=         | Select a double-quoted expression |
+| =`=         | Select a back-quoted expression   |
+| =t=         | Select a tag block                |
+| =o=         | Select a symbol                   |
 
 Some visual state keybindings:
 | key | describe                                                         |
 |-----+------------------------------------------------------------------|
-| ~o~ | Put the mark where point is now, and point where the mark is now |
-| ~O~ | Rearrange corners in Visual Block mode                           |
+| =o= | Put the mark where point is now, and point where the mark is now |
+| =O= | Rearrange corners in Visual Block mode                           |
 
 Some evil commands:
 | command                  | describe                                                  |
 |--------------------------+-----------------------------------------------------------|
-| ~q[uit]~                 | Closes the current window, current frame, Emacs           |
-| ~wq~                     | Saves the current buffer and closes the window            |
-| ~quita[ll]~ ~qa[ll]~     | Exits Emacs, asking for saving                            |
-| ~cq[uit]~                | Exits Emacs without saving, with an non-zero error code   |
-| ~wqa[ll]~ ~xa[ll]~       | Save all buffers and exit Emacs                           |
-| ~x[it]~ ~exi[t]~         | Saves the current buffer and closes the window            |
-| ~g[lobal]~               | The Ex global command                                     |
-| ~v[global]~              | The Ex vglobal command                                    |
-| ~norm[al]~               | The Ex normal command                                     |
-| ~registers~              | Shows the contents of all registers                       |
-| ~marks~                  | Shows all marks                                           |
-| ~delm[arks]~             | Delete all marks                                          |
-| ~ju[mps]~                | Display the contents of the jump list                     |
-| ~noh[lsearch]~           | Disable the active search highlightings                   |
-| ~f[ile]~                 | Shows basic file information                              |
-| ~=~                      | Print the last line number                                |
-| ~!~                      | Execute a shell command                                   |
-| ~@:~                     | Repeats the last ex command                               |
-| ~mak[e]~                 | Call a build command in the current directory             |
-| ~cc~                     | Go to error number COUNT                                  |
-| ~cfir[st]~ ~cr[ewind]~   | Restart at the first error                                |
-| ~cn[ext]~                | Visit next error and corresponding source code            |
-| ~cp[revious]~            | Visit previous error and corresponding source code        |
-| ~set-initial-state~      | Set initial state for the current major mode to STATE     |
-| ~show-digraphs~          | Shows a list of all available digraphs                    |
+| =q[uit]=                 | Closes the current window, current frame, Emacs           |
+| =wq=                     | Saves the current buffer and closes the window            |
+| =quita[ll]= =qa[ll]=     | Exits Emacs, asking for saving                            |
+| =cq[uit]=                | Exits Emacs without saving, with an non-zero error code   |
+| =wqa[ll]= =xa[ll]=       | Save all buffers and exit Emacs                           |
+| =x[it]= =exi[t]=         | Saves the current buffer and closes the window            |
+| =g[lobal]=               | The Ex global command                                     |
+| =v[global]=              | The Ex vglobal command                                    |
+| =norm[al]=               | The Ex normal command                                     |
+| =registers=              | Shows the contents of all registers                       |
+| =marks=                  | Shows all marks                                           |
+| =delm[arks]=             | Delete all marks                                          |
+| =ju[mps]=                | Display the contents of the jump list                     |
+| =noh[lsearch]=           | Disable the active search highlightings                   |
+| =f[ile]=                 | Shows basic file information                              |
+| ===                      | Print the last line number                                |
+| =!=                      | Execute a shell command                                   |
+| =@:=                     | Repeats the last ex command                               |
+| =mak[e]=                 | Call a build command in the current directory             |
+| =cc=                     | Go to error number COUNT                                  |
+| =cfir[st]= =cr[ewind]=   | Restart at the first error                                |
+| =cn[ext]=                | Visit next error and corresponding source code            |
+| =cp[revious]=            | Visit previous error and corresponding source code        |
+| =set-initial-state=      | Set initial state for the current major mode to STATE     |
+| =show-digraphs=          | Shows a list of all available digraphs                    |
 
 #+begin_src elisp
   (use-package evil
@@ -625,40 +625,40 @@ Use bindings while the non-default system layout is active.
 Common prefixes:
 | prefix  | meaning          |
 |---------+------------------|
-| ~SPC a~ | Applications     |
-| ~SPC b~ | Buffers          |
-| ~SPC e~ | Error management |
-| ~SPC f~ | Files            |
-| ~SPC j~ | Jump/join/split  |
-| ~SPC K~ | Macros           |
-| ~SPC m~ | Major mode       |
-| ~SPC t~ | Global toggles   |
+| =SPC a= | Applications     |
+| =SPC b= | Buffers          |
+| =SPC e= | Error management |
+| =SPC f= | Files            |
+| =SPC j= | Jump/join/split  |
+| =SPC K= | Macros           |
+| =SPC m= | Major mode       |
+| =SPC t= | Global toggles   |
 
 #+begin_src elisp
   (general-leader
     "" nil
-    "K" '(nil :wk "Macros")
-    "R" '(nil :wk "Rectangles")
-    "a"  '(nil :wk "Applications")
-    "b" '(nil :wk "Buffers")
-    "e" '(nil :wk "Error management")
-    "f" '(nil :wk "Files")
-    "j" '(nil :wk "Jump/join/split")
-    "t" '(nil :wk "Global toggles"))
+    "K" '(nil :wk "macros")
+    "R" '(nil :wk "rectangles")
+    "a"  '(nil :wk "applications")
+    "b" '(nil :wk "buffers")
+    "e" '(nil :wk "error management")
+    "f" '(nil :wk "files")
+    "j" '(nil :wk "jump/join/split")
+    "t" '(nil :wk "toggles"))
 #+end_src
 
 Application:
 | key       | command                 |
 |-----------+-------------------------|
-| ~SPC a c~ | Calculator              |
-| ~SPC a p~ | List Emacs subprocesses |
-| ~SPC a P~ | List system processes   |
+| =SPC a c= | Calculator              |
+| =SPC a p= | List Emacs subprocesses |
+| =SPC a P= | List system processes   |
 
 #+begin_src elisp
   (general-leader
-    "ac" '(calc-dispatch :wk "Calculator")
-    "ap" '(list-processes :wk "List subprocesses")
-    "aP" '(proced :wk "List system processes"))
+    "ac" '(calc-dispatch :wk "calc")
+    "ap" '(list-processes :wk "list subprocesses")
+    "aP" '(proced :wk "list system processes"))
 #+end_src
 * Essential settings
 ** Emacs variables that defined in C source code
@@ -970,56 +970,56 @@ Don't display floating tooltips; display their contents in the echo-area.
 Motion state keybindings:
 | key       | describe                                                           |
 |-----------+--------------------------------------------------------------------|
-| ~C-w b~   | Move the cursor to bottom-right window                             |
-| ~C-w c~   | Deletes the current window                                         |
-| ~C-w h~   | Move the cursor to new COUNT-th window left of the current one     |
-| ~C-w H~   | Closes current, splits the upper-left one vertically               |
+| =C-w b=   | Move the cursor to bottom-right window                             |
+| =C-w c=   | Deletes the current window                                         |
+| =C-w h=   | Move the cursor to new COUNT-th window left of the current one     |
+| =C-w H=   | Closes current, splits the upper-left one vertically               |
 |           | and redisplays the current buffer there                            |
-| ~C-w j~   | Move the cursor to new COUNT-th window below the current one       |
-| ~C-w J~   | Closes the current window, splits the lower-right one horizontally |
+| =C-w j=   | Move the cursor to new COUNT-th window below the current one       |
+| =C-w J=   | Closes the current window, splits the lower-right one horizontally |
 |           | and redisplays the current buffer there                            |
-| ~C-w k~   | Move the cursor to new COUNT-th window above the current one       |
-| ~C-w K~   | Closes the current window, splits the upper-left one horizontally  |
+| =C-w k=   | Move the cursor to new COUNT-th window above the current one       |
+| =C-w K=   | Closes the current window, splits the upper-left one horizontally  |
 |           | and redisplays the current buffer there                            |
-| ~C-w l~   | Move the cursor to new COUNT-th window right of the current one    |
-| ~C-w L~   | Closes the current window, splits the lower-right one vertically   |
+| =C-w l=   | Move the cursor to new COUNT-th window right of the current one    |
+| =C-w L=   | Closes the current window, splits the lower-right one vertically   |
 |           | and redisplays the current buffer there                            |
-| ~C-w n~   | Splits the current window horizontally                             |
+| =C-w n=   | Splits the current window horizontally                             |
 |           | and opens a new buffer or edits a certain FILE                     |
-| ~C-w o~   | Make WINDOW fill its frame                                         |
-| ~C-w p~   | Move the cursor to the previous buffer in another window           |
-| ~C-w q~   | Closes the current window, current frame, Emacs                    |
-| ~C-w r~   | Rotates the windows according to the current cyclic ordering       |
-| ~C-w R~   | Rotates the windows according to the current cyclic ordering       |
-| ~C-w s~   | Splits the current window horizontally, COUNT lines height,        |
-| ~C-w S~   | editing a certain FILE                                             |
-| ~C-w t~   | Move the cursor to top-left window                                 |
-| ~C-w v~   | Splits the current window vertically, COUNT columns width,         |
+| =C-w o=   | Make WINDOW fill its frame                                         |
+| =C-w p=   | Move the cursor to the previous buffer in another window           |
+| =C-w q=   | Closes the current window, current frame, Emacs                    |
+| =C-w r=   | Rotates the windows according to the current cyclic ordering       |
+| =C-w R=   | Rotates the windows according to the current cyclic ordering       |
+| =C-w s=   | Splits the current window horizontally, COUNT lines height,        |
+| =C-w S=   | editing a certain FILE                                             |
+| =C-w t=   | Move the cursor to top-left window                                 |
+| =C-w v=   | Splits the current window vertically, COUNT columns width,         |
 |           | editing a certain FILE                                             |
-| ~C-w w~   | Move the cursor to the next window in the cyclic order             |
-| ~C-w W~   | Move the cursor to the previous window in the cyclic order         |
-| ~C-w +~   | Increase current window height by COUNT                            |
-| ~C-w -~   | Decrease current window height by COUNT                            |
-| ~C-w _~   | Sets the height of the current window to COUNT                     |
-| ~C-w <~   | Decrease current window width by COUNT                             |
-| ~C-w >~   | Increase current window width by COUNT                             |
-| ~C-w =~   | Balance the sizes of windows of WINDOW-OR-FRAME                    |
-| ~C-w \vert~   | Sets the width of the current window to COUNT                      |
-| ~C-w C-f~ | Find file at point and open in other window                        |
+| =C-w w=   | Move the cursor to the next window in the cyclic order             |
+| =C-w W=   | Move the cursor to the previous window in the cyclic order         |
+| =C-w +=   | Increase current window height by COUNT                            |
+| =C-w -=   | Decrease current window height by COUNT                            |
+| =C-w _=   | Sets the height of the current window to COUNT                     |
+| =C-w <=   | Decrease current window width by COUNT                             |
+| =C-w >=   | Increase current window width by COUNT                             |
+| =C-w ==   | Balance the sizes of windows of WINDOW-OR-FRAME                    |
+| =C-w \vert=   | Sets the width of the current window to COUNT                      |
+| =C-w C-f= | Find file at point and open in other window                        |
 
 Some evil commands:
 | command                   | describe                                                 |
 |---------------------------+----------------------------------------------------------|
-| ~sb[uffer]~               | Splits window and switches to another buffer             |
-| ~sbn[ext]~                | Splits window; goes to the COUNT-th next buffer          |
-| ~sbp[revious]~ ~sbN[ext]~ | Splits window; goes to the COUNT-th prev buffer          |
-| ~sp[lit]~                 | Splits window \vert, COUNT lines height, editing FILE        |
-| ~vs[plit]~                | Splits window -, COUNT lines height, editing FILE        |
-| ~new~ ~ene[w]~            | Splits the current window \vert, opens new buff or edit FILE |
-| ~vne[w]~                  | Splits the current window -, opens new buff or edit FILE |
-| ~clo[se]~                 | Deletes the current window                               |
-| ~on[ly]~                  | Make WINDOW fill its frame                               |
-| ~res[ize]~                | The ex :resize command                                   |
+| =sb[uffer]=               | Splits window and switches to another buffer             |
+| =sbn[ext]=                | Splits window; goes to the COUNT-th next buffer          |
+| =sbp[revious]= =sbN[ext]= | Splits window; goes to the COUNT-th prev buffer          |
+| =sp[lit]=                 | Splits window \vert, COUNT lines height, editing FILE        |
+| =vs[plit]=                | Splits window -, COUNT lines height, editing FILE        |
+| =new= =ene[w]=            | Splits the current window \vert, opens new buff or edit FILE |
+| =vne[w]=                  | Splits the current window -, opens new buff or edit FILE |
+| =clo[se]=                 | Deletes the current window                               |
+| =on[ly]=                  | Make WINDOW fill its frame                               |
+| =res[ize]=                | The ex :resize command                                   |
 ** Winner mode
 Restore old window configurations.
 
@@ -1770,15 +1770,15 @@ prefix) in a popup.
 Global keybindings:
 | key       | command                    |
 |-----------+----------------------------|
-| ~SPC h k~ | Show top level keybindings |
+| =SPC h k= | Show top level keybindings |
 
 Keybindings in =which-key= window.
 | key | command      |
 |-----+--------------|
-| ~q~ | Exit         |
-| ~j~ | Next page    |
-| ~k~ | Previous key |
-| ~?~ | Show help    |
+| =q= | Exit         |
+| =j= | Next page    |
+| =k= | Previous key |
+| =?= | Show help    |
 
 #+begin_src elisp
   (use-package which-key
@@ -1786,7 +1786,7 @@ Keybindings in =which-key= window.
     :hook (pre-command . (lambda () (which-key-mode +1)))
     :general
     (general-leader
-      "hk" '(which-key-show-top-level :wk "Show top level keybindings"))
+      "hk" '(which-key-show-top-level :wk "top level keybindings"))
     :custom
     (which-key-max-description-length 32)
     (which-key-allow-multiple-replacements t)
@@ -1818,7 +1818,7 @@ Jump to bookmark.
 
 | key       | command          |
 |-----------+------------------|
-| ~SPC f b~ | Jump to bookmark |
+| =SPC f b= | Jump to bookmark |
 
 #+begin_src elisp
   (use-package bookmark
@@ -1844,52 +1844,52 @@ Jump to things in Emacs tree-style.
 Some normal state keybindings:
 | key  | describe                                                 |
 |------+----------------------------------------------------------|
-| ~gf~ | Find FILENAME, guessing a default from text around point |
-| ~gF~ | Opens the file at point and goes to line-number          |
-| ~ZZ~ | Saves the current buffer and closes the window           |
+| =gf= | Find FILENAME, guessing a default from text around point |
+| =gF= | Opens the file at point and goes to line-number          |
+| =ZZ= | Saves the current buffer and closes the window           |
 
 Global keybindings:
 | key                    | command                                                    |
 |------------------------+------------------------------------------------------------|
-| ~SPC TAB~              | Switch between last two buffers                            |
-| ~SPC b d~ ~:bd[elete]~ | Kill this buffer (without window)                          |
-| ~SPC b e~              | Erase buffer                                               |
-| ~SPC b n~              | Next buffer                                                |
-| ~SPC b N C-i~          | Create indirect buffer                                     |
-| ~SPC b N i~            | Indirect buffer cloned from current buffer                 |
-| ~SPC b N I~            | Indirect buffer cloned from current buffer in other window |
-| ~SPC b p~              | Previous buffer                                            |
-| ~SPC b x~              | Kill buffer with window                                    |
-| ~SPC b w~              | Make buffer read only                                      |
+| =SPC TAB=              | Switch between last two buffers                            |
+| =SPC b d= =:bd[elete]= | Kill this buffer (without window)                          |
+| =SPC b e=              | Erase buffer                                               |
+| =SPC b n=              | Next buffer                                                |
+| =SPC b N C-i=          | Create indirect buffer                                     |
+| =SPC b N i=            | Indirect buffer cloned from current buffer                 |
+| =SPC b N I=            | Indirect buffer cloned from current buffer in other window |
+| =SPC b p=              | Previous buffer                                            |
+| =SPC b x=              | Kill buffer with window                                    |
+| =SPC b w=              | Make buffer read only                                      |
 
 Some evil commands:
 | command                  | describe                                                  |
 |--------------------------+-----------------------------------------------------------|
-| ~e[dit]~                 | Open FILE                                                 |
-| ~w[rite]~                | Save the current buff, from BEG to END, to FILE-OR-APPEND |
-| ~wa[ll]~                 | Saves all buffers visiting a file                         |
-| ~sav[eas]~               | Save the current buffer to FILENAME                       |
-| ~b[uffer]~               | Switches to another buffer                                |
-| ~bn[ext]~                | Goes to the count-th next buffer in the buffer list       |
-| ~bp[revious]~ ~bN[ext]~  | Goes to the count-th prev buffer in the buffer list       |
-| ~buffers~ ~ls~           | Switch to the Buffer Menu                                 |
-| ~files~                  | Shows the file-list                                       |
-| ~go[to]~                 | Go to POSITION in the buffer                              |
-| ~bd[elete]~ ~bw[ipeout]~ | Deletes a buffer                                          |
+| =e[dit]=                 | Open FILE                                                 |
+| =w[rite]=                | Save the current buff, from BEG to END, to FILE-OR-APPEND |
+| =wa[ll]=                 | Saves all buffers visiting a file                         |
+| =sav[eas]=               | Save the current buffer to FILENAME                       |
+| =b[uffer]=               | Switches to another buffer                                |
+| =bn[ext]=                | Goes to the count-th next buffer in the buffer list       |
+| =bp[revious]= =bN[ext]=  | Goes to the count-th prev buffer in the buffer list       |
+| =buffers= =ls=           | Switch to the Buffer Menu                                 |
+| =files=                  | Shows the file-list                                       |
+| =go[to]=                 | Go to POSITION in the buffer                              |
+| =bd[elete]= =bw[ipeout]= | Deletes a buffer                                          |
 
 #+begin_src elisp
   (general-leader
-    "TAB"    '(mode-line-other-buffer :wk "Alternate buffer")
-    "bd"     '(kill-this-buffer :wk "Kill this buffer")
-    "be"     '(erase-buffer :wk "Erase buffer")
-    "bn"     '(next-buffer :wk "Next buffer")
-    "bN C-i" '(make-indirect-buffer :wk "Create indirect buffer")
-    "bNi"    '(clone-indirect-buffer :wk "Indirect buffer from current")
+    "TAB"    '(mode-line-other-buffer :wk "alternate buffer")
+    "bd"     '(kill-this-buffer :wk "kill this buffer")
+    "be"     '(erase-buffer :wk "erase buffer")
+    "bn"     '(next-buffer :wk "next buffer")
+    "bN C-i" '(make-indirect-buffer :wk "create indirect buffer")
+    "bNi"    '(clone-indirect-buffer :wk "indirect buffer from current")
     "bNI"    '(clone-indirect-buffer-other-window
-               :wk "Indirect buffer from current in other window")
-    "bp"     '(previous-buffer :wk "Previous buffer")
-    "bx"     '(kill-buffer-and-window :wk "Kill buffer with window")
-    "bw"     '(read-only-mode :wk "Read only buffer"))
+               :wk "indirect buffer from current in other window")
+    "bp"     '(previous-buffer :wk "previous buffer")
+    "bx"     '(kill-buffer-and-window :wk "kill buffer with window")
+    "bw"     '(read-only-mode :wk "read only buffer"))
 
   ;; Kill buffer without window
   (eval-after-load 'evil-mode
@@ -2033,139 +2033,139 @@ Standard file manager.
 Global keys:
 | key       | commandard                             |
 |-----------+----------------------------------------|
-| ~​SPC a d~ | Start =dired=                          |
-| ~SPC f j~ | Jump to =dired= buffer                 |
-| ~SPC j d~ | Jump to =dired= buffer                 |
-| ~SPC j D~ | Jump to =dired= buffer in other window |
+| =​SPC a d= | Start =dired=                          |
+| =SPC f j= | Jump to =dired= buffer                 |
+| =SPC j d= | Jump to =dired= buffer                 |
+| =SPC j D= | Jump to =dired= buffer in other window |
 
 Mode keys:
 | key           | commandard                                             |
 |---------------+--------------------------------------------------------|
-| ~q~           | Quit                                                   |
-| ~j~           | Next line                                              |
-| ~k~           | Previous line                                          |
+| =q=           | Quit                                                   |
+| =j=           | Next line                                              |
+| =k=           | Previous line                                          |
 |               |                                                        |
-| ~#~           | Flag auto save files                                   |
-| ~.~           | Flag numerical backupd for deletion                    |
-| ~~~           | Flag backups for deletion                              |
+| =#=           | Flag auto save files                                   |
+| =.=           | Flag numerical backupd for deletion                    |
+| ===           | Flag backups for deletion                              |
 |               |                                                        |
-| ~A~           | Flag all matches for regexp in all marked files        |
-| ~B~           | Byte compile marked files                              |
-| ~C~           | Copy all marked files                                  |
-| ~D~           | Delete marked files                                    |
-| ~gG~          | Change group of marked files                           |
-| ~H~           | Create hardlinks of marked files                       |
-| ~L~           | Load marked Elisp files                                |
-| ~M~           | Chmod marked files                                     |
-| ~O~           | Chown marked files                                     |
-| ~P~           | Print marked files                                     |
-| ~Q~           | Find regexp and replace in marked files                |
-| ~R~           | Rename marked files                                    |
-| ~S~           | Symlink marked files                                   |
-| ~T~           | Touch marked files                                     |
-| ~X~           | Run shell command on marked files                      |
-| ~Z~           | (Un)compress marked files                              |
-| ~c~           | Compress marked files to archive                       |
-| ~!~           | Run shell command on marked files                      |
-| ~&~           | Run async shell command on marked files                |
+| =A=           | Flag all matches for regexp in all marked files        |
+| =B=           | Byte compile marked files                              |
+| =C=           | Copy all marked files                                  |
+| =D=           | Delete marked files                                    |
+| =gG=          | Change group of marked files                           |
+| =H=           | Create hardlinks of marked files                       |
+| =L=           | Load marked Elisp files                                |
+| =M=           | Chmod marked files                                     |
+| =O=           | Chown marked files                                     |
+| =P=           | Print marked files                                     |
+| =Q=           | Find regexp and replace in marked files                |
+| =R=           | Rename marked files                                    |
+| =S=           | Symlink marked files                                   |
+| =T=           | Touch marked files                                     |
+| =X=           | Run shell command on marked files                      |
+| =Z=           | (Un)compress marked files                              |
+| =c=           | Compress marked files to archive                       |
+| =!=           | Run shell command on marked files                      |
+| =&=           | Run async shell command on marked files                |
 |               |                                                        |
-| ~=~           | Dired diff                                             |
+| ===           | Dired diff                                             |
 |               |                                                        |
-| ~M-C-?~       | Unmark all files                                       |
-| ~M-C-d~       | Go down in tree                                        |
-| ~M-C-u~       | Go up in tree                                          |
-| ~M-C-n~       | Go to the next subdirectory                            |
-| ~M-C-p~       | Go to the previous subdirectory                        |
+| =M-C-?=       | Unmark all files                                       |
+| =M-C-d=       | Go down in tree                                        |
+| =M-C-u=       | Go up in tree                                          |
+| =M-C-n=       | Go to the next subdirectory                            |
+| =M-C-p=       | Go to the previous subdirectory                        |
 |               |                                                        |
-| ~M-{~         | Go to previous marked file                             |
-| ~M-}~         | To to the next marked file                             |
+| =M-{=         | Go to previous marked file                             |
+| =M-}=         | To to the next marked file                             |
 |               |                                                        |
-| ~%u~          | Rename all marked files to upper case                  |
-| ~%l~          | Rename all marked files to downcase                    |
-| ~%d~          | Mark all files that contains regexp for deletion       |
-| ~%g~          | Mark all files that contains regexp                    |
-| ~%m~          | Mark all files that contains regexp                    |
-| ~%r~          | Mark all files with regexp in name                     |
-| ~%C~          | Copy files whose names contains regexp                 |
-| ~%H~          | Hardlink files whose names contans regexp              |
-| ~%R~          | Rename files whose names contains regexp               |
-| ~%S~          | Symlink files whose names contains regexp              |
-| ~%&~          | Flag for deletion all 'garbage' files                  |
+| =%u=          | Rename all marked files to upper case                  |
+| =%l=          | Rename all marked files to downcase                    |
+| =%d=          | Mark all files that contains regexp for deletion       |
+| =%g=          | Mark all files that contains regexp                    |
+| =%m=          | Mark all files that contains regexp                    |
+| =%r=          | Mark all files with regexp in name                     |
+| =%C=          | Copy files whose names contains regexp                 |
+| =%H=          | Hardlink files whose names contans regexp              |
+| =%R=          | Rename files whose names contains regexp               |
+| =%S=          | Symlink files whose names contains regexp              |
+| =%&=          | Flag for deletion all 'garbage' files                  |
 |               |                                                        |
-| ~**~          | Mark executables                                       |
-| ~*/~          | Mark directories                                       |
-| ~*@~          | Mark symlinks                                          |
-| ~*%~          | Mark all files matching regexp                         |
-| ~*.~          | Mark all files with extension                          |
-| ~*c~          | Change old mark to new marks                           |
-| ~*s~          | Mark subdir files                                      |
-| ~*m~          | Mark file at point                                     |
-| ~*u~          | Unmark file at point                                   |
-| ~*?~ ~*!~ ~U~ | Unmark all files                                       |
-| ~* <delete>~  | Unmark backward                                        |
-| ~* C-n~       | Next marked file                                       |
-| ~* C-p~       | Previous marked file                                   |
-| ~*t~          | Reverse marks                                          |
+| =**=          | Mark executables                                       |
+| =*/=          | Mark directories                                       |
+| =*@=          | Mark symlinks                                          |
+| =*%=          | Mark all files matching regexp                         |
+| =*.=          | Mark all files with extension                          |
+| =*c=          | Change old mark to new marks                           |
+| =*s=          | Mark subdir files                                      |
+| =*m=          | Mark file at point                                     |
+| =*u=          | Unmark file at point                                   |
+| =*?= =*!= =U= | Unmark all files                                       |
+| =* <delete>=  | Unmark backward                                        |
+| =* C-n=       | Next marked file                                       |
+| =* C-p=       | Previous marked file                                   |
+| =*t=          | Reverse marks                                          |
 |               |                                                        |
-| ~a~           | Visit file/directory under cursor                      |
-| ~d~           | Flag file for deletion                                 |
-| ~gf~ ~C-m~    | Visit file/directory on the current line               |
-| ~gr~          | Revert buffer                                          |
-| ~i~           | Edit with Wdired or make it read only                  |
-| ~I~           | Insert this subdirectory into the same dired buffer    |
-| ~J~           | GO to line describing file FILE in this Dired buffer   |
-| ~K~           | Kill all marked lines (not files)                      |
-| ~r~           | Redisplay all marked files                             |
-| ~m~           | Mark the file at point in the Dired buffer             |
-| ~t~           | Reverse mark                                           |
-| ~u~           | Unmark file at point                                   |
-| ~W~           | Open file in www browser                               |
-| ~x~           | Delete the files flagged for deletion                  |
-| ~gy~          | Print file type                                        |
-| ~Y~           | Copy names of marked files into kill ring              |
-| ~+~           | Create a directory                                     |
+| =a=           | Visit file/directory under cursor                      |
+| =d=           | Flag file for deletion                                 |
+| =gf= =C-m=    | Visit file/directory on the current line               |
+| =gr=          | Revert buffer                                          |
+| =i=           | Edit with Wdired or make it read only                  |
+| =I=           | Insert this subdirectory into the same dired buffer    |
+| =J=           | GO to line describing file FILE in this Dired buffer   |
+| =K=           | Kill all marked lines (not files)                      |
+| =r=           | Redisplay all marked files                             |
+| =m=           | Mark the file at point in the Dired buffer             |
+| =t=           | Reverse mark                                           |
+| =u=           | Unmark file at point                                   |
+| =W=           | Open file in www browser                               |
+| =x=           | Delete the files flagged for deletion                  |
+| =gy=          | Print file type                                        |
+| =Y=           | Copy names of marked files into kill ring              |
+| =+=           | Create a directory                                     |
 |               |                                                        |
-| ~RET~         | Open file/directory                                    |
-| ~S-RET~       | Open file/directory in other window                    |
-| ~gO~          | Find file in other window                              |
-| ~go~          | View file                                              |
+| =RET=         | Open file/directory                                    |
+| =S-RET=       | Open file/directory in other window                    |
+| =gO=          | Find file in other window                              |
+| =go=          | View file                                              |
 |               |                                                        |
-| ~o~           | Toggle sorting by date                                 |
+| =o=           | Toggle sorting by date                                 |
 |               |                                                        |
-| ~gj~ ~]]~ ~>~ | Go to next directory line                              |
-| ~gk~ ~[[~ ~<~ | Go to previous directory line                          |
-| ~^~ ~-~       | Run dired on parent directory                          |
-| ~SPC~         | Move down lines then position at filename              |
+| =gj= =]]= =>= | Go to next directory line                              |
+| =gk= =[[= =<= | Go to previous directory line                          |
+| =^= =-=       | Run dired on parent directory                          |
+| =SPC=         | Move down lines then position at filename              |
 |               |                                                        |
-| ~g$~          | (Un)hide the current subdir and move to next dir       |
-| ~M-$~         | Hide all subdirs, leaving only their header lines      |
-| ~(~           | Toggle visibility of detailed indo in current buffer   |
+| =g$=          | (Un)hide the current subdir and move to next dir       |
+| =M-$=         | Hide all subdirs, leaving only their header lines      |
+| =(=           | Toggle visibility of detailed indo in current buffer   |
 |               |                                                        |
-| ~M-s a C-s~   | Search for a string through all marked files           |
-| ~M-s a M-C-s~ | Search for a regexp through all marked files           |
-| ~M-s f C-s~   | Search for a string only in file names                 |
-| ~M-s f M-C-s~ | Search for a regexp only in file names                 |
+| =M-s a C-s=   | Search for a string through all marked files           |
+| =M-s a M-C-s= | Search for a regexp through all marked files           |
+| =M-s f C-s=   | Search for a string only in file names                 |
+| =M-s f M-C-s= | Search for a regexp only in file names                 |
 |               |                                                        |
-| ~g?~          | Summarize basic commands and show recent errors        |
-| ~<delete>~    | Unmark backward                                        |
+| =g?=          | Summarize basic commands and show recent errors        |
+| =<delete>=    | Unmark backward                                        |
 |               |                                                        |
-| ~C-t d~       | Display thumbs of all marked files                     |
-| ~C-t t~       | Tag marked files                                       |
-| ~C-t r~       | Remove tag for selected files                          |
-| ~C-t j~       | Jump to thumbnail buffer                               |
-| ~C-t i~       | Display current image file                             |
-| ~C-t x~       | Display file at point in external viewer               |
-| ~C-t a~       | Append thumbs to thumb buffer                          |
-| ~C-t .~       | Display thumb for current file                         |
-| ~C-t c~       | Add comment to current of marked files                 |
-| ~C-t f~       | Use regexp to mark files with matching tag             |
-| ~C-t C-t~     | Toogle thumbs in front of file names                   |
-| ~C-t e~       | Edit comment and tags of current or marked image files |
+| =C-t d=       | Display thumbs of all marked files                     |
+| =C-t t=       | Tag marked files                                       |
+| =C-t r=       | Remove tag for selected files                          |
+| =C-t j=       | Jump to thumbnail buffer                               |
+| =C-t i=       | Display current image file                             |
+| =C-t x=       | Display file at point in external viewer               |
+| =C-t a=       | Append thumbs to thumb buffer                          |
+| =C-t .=       | Display thumb for current file                         |
+| =C-t c=       | Add comment to current of marked files                 |
+| =C-t f=       | Use regexp to mark files with matching tag             |
+| =C-t C-t=     | Toogle thumbs in front of file names                   |
+| =C-t e=       | Edit comment and tags of current or marked image files |
 |               |                                                        |
-| ~;d~          | Decrypt marked files                                   |
-| ~;v~          | Verify marked files                                    |
-| ~;s~          | Sign marked files                                      |
-| ~;e~          | Encrypt marked files                                   |
+| =;d=          | Decrypt marked files                                   |
+| =;v=          | Verify marked files                                    |
+| =;s=          | Sign marked files                                      |
+| =;e=          | Encrypt marked files                                   |
 
 #+begin_src elisp
   (use-package dired
@@ -2227,90 +2227,90 @@ Mode keys:
 Some normal state keybindings:
 | key   | describe                                                                |
 |-------+-------------------------------------------------------------------------|
-| ~a~   | Switch to Insert state just after point                                 |
-| ~A~   | Switch to Insert state at the end of the current line                   |
-| ~c~   | Change text from BEG to END with TYPE                                   |
-| ~C~   | Change to end of line                                                   |
-| ~d~   | Delete text from BEG to END with TYPE                                   |
-| ~D~   | Delete to end of line                                                   |
-| ~i~   | Switch to Insert state just before point                                |
-| ~I~   | Switch to insert state at beginning of current line                     |
-| ~J~   | Join the selected lines                                                 |
-| ~o~   | Insert a new line below point and switch to Insert state                |
-| ~O~   | Insert a new line above point and switch to Insert state                |
-| ~p~   | Pastes the latest yanked text behind point                              |
-| ~P~   | Pastes the latest yanked text before the cursor position                |
-| ~r~   | Replace text from BEG to END with CHAR                                  |
-| ~R~   | Enable Replace state. Disable with negative ARG                         |
-| ~s~   | Change a charactr                                                       |
-| ~S~   | Change whole line                                                       |
-| ~x~   | Delete text from BEG to END with TYPE                                   |
-| ~X~   | Delete previous character                                               |
-| ~y~   | Saves the characters in motion into the kill-ring                       |
-| ~Y~   | Saves whole lines into the kill-ring                                    |
-| ~gi~  | Switch to Insert state at previous insertion point                      |
-| ~gJ~  | Join the selected lines without changing whitespace                     |
-| ~gq~  | Fill text and move point to the end of the filled region                |
-| ~gw~  | Fill text                                                               |
-| ~gu~  | Convert text to lower case                                              |
-| ~gU~  | Convert text to upper case                                              |
-| ~g?~  | ROT13 encrypt text                                                      |
-| ~g~~  | Invert case of text                                                     |
-| ~C-n~ | Same as evil-paste-pop but with negative argument                       |
-| ~C-p~ | Replace the just-yanked stretch of killed text with a different stretch |
-| ~C-t~ | Pop back to where M-. was last invoked                                  |
-| ~C-.~ | Replace the just repeated command with a previously executed command    |
-| ~M-.~ | Same as evil-repeat-pop, but with negative COUNT                        |
-| ~.~   | Repeat the last editing command with count replaced by COUNT            |
-| ~"~   | Use REGISTER for the next command                                       |
-| ~~~   | Invert case of character                                                |
-| ~=~   | Indent text                                                             |
-| ~<~   | Shift text from BEG to END to the left                                  |
-| ~>~   | Shift text from BEG to END to the right                                 |
-| ~u~   | Undo some previous changes                                              |
-| ~C-r~ | Redo some changes                                                       |
-| ~&~   | Repeat last substitute command                                          |
-| ~g&~  | Repeat last substitute command on the whole buffer                      |
+| =a=   | Switch to Insert state just after point                                 |
+| =A=   | Switch to Insert state at the end of the current line                   |
+| =c=   | Change text from BEG to END with TYPE                                   |
+| =C=   | Change to end of line                                                   |
+| =d=   | Delete text from BEG to END with TYPE                                   |
+| =D=   | Delete to end of line                                                   |
+| =i=   | Switch to Insert state just before point                                |
+| =I=   | Switch to insert state at beginning of current line                     |
+| =J=   | Join the selected lines                                                 |
+| =o=   | Insert a new line below point and switch to Insert state                |
+| =O=   | Insert a new line above point and switch to Insert state                |
+| =p=   | Pastes the latest yanked text behind point                              |
+| =P=   | Pastes the latest yanked text before the cursor position                |
+| =r=   | Replace text from BEG to END with CHAR                                  |
+| =R=   | Enable Replace state. Disable with negative ARG                         |
+| =s=   | Change a charactr                                                       |
+| =S=   | Change whole line                                                       |
+| =x=   | Delete text from BEG to END with TYPE                                   |
+| =X=   | Delete previous character                                               |
+| =y=   | Saves the characters in motion into the kill-ring                       |
+| =Y=   | Saves whole lines into the kill-ring                                    |
+| =gi=  | Switch to Insert state at previous insertion point                      |
+| =gJ=  | Join the selected lines without changing whitespace                     |
+| =gq=  | Fill text and move point to the end of the filled region                |
+| =gw=  | Fill text                                                               |
+| =gu=  | Convert text to lower case                                              |
+| =gU=  | Convert text to upper case                                              |
+| =g?=  | ROT13 encrypt text                                                      |
+| =g==  | Invert case of text                                                     |
+| =C-n= | Same as evil-paste-pop but with negative argument                       |
+| =C-p= | Replace the just-yanked stretch of killed text with a different stretch |
+| =C-t= | Pop back to where M-. was last invoked                                  |
+| =C-.= | Replace the just repeated command with a previously executed command    |
+| =M-.= | Same as evil-repeat-pop, but with negative COUNT                        |
+| =.=   | Repeat the last editing command with count replaced by COUNT            |
+| ="=   | Use REGISTER for the next command                                       |
+| ===   | Invert case of character                                                |
+| ===   | Indent text                                                             |
+| =<=   | Shift text from BEG to END to the left                                  |
+| =>=   | Shift text from BEG to END to the right                                 |
+| =u=   | Undo some previous changes                                              |
+| =C-r= | Redo some changes                                                       |
+| =&=   | Repeat last substitute command                                          |
+| =g&=  | Repeat last substitute command on the whole buffer                      |
 
 Some motion state keybindings:
 | key | describe                                          |
 |-----+---------------------------------------------------|
-| ~y~ | Saves the characters in motion into the kill-ring |
-| ~Y~ | Saves whole lines into the kill-ring              |
+| =y= | Saves the characters in motion into the kill-ring |
+| =Y= | Saves whole lines into the kill-ring              |
 
 
 Some visual state keybindings:
 | key | describe                                 |
 |-----+------------------------------------------|
-| ~A~ | Switch to Insert state just after point  |
-| ~I~ | Switch to Insert state just before point |
-| ~J~ | Move selected block up                   |
-| ~K~ | Move selected block down                 |
-| ~R~ | Change text from BEG to END with TYPE    |
-| ~u~ | Convert text to lower case               |
-| ~U~ | Convert text to upper case               |
+| =I= | Switch to Insert state just before point |
+| =A= | Switch to Insert state just after point  |
+| =J= | Move selected block up                   |
+| =K= | Move selected block down                 |
+| =R= | Change text from BEG to END with TYPE    |
+| =u= | Convert text to lower case               |
+| =U= | Convert text to upper case               |
 
 Some evil commands:
 | command        | describe                                                |
 |----------------+---------------------------------------------------------|
-| ~r[ead]~       | Inserts the contents of FILE below curr line/line COUNT |
-| ~c[hange]~     | Change text from BEG to END with TYPE                   |
-| ~co[py]~ ~t~   | Copy lines in BEG END below line given by ADDRESS       |
-| ~m[ove]~       | Move lines in BEG END below line given by ADDRESS       |
-| ~d[elete]~     | The Ex delete command                                   |
-| ~y[ank]~       | The Ex yank command                                     |
-| ~j[oin]~       | Join the selected lines with optional COUNT and BANG    |
-| ~le[ft]~       | Right-align lines in the region at WIDTH columns        |
-| ~ri[ght]~      | Right-align lines in the region at WIDTH columns        |
-| ~ce[nter]~     | Centers lines in the region between WIDTH columns       |
-| ~s[ubstitute]~ | The Ex substitute command                               |
-| ~&~            | Repeat last substitute command                          |
-| ~&&~           | Same with last flags                                    |
-| ~~~            | Same with last search pattern                           |
-| ~~&~           | Same with last search pattern and last flags            |
-| ~<~            | Shift text from BEG to END to the left                  |
-| ~>~            | Shift text from BEG to END to the right                 |
-| ~sor[t]~       | The Ex sort command                                     |
+| =r[ead]=       | Inserts the contents of FILE below curr line/line COUNT |
+| =c[hange]=     | Change text from BEG to END with TYPE                   |
+| =co[py]= =t=   | Copy lines in BEG END below line given by ADDRESS       |
+| =m[ove]=       | Move lines in BEG END below line given by ADDRESS       |
+| =d[elete]=     | The Ex delete command                                   |
+| =y[ank]=       | The Ex yank command                                     |
+| =j[oin]=       | Join the selected lines with optional COUNT and BANG    |
+| =le[ft]=       | Right-align lines in the region at WIDTH columns        |
+| =ri[ght]=      | Right-align lines in the region at WIDTH columns        |
+| =ce[nter]=     | Centers lines in the region between WIDTH columns       |
+| =s[ubstitute]= | The Ex substitute command                               |
+| =&=            | Repeat last substitute command                          |
+| =&&=           | Same with last flags                                    |
+| ===            | Same with last search pattern                           |
+| ==&=           | Same with last search pattern and last flags            |
+| =<=            | Shift text from BEG to END to the left                  |
+| =>=            | Shift text from BEG to END to the right                 |
+| =sor[t]=       | The Ex sort command                                     |
 
 #+begin_src elisp
   (general-vmap
@@ -2359,8 +2359,8 @@ Delete trailing whitespaces on buffer save.
     :commands (whitespace-mode global-whitespace-mode)
     :general
     (general-leader
-     "t w"   '(whitespace-mode :wk "Whitespace mode")
-     "t C-w" '(global-whitespace-mode :wk "Global whitespace mode")))
+     "t w"   '(whitespace-mode :wk "whitespace mode")
+     "t C-w" '(global-whitespace-mode :wk "global whitespace mode")))
 #+end_src
 ** Macros
 Macros keybindings.
@@ -2368,93 +2368,93 @@ Macros keybindings.
 Normal state keybindings:
 | key | command                                   |
 |-----+-------------------------------------------|
-| ~q~ | Record a keyboard macro into REGISTER     |
-| ~@~ | Execute keyboard macro MACRO, COUNT times  |
+| =q= | Record a keyboard macro into REGISTER     |
+| =@= | Execute keyboard macro MACRO, COUNT times  |
 
 Global keybindings:
 | key         | command                                        |
 |-------------+------------------------------------------------|
-| ~SPC K c a~ | Add the value of numeric prefix                |
-| ~SPC K c c~ | Insert current value of counter then increment |
-| ~SPC K c C~ | Set value of counter                           |
-| ~SPC K c f~ | Set the format of counter                      |
-| ~SPC K e b~ | Bind last macro to key                         |
-| ~SPC K e e~ | Edit last keyboard macro                       |
-| ~SPC K e l~ | Edit most recent 300 keystrokes as macro       |
-| ~SPC K e n~ | Name last macro                                |
-| ~SPC K e r~ | Store the last macro in register               |
-| ~SPC K e s~ | Step edit and execute last macro               |
-| ~SPC K k "~ | Record keyboard input                          |
-| ~SPC K K "~ | End macro if currently defined or call last    |
-| ~SPC K r L~ | Display current head of macro ring             |
-| ~SPC K r d~ | Delete current macro from ring                 |
-| ~SPC K r l~ | Execute second macro in macro ring             |
-| ~SPC K r n~ | Move to next macro in macro ring               |
-| ~SPC K r p~ | Move to prev macro in macro ring               |
-| ~SPC K r s~ | Swap first two elements in macro ring          |
-| ~SPC K v "~ | Display last macro"                            |
+| =SPC K c a= | Add the value of numeric prefix                |
+| =SPC K c c= | Insert current value of counter then increment |
+| =SPC K c C= | Set value of counter                           |
+| =SPC K c f= | Set the format of counter                      |
+| =SPC K e b= | Bind last macro to key                         |
+| =SPC K e e= | Edit last keyboard macro                       |
+| =SPC K e l= | Edit most recent 300 keystrokes as macro       |
+| =SPC K e n= | Name last macro                                |
+| =SPC K e r= | Store the last macro in register               |
+| =SPC K e s= | Step edit and execute last macro               |
+| =SPC K k "= | Record keyboard input                          |
+| =SPC K K "= | End macro if currently defined or call last    |
+| =SPC K r L= | Display current head of macro ring             |
+| =SPC K r d= | Delete current macro from ring                 |
+| =SPC K r l= | Execute second macro in macro ring             |
+| =SPC K r n= | Move to next macro in macro ring               |
+| =SPC K r p= | Move to prev macro in macro ring               |
+| =SPC K r s= | Swap first two elements in macro ring          |
+| =SPC K v "= | Display last macro"                            |
 
 #+begin_src elisp
   (general-leader
-   "Kca" '(kmacro-add-counter :wk "Add the value of numeric prefix")
-   "Kcc" '(kmacro-insert-counter :wk "Insert current value of counter then increment")
-   "KcC" '(kmacro-set-counter :wk "Set value of counter")
-   "Kcf" '(kmacro-set-format :wk "Set the format of counter")
-   "Keb" '(kmacro-bind-to-key :wk "Bind last macro to key")
-   "Kee" '(kmacro-edit-macro-repeat :wk "Edit last keyboard macro")
-   "Kel" '(kmacro-edit-lossage :wk "Edit most recent 300 keystrokes as macro")
-   "Ken" '(kmacro-name-last-macro :wk "Name last macro")
-   "Ker" '(kmacro-to-register :wk "Store the last macro in register")
-   "Kes" '(kmacro-step-edit-macro :wk "Step edit and execute last macro")
-   "Kk"  '(kmacro-start-macro-or-insert-counter :wk "Record keyboard input")
-   "KK"  '(kmacro-end-or-call-macro :wk "End macro if currently defined or call last")
-   "KrL" '(kmacro-view-ring-2nd :wk "Display current head of macro ring")
-   "Krd" '(kmacro-delete-ring-head :wk "Delete current macro from ring")
-   "Krl" '(kmacro-call-ring-2nd-repeat :wk "Execute second macro in macro ring")
-   "Krn" '(kmacro-cycle-ring-next :wk "Move to next macro in macro ring")
-   "Krp" '(kmacro-cycle-ring-previous :wk "Move to prev macro in macro ring")
-   "Krs" '(kmacro-swap-ring :wk "Swap first two elements in macro ring")
-   "Kv"  '(kmacro-view-macro-repeat :wk "Display last macro"))
+   "Kca" '(kmacro-add-counter :wk "add the value of numeric prefix")
+   "Kcc" '(kmacro-insert-counter :wk "insert current value of counter then increment")
+   "KcC" '(kmacro-set-counter :wk "set value of counter")
+   "Kcf" '(kmacro-set-format :wk "set the format of counter")
+   "Keb" '(kmacro-bind-to-key :wk "bind last macro to key")
+   "Kee" '(kmacro-edit-macro-repeat :wk "edit last keyboard macro")
+   "Kel" '(kmacro-edit-lossage :wk "edit most recent 300 keystrokes as macro")
+   "Ken" '(kmacro-name-last-macro :wk "name last macro")
+   "Ker" '(kmacro-to-register :wk "store the last macro in register")
+   "Kes" '(kmacro-step-edit-macro :wk "step edit and execute last macro")
+   "Kk"  '(kmacro-start-macro-or-insert-counter :wk "record keyboard input")
+   "KK"  '(kmacro-end-or-call-macro :wk "end macro if currently defined or call last")
+   "KrL" '(kmacro-view-ring-2nd :wk "display current head of macro ring")
+   "Krd" '(kmacro-delete-ring-head :wk "delete current macro from ring")
+   "Krl" '(kmacro-call-ring-2nd-repeat :wk "execute second macro in macro ring")
+   "Krn" '(kmacro-cycle-ring-next :wk "move to next macro in macro ring")
+   "Krp" '(kmacro-cycle-ring-previous :wk "move to prev macro in macro ring")
+   "Krs" '(kmacro-swap-ring :wk "swap first two elements in macro ring")
+   "Kv"  '(kmacro-view-macro-repeat :wk "display last macro"))
 #+end_src
 ** Rectangles
 
 | key       | command                                                    |
 |-----------+------------------------------------------------------------|
-| ~SPC R !~ | Blank out the rect                                         |
-| ~SPC R c~ | Delete all whitespace following column in each line        |
-| ~SPC R d~ | Delete text in rect                                        |
-| ~SPC R e~ | Cycles through the rect's corners                          |
-| ~SPC R i~ | Copy rect into register                                    |
-| ~SPC R k~ | Delete rect and save it as last killed one                 |
-| ~SPC R l~ | Move N wide chars to the left                              |
-| ~SPC R m~ | Toggle the region as rect                                  |
-| ~SPC R n~ | Move N wide chars down                                     |
-| ~SPC R N~ | Insert numbers in front of rect                            |
-| ~SPC R o~ | Blank out rect, shifting text right                        |
-| ~SPC R p~ | Move N wide chars up                                       |
-| ~SPC R r~ | Move N wide chars to the right                             |
-| ~SPC R s~ | Replace rect contents with string on each line             |
-| ~SPC R t~ | Transpose region                                           |
-| ~SPC R y~ | Yank the last killed rect with upper left corner at point" |
+| =SPC R != | Blank out the rect                                         |
+| =SPC R c= | Delete all whitespace following column in each line        |
+| =SPC R d= | Delete text in rect                                        |
+| =SPC R e= | Cycles through the rect's corners                          |
+| =SPC R i= | Copy rect into register                                    |
+| =SPC R k= | Delete rect and save it as last killed one                 |
+| =SPC R l= | Move N wide chars to the left                              |
+| =SPC R m= | Toggle the region as rect                                  |
+| =SPC R n= | Move N wide chars down                                     |
+| =SPC R N= | Insert numbers in front of rect                            |
+| =SPC R o= | Blank out rect, shifting text right                        |
+| =SPC R p= | Move N wide chars up                                       |
+| =SPC R r= | Move N wide chars to the right                             |
+| =SPC R s= | Replace rect contents with string on each line             |
+| =SPC R t= | Transpose region                                           |
+| =SPC R y= | Yank the last killed rect with upper left corner at point" |
 
 #+begin_src elisp
   (general-leader
-    "R!" '(clear-rectangle :wk "Blank out the rect")
-    "Rc" '(close-rectangle :wk "Delete all whitespace following column in each line")
-    "Rd" '(delete-rectangle :wk "Delete text in rect")
-    "Re" '(rectangle-exchange-point-and-mark :wk "Cycles through the rect's corners")
-    "Ri" '(copy-rectangle-to-register :wk "Copy rect into register")
-    "Rk" '(kill-rectangle :wk "Delete rect and save it as last killed one")
-    "Rl" '(rectangle-left-char :wk "Move N wide chars to the left")
-    "Rm" '(rectangle-mark-mode :wk "Toggle the region as rect")
-    "Rn" '(rectangle-next-line :wk "Move N wide chars down")
-    "RN" '(rectangle-number-lines :wk "Insert numbers in front of rect")
-    "Ro" '(open-rectangle :wk "Blank out rect, shifting text right")
-    "Rp" '(rectangle-previous-line :wk "Move N wide chars up")
-    "Rr" '(rectangle-right-char :wk "Move N wide chars to the right")
-    "Rs" '(string-rectangle :wk "Replace rect contents with string on each line")
-    "Rt" '(transpose-regions :wk "Transpose region")
-    "Ry" '(yank-rectangle :wk "Yank the last killed rect with upper left corner at point"))
+    "R!" '(clear-rectangle :wk "blank out the rect")
+    "Rc" '(close-rectangle :wk "delete all whitespace following column in each line")
+    "Rd" '(delete-rectangle :wk "delete text in rect")
+    "Re" '(rectangle-exchange-point-and-mark :wk "cycles through the rect's corners")
+    "Ri" '(copy-rectangle-to-register :wk "copy rect into register")
+    "Rk" '(kill-rectangle :wk "delete rect and save it as last killed one")
+    "Rl" '(rectangle-left-char :wk "move N wide chars to the left")
+    "Rm" '(rectangle-mark-mode :wk "toggle the region as rect")
+    "Rn" '(rectangle-next-line :wk "move N wide chars down")
+    "RN" '(rectangle-number-lines :wk "insert numbers in front of rect")
+    "Ro" '(open-rectangle :wk "blank out rect, shifting text right")
+    "Rp" '(rectangle-previous-line :wk "move N wide chars up")
+    "Rr" '(rectangle-right-char :wk "move N wide chars to the right")
+    "Rs" '(string-rectangle :wk "replace rect contents with string on each line")
+    "Rt" '(transpose-regions :wk "transpose region")
+    "Ry" '(yank-rectangle :wk "yank the last killed rect with upper left corner at point"))
 #+end_src
 ** On-the-fly spell checker
 On the fly spell checking. Disabled by default. =hunspell= is must because of ability to query multiple dictionaries.
@@ -2462,12 +2462,12 @@ On the fly spell checking. Disabled by default. =hunspell= is must because of ab
 Related keybindings:
 | key       | mode   | command                                           |
 |-----------+--------+---------------------------------------------------|
-| ~SPC t S~ | global | Toggle flyspell on/off                            |
-| ~SPC S b~ | global | Spell check whole buffer.                         |
-| ~z=~      | normal | Check spelling of word under or before the cursor |
+| =SPC t S= | global | Toggle flyspell on/off                            |
+| =SPC S b= | global | Spell check whole buffer.                         |
+| =z==      | normal | Check spelling of word under or before the cursor |
 |           |        | (ivy menu, access commands by =M-o=)              |
-| ~[s~      | normal | Jump to the previous incorrect word.              |
-| ~]s~      | normal | Jump to the next incorrect word.                  |
+| =[s=      | normal | Jump to the previous incorrect word.              |
+| =]s=      | normal | Jump to the next incorrect word.                  |
 
 #+begin_src elisp
   (use-package flyspell
@@ -2515,11 +2515,11 @@ Treat undo history as a branching tree of changes.
 =undo-tree-mode= and =global-undo-tree-mode= keybindings:
 | key               | command                               |
 |-------------------+---------------------------------------|
-| ~SPC a u~ ~C-x u~ | Run Undo Tree Visualizer              |
-| ~C-_~ ~C-/~       | Undo tree undo                        |
-| ~M-_~ ~M-/~       | Undo tree redo                        |
-| ~C-x r u~         | Save current buffer state to register |
-| ~C-x r U~         | Load buffer state from register       |
+| =SPC a u= =C-x u= | Run Undo Tree Visualizer              |
+| =C-_= =C-/=       | Undo tree undo                        |
+| =M-_= =M-/=       | Undo tree redo                        |
+| =C-x r u=         | Save current buffer state to register |
+| =C-x r U=         | Load buffer state from register       |
 
 =undo-tree-visualizer= keybindings:
 | key                    | command                                |
@@ -2933,56 +2933,56 @@ Tables:
 =org-agenda-mode= normal state map:
 | key     | explanation                                                      |
 |---------+------------------------------------------------------------------|
-| =, a=   | Dispatch agenda commands to collect entries to the agenda buffer |
+| =​, a=   | Dispatch agenda commands to collect entries to the agenda buffer |
 |         |                                                                  |
-| =, C c= | Cancel the currently running clock                               |
-| =, C i= | Start the clock on the currently selected item                   |
-| =, C j= | Jump to the currently clocked in task within the agenda          |
-| =, C o= | Stop the currently running clock                                 |
+| =​, C c= | Cancel the currently running clock                               |
+| =​, C i= | Start the clock on the currently selected item                   |
+| =​, C j= | Jump to the currently clocked in task within the agenda          |
+| =​, C o= | Stop the currently running clock                                 |
 |         |                                                                  |
-| =, d += | Add day to schedule date of task                                 |
-| =, d -= | Remove date from schedule date of task                           |
-| =, d d= | Add deadline                                                     |
-| =, d D= | Remove deadline                                                  |
-| =, d s= | Schedule                                                         |
-| =, d S= | Unschedule                                                       |
-| =, d t= | Change the date of this item                                     |
+| =​, d += | Add day to schedule date of task                                 |
+| =​, d -= | Remove date from schedule date of task                           |
+| =​, d d= | Add deadline                                                     |
+| =​, d D= | Remove deadline                                                  |
+| =​, d s= | Schedule                                                         |
+| =​, d S= | Unschedule                                                       |
+| =​, d t= | Change the date of this item                                     |
 |         |                                                                  |
-| =, f c= | Filter lines in the agenda buffer that have a specific category  |
-| =, f d= | Remove all filters from the current agenda buffer                |
-| =, f h= | Keep only those lines that are descendants from the same top     |
-| =, f r= | org-agenda-filter-by-tag-refine                                  |
-| =, f t= | Keep only those lines in the agenda buffer that have a tag       |
-| =, f x= | Filter agenda entries by regular expressions                     |
+| =​, f c= | Filter lines in the agenda buffer that have a specific category  |
+| =​, f d= | Remove all filters from the current agenda buffer                |
+| =​, f h= | Keep only those lines that are descendants from the same top     |
+| =​, f r= | org-agenda-filter-by-tag-refine                                  |
+| =​, f t= | Keep only those lines in the agenda buffer that have a tag       |
+| =​, f x= | Filter agenda entries by regular expressions                     |
 |         |                                                                  |
-| =, h := | Set tags for the current headline                                |
-| =, h A= | Archive the entry/subtree belonging to the current agenda entry  |
-| =, h k= | Kill the entry/subtree belonging to the current agenda entry     |
-| =, h p= | Set the priority of line at point, also in Org file              |
-| =, h r= | Refile the item at point                                         |
-| =, h t= | Cycle TODO state of line at point, also in Org file              |
+| =​, h := | Set tags for the current headline                                |
+| =​, h A= | Archive the entry/subtree belonging to the current agenda entry  |
+| =​, h k= | Kill the entry/subtree belonging to the current agenda entry     |
+| =​, h p= | Set the priority of line at point, also in Org file              |
+| =​, h r= | Refile the item at point                                         |
+| =​, h t= | Cycle TODO state of line at point, also in Org file              |
 |         |                                                                  |
-| =, i e= | Set the effort property for the current headline                 |
-| =, i p= | Set a property for the current headline                          |
-| =, i t= | Set tags for the current headline                                |
+| =​, i e= | Set the effort property for the current headline                 |
+| =​, i p= | Set a property for the current headline                          |
+| =​, i t= | Set tags for the current headline                                |
 |         |                                                                  |
-| =, s r= | Refile the item at point                                         |
+| =​, s r= | Refile the item at point                                         |
 |         |                                                                  |
-| =, t a= | Toggle inclusion of items in trees marked with :ARCHIVE:         |
-| =, t d= | Toggle diary inclusion in an agenda buffer                       |
-| =, t f= | Toggle follow mode in an agenda buffer                           |
-| =, t i= | Add overlays, showing issues with clocking                       |
-| =, t l= | Toggle log mode in an agenda buffer                              |
-| =, t r= | Toggle clocktable mode in an agenda buffer                       |
+| =​, t a= | Toggle inclusion of items in trees marked with :ARCHIVE:         |
+| =​, t d= | Toggle diary inclusion in an agenda buffer                       |
+| =​, t f= | Toggle follow mode in an agenda buffer                           |
+| =​, t i= | Add overlays, showing issues with clocking                       |
+| =​, t l= | Toggle log mode in an agenda buffer                              |
+| =​, t r= | Toggle clocktable mode in an agenda buffer                       |
 |         |                                                                  |
-| =, v d= | Switch to daily view for agenda                                  |
-| =, v m= | Switch to monthly view for agenda                                |
-| =, v n= | Go forward in time by the current span                           |
-| =, v p= | Go backward in time by the current span                          |
-| =, v r= | Switch to default view for agenda                                |
-| =, v t= | Switch to fortnightly view for agenda                            |
-| =, v w= | Switch to weekly view for agenda                                 |
-| =, v y= | Switch to yearly view for agenda                                 |
+| =​, v d= | Switch to daily view for agenda                                  |
+| =​, v m= | Switch to monthly view for agenda                                |
+| =​, v n= | Go forward in time by the current span                           |
+| =​, v p= | Go backward in time by the current span                          |
+| =​, v r= | Switch to default view for agenda                                |
+| =​, v t= | Switch to fortnightly view for agenda                            |
+| =​, v w= | Switch to weekly view for agenda                                 |
+| =​, v y= | Switch to yearly view for agenda                                 |
 
 Normal agenda evil keys:
 | evil key              | explanation                                              |
@@ -3598,44 +3598,44 @@ On-the-fly syntax checker.
 Global keybindings:
 | key       | command                         |
 |-----------+---------------------------------|
-| ~SPC t s~ | Toggle flycheck mode            |
-| ~SPC e b~ | Check for errors                |
-| ~SPC e c~ | Clear errors                    |
-| ~SPC e h~ | Describe checker                |
-| ~SPC e l~ | Display list of errors          |
-| ~SPC e s~ | Set flycheck checker            |
-| ~SPC e S~ | Set flycheck checker executable |
-| ~SPC e v~ | Verify flycheck setup           |
-| ~SPC e y~ | Copy error to kill-ring         |
-| ~SPC e x~ | Explain error at point          |
+| =SPC t s= | Toggle flycheck mode            |
+| =SPC e b= | Check for errors                |
+| =SPC e c= | Clear errors                    |
+| =SPC e h= | Describe checker                |
+| =SPC e l= | Display list of errors          |
+| =SPC e s= | Set flycheck checker            |
+| =SPC e S= | Set flycheck checker executable |
+| =SPC e v= | Verify flycheck setup           |
+| =SPC e y= | Copy error to kill-ring         |
+| =SPC e x= | Explain error at point          |
 
 Flycheck error list mode keybindings:
 | key                 | command        |
 |---------------------+----------------|
-| ~gj~ / ~C-j~ / ~]]~ | Next error     |
-| ~gk~ / ~C-k~ / ~[[~ | Previous error |
-| ~gr~                | Check source   |
-| ~s~                 | Set filter     |
-| ~S~                 | Reset filter   |
-| ~x~                 | Explain error  |
-| ~RET~               | Go to error    |
-| ~q~                 | Quit window    |
+| =gj= / =C-j= / =]]= | Next error     |
+| =gk= / =C-k= / =[[= | Previous error |
+| =gr=                | Check source   |
+| =s=                 | Set filter     |
+| =S=                 | Reset filter   |
+| =x=                 | Explain error  |
+| =RET=               | Go to error    |
+| =q=                 | Quit window    |
 
 #+begin_src elisp
   (use-package flycheck
     :hook (after-find-file . global-flycheck-mode)
     :general
     (general-leader
-      "ts" '(flycheck-mode :wk "Toggle flycheck mode")
-      "eb" '(flycheck-buffer :wk "Check for errors")
-      "ec" '(flycheck-clear :wk "Clear errors")
-      "eh" '(flycheck-describe-checker :wk "Describe checker")
-      "el" '(list-flycheck-errors :wk "Display list of errors")
-      "es" '(flycheck-select-checker :wk "Set flycheck checker")
-      "eS" '(flycheck-set-checker-executable :wk "Set flycheck checker executable")
-      "ev" '(flycheck-verify-setup :wk "Verify flycheck setup")
-      "ey" '(flycheck-copy-errors-as-kill :wk "Copy error to kill-ring")
-      "ex" '(flycheck-explain-error-at-point :wk "Explain error at point"))
+      "ts" '(flycheck-mode :wk "toggle flycheck mode")
+      "eb" '(flycheck-buffer :wk "check for errors")
+      "ec" '(flycheck-clear :wk "clear errors")
+      "eh" '(flycheck-describe-checker :wk "describe checker")
+      "el" '(list-flycheck-errors :wk "display list of errors")
+      "es" '(flycheck-select-checker :wk "set flycheck checker")
+      "eS" '(flycheck-set-checker-executable :wk "set flycheck checker executable")
+      "ev" '(flycheck-verify-setup :wk "verify flycheck setup")
+      "ey" '(flycheck-copy-errors-as-kill :wk "copy error to kill-ring")
+      "ex" '(flycheck-explain-error-at-point :wk "explain error at point"))
     ;; t s
     :custom
     (flycheck-emacs-lisp-load-path 'inherit "Inherit load paths from Emacs.")
@@ -3699,56 +3699,56 @@ Language Server Protocol Support for Emacs
 LSP mode keybindings:
 | key     | command                     |
 |---------+-----------------------------|
-| ~​, s s~ | Start server                |
-| ~​, s r~ | Restart server              |
-| ~​, s q~ | Shutdown server             |
-| ~​, s d~ | Describe session            |
-| ~​, s D~ | Disconnect                  |
+| =​, s s= | Start server                |
+| =​, s r= | Restart server              |
+| =​, s q= | Shutdown server             |
+| =​, s d= | Describe session            |
+| =​, s D= | Disconnect                  |
 |         |                             |
-| ~​, = =~ | Format buffer               |
-| ~​, = r~ | Format region               |
+| =​, = == | Format buffer               |
+| =​, = r= | Format region               |
 |         |                             |
-| ~​, F a~ | Add folder                  |
-| ~​, F r~ | Remove folder               |
-| ~​, F b~ | Un-blacklist folder         |
+| =​, F a= | Add folder                  |
+| =​, F r= | Remove folder               |
+| =​, F b= | Un-blacklist folder         |
 |         |                             |
-| ~​, T l~ | Toggle lenses               |
-| ~​, T L~ | Toggle log io               |
-| ~​, T h~ | Toggle highlighting         |
-| ~​, T s~ | Toggle signatures           |
-| ~​, T S~ | Toggle sideline             |
-| ~​, T d~ | Toddle documentation popup  |
-| ~​, T p~ | Toggle signature help       |
-| ~​, T f~ | Toggle on type formatting   |
-| ~​, T T~ | Toggle treemacs integration |
+| =​, T l= | Toggle lenses               |
+| =​, T L= | Toggle log io               |
+| =​, T h= | Toggle highlighting         |
+| =​, T s= | Toggle signatures           |
+| =​, T S= | Toggle sideline             |
+| =​, T d= | Toddle documentation popup  |
+| =​, T p= | Toggle signature help       |
+| =​, T f= | Toggle on type formatting   |
+| =​, T T= | Toggle treemacs integration |
 |         |                             |
-| ~​, g g~ | Find definition             |
-| ~​, g r~ | Find references             |
-| ~​, g i~ | Find implementations        |
-| ~​, g d~ | Find declarations           |
-| ~​, g t~ | Find type definitions       |
-| ~​, g h~ | Call hierarchy              |
-| ~​, g a~ | Find symbol in workspace    |
-| ~​, g M~ | Show navigation menu        |
-| ~​, g e~ | Show flycheck errors        |
+| =​, g g= | Find definition             |
+| =​, g r= | Find references             |
+| =​, g i= | Find implementations        |
+| =​, g d= | Find declarations           |
+| =​, g t= | Find type definitions       |
+| =​, g h= | Call hierarchy              |
+| =​, g a= | Find symbol in workspace    |
+| =​, g M= | Show navigation menu        |
+| =​, g e= | Show flycheck errors        |
 |         |                             |
-| ~​, h h~ | Describe symbol at point    |
-| ~​, h s~ | Signature help              |
-| ~​, h g~ | Doc popup                   |
+| =​, h h= | Describe symbol at point    |
+| =​, h s= | Signature help              |
+| =​, h g= | Doc popup                   |
 |         |                             |
-| ~​, r r~ | Rename                      |
-| ~​, r o~ | Organize imports            |
+| =​, r r= | Rename                      |
+| =​, r o= | Organize imports            |
 |         |                             |
-| ~​, a a~ | Code actions                |
-| ~​, a l~ | Lens                        |
-| ~​, a h~ | Highlight symbol            |
+| =​, a a= | Code actions                |
+| =​, a l= | Lens                        |
+| =​, a h= | Highlight symbol            |
 |         |                             |
-| ~​, G g~ | Peek definitions            |
-| ~​, G r~ | Peek references             |
-| ~​, G i~ | Peek implementations        |
-| ~​, G s~ | Peek workspace symbol       |
-| ~​, G N~ | Peek jump backward          |
-| ~​, G n~ | Peek jump forward           |
+| =​, G g= | Peek definitions            |
+| =​, G r= | Peek references             |
+| =​, G i= | Peek implementations        |
+| =​, G s= | Peek workspace symbol       |
+| =​, G N= | Peek jump backward          |
+| =​, G n= | Peek jump forward           |
 
 #+begin_src elisp
   (use-package lsp-mode
@@ -3760,77 +3760,77 @@ LSP mode keybindings:
     (general-major-leader
       :keymaps 'lsp-mode-map
       ;; sessions
-      "s"  '(nil :wk "Sessions")
-      "ss" '(lsp :wk "Start server")
-      "sr" '(lsp-workspace-restart :wk "Restart server")
-      "sq" '(lsp-workspace-shutdown :wk "Shutdown server")
-      "sd" '(lsp-describe-session :wk "Describe session")
-      "sD" '(lsp-disconnect :wk "Disconnect")
+      "s"  '(nil :wk "sessions")
+      "ss" '(lsp :wk "start server")
+      "sr" '(lsp-workspace-restart :wk "restart server")
+      "sq" '(lsp-workspace-shutdown :wk "shutdown server")
+      "sd" '(lsp-describe-session :wk "describe session")
+      "sD" '(lsp-disconnect :wk "disconnect")
 
       ;; formatting
-      "="  '(nil :wk "Formatting")
+      "="  '(nil :wk "formatting")
       "==" '((lambda ()
                 (interactive)
                 (cond
                  ((derived-mode-p 'python-mode) (python-black-buffer))
-                 (lsp-format-buffer))) :wk "Format buffer")
-      "=r" '(lsp-format-region :wk "Format region")
+                 (lsp-format-buffer))) :wk "format buffer")
+      "=r" '(lsp-format-region :wk "format region")
 
       ;; folders
-      "F"  '(nil :wk "Folders")
-      "Fa" '(lsp-workspace-folders-add :wk "Add folder")
-      "Fr" '(lsp-workspace-folders-remove :wk "Remove folder")
-      "Fb" '(lsp-workspace-blacklist-remove :wk "Un-blacklist folder")
+      "F"  '(nil :wk "folders")
+      "Fa" '(lsp-workspace-folders-add :wk "add folder")
+      "Fr" '(lsp-workspace-folders-remove :wk "remove folder")
+      "Fb" '(lsp-workspace-blacklist-remove :wk "un-blacklist folder")
 
       ;; toggle
-      "T"  '(nil :wk "Toggle")
-      "Tl" '(lsp-lens-mode :wk "Toggle lenses")
-      "TL" '(lsp-toggle-trace-io :wk "Toggle log io")
-      "Th" '(lsp-toggle-symbol-highlight :wk "Toggle highlighting")
-      "Ts" '(lsp-toggle-signature-auto-activate :wk "Toggle signature")
-      "TS" '(lsp-ui-sideline-mode :wk "Toggle sideline")
-      "Td" '(lsp-ui-doc-mode :wk "Toggle documentation popup")
-      "Tp" '(lsp-signature-mode :wk "Toggle signature help")
-      "Tf" '(lsp-toggle-on-type-formatting :wk "Toggle on type formatting")
-      "TT" '(lsp-treemacs-sync-mode :wk "Toggle treemacs integration")
+      "T"  '(nil :wk "toggle")
+      "Tl" '(lsp-lens-mode :wk "toggle lenses")
+      "TL" '(lsp-toggle-trace-io :wk "toggle log io")
+      "Th" '(lsp-toggle-symbol-highlight :wk "toggle highlighting")
+      "Ts" '(lsp-toggle-signature-auto-activate :wk "toggle signature")
+      "TS" '(lsp-ui-sideline-mode :wk "toggle sideline")
+      "Td" '(lsp-ui-doc-mode :wk "toggle documentation popup")
+      "Tp" '(lsp-signature-mode :wk "toggle signature help")
+      "Tf" '(lsp-toggle-on-type-formatting :wk "toggle on type formatting")
+      "TT" '(lsp-treemacs-sync-mode :wk "toggle treemacs integration")
 
       ;; goto
-      "g"  '(nil :wk "Go To")
-      "gg" '(lsp-find-definition :wk "Find definition")
-      "gr" '(lsp-find-references :wk "Find references")
-      "gi" '(lsp-find-implementation :wk "Find implementations")
-      "gd" '(lsp-find-declaration :wk "Find declarations")
-      "gt" '(lsp-find-type-definition :wl "Find type definition")
-      "gh" '(lsp-treemacs-call-hierarchy :wk "Call hierarchy")
-      "ga" '(xref-find-apropos :wk "Find symbol in workspace")
-      "gM" '(lsp-ui-imenu :wk "Show navigation menu")
-      "ge" '(lsp-ui-flycheck-list :wk "Show flyckeck errors")
+      "g"  '(nil :wk "goto")
+      "gg" '(lsp-find-definition :wk "find definition")
+      "gr" '(lsp-find-references :wk "find references")
+      "gi" '(lsp-find-implementation :wk "find implementations")
+      "gd" '(lsp-find-declaration :wk "find declarations")
+      "gt" '(lsp-find-type-definition :wl "find type definition")
+      "gh" '(lsp-treemacs-call-hierarchy :wk "call hierarchy")
+      "ga" '(xref-find-apropos :wk "find symbol in workspace")
+      "gM" '(lsp-ui-imenu :wk "show navigation menu")
+      "ge" '(lsp-ui-flycheck-list :wk "show flyckeck errors")
 
       ;; help
-      "h"  '(nil :wk "Help")
-      "hh" '(lsp-describe-thing-at-point :wk "Describe symbol at point")
-      "hs" '(lsp-signature-activate :wk "Signature help")
-      "hg" '(lsp-ui-doc-glance :wk "Doc popup")
+      "h"  '(nil :wk "help")
+      "hh" '(lsp-describe-thing-at-point :wk "describe symbol at point")
+      "hs" '(lsp-signature-activate :wk "signature help")
+      "hg" '(lsp-ui-doc-glance :wk "doc popup")
 
       ;; refactor
-      "r"  '(nil :wk "Refactoring")
-      "rr" '(lsp-rename :wk "Rename")
-      "ro" '(lsp-organize-imports :wk "Organize imports")
+      "r"  '(nil :wk "refactoring")
+      "rr" '(lsp-rename :wk "rename")
+      "ro" '(lsp-organize-imports :wk "organize imports")
 
       ;; actions
-      "a"  '(nil :wk "Code actions")
-      "aa" '(lsp-execute-code-action :wk "Code actions")
-      "al" '(lsp-avy-lens :wk "Lens")
-      "ah" '(lsp-document-highlight :wk "Highlight symbol")
+      "a"  '(nil :wk "code actions")
+      "aa" '(lsp-execute-code-action :wk "code actions")
+      "al" '(lsp-avy-lens :wk "lens")
+      "ah" '(lsp-document-highlight :wk "highlight symbol")
 
       ;; peek
-      "G"  '(nil :wk "Peek")
-      "Gg" '(lsp-ui-peek-find-definitions :wk "Peek definitions")
-      "Gr" '(lsp-ui-peek-find-references :wk "Peek references")
-      "Gi" '(lsp-ui-peek-find-implementation :wk "Peek implementations")
-      "Gs" '(lsp-ui-peek-find-workspace-symbol :wk "Peek workspace symbol")
-      "GN" '(lsp-ui-peek-jump-backward :wk "Jump backward")
-      "Gn" '(lsp-ui-peek-jump-forward :wk "Jump forward"))
+      "G"  '(nil :wk "peek")
+      "Gg" '(lsp-ui-peek-find-definitions :wk "peek definitions")
+      "Gr" '(lsp-ui-peek-find-references :wk "peek references")
+      "Gi" '(lsp-ui-peek-find-implementation :wk "peek implementations")
+      "Gs" '(lsp-ui-peek-find-workspace-symbol :wk "peek workspace symbol")
+      "GN" '(lsp-ui-peek-jump-backward :wk "jump backward")
+      "Gn" '(lsp-ui-peek-jump-forward :wk "jump forward"))
     :custom
     (read-process-output-max (* 1024 1024) "Performace.")
     (lsp-auto-guess-root t "Detect project root.")
@@ -3944,7 +3944,7 @@ TODO: lsp-treemacs
 Some normal state keybindings:
 | key  | describe                                 |
 |------+------------------------------------------|
-| ~gz~ | Switch to inferior Python process buffer |
+| =gz= | Switch to inferior Python process buffer |
 
 #+begin_src elisp
   (use-package python
