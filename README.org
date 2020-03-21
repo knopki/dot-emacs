@@ -3836,6 +3836,7 @@ LSP mode keybindings:
     (lsp-auto-guess-root t "Detect project root.")
     (lsp-keep-workspace-alive nil "Auto-kill LSP server.")
     (lsp-diagnostic-package :flycheck)
+    (lsp-response-timeout 3)
 
     (lsp-pyls-configuration-sources ["flake8"])
     (lsp-pyls-plugins-autopep8-enabled nil)
