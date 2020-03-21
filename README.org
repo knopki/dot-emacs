@@ -92,6 +92,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
 - [[#productivity--task-management][Productivity & task management]]
   - [[#org-mode][Org mode]]
     - [[#core-1][Core]]
+    - [[#expiry][Expiry]]
     - [[#evil][Evil]]
     - [[#org-bullets][Org Bullets]]
     - [[#fancy-priorities][Fancy Priorities]]
@@ -2668,6 +2669,25 @@ Treat undo history as a branching tree of changes.
     ;; Set up hooks for clock persistence.
     (org-clock-persistence-insinuate))
 #+end_src
+*** Expiry
+Expire old entries.
+
+#+begin_src elisp
+  (use-package org-expiry
+    :ensure nil
+    :after org
+    :commands (org-expiry-insinuate
+               org-expiry-deinsinuate
+               org-expiry-insert-created
+               org-expiry-insert-expiry
+               org-expiry-add-keyword
+               org-expiry-archive-subtree
+               org-expiry-process-entry
+               org-expiry-process-entries)
+    :config
+    (org-expiry-insinuate))
+#+end_src
+
 *** Evil
 Evil support in org-mode.
 
@@ -2748,6 +2768,8 @@ Global keybindings for =org-mode=
 | =​, C R=   | Update or create a table containing a report about clocked time         |
 | =​, C r=   | Resolve all currently open Org clocks                                   |
 | =​, d d=   | Insert the "DEADLINE:" string with a timestamp to make a deadline       |
+| =​, d e=   | Insert the "EXPIRE:" string with a timestamp make item expire sometime  |
+| =​, d E=   | Check expirity of all items                                             |
 | =​, d s=   | Insert the SCHEDULED: string with a timestamp to schedule a TODO item   |
 | =​, d t=   | Prompt for a date/time and insert a time stamp                          |
 | =​, d T=   | Insert an inactive time stamp                                           |
@@ -3159,6 +3181,8 @@ Normal agenda evil keys:
       "Cr" '(org-resolve-clocks :wk "resolve all")
 
       "d"  '(nil :wk "dates")
+      "de" '(org-expiry-insert-expiry :wk "set expirity")
+      "dE" '(org-expiry-process-entries :wk "expirity all")
       "dd" '(org-deadline :wk "set deadline")
       "ds" '(org-schedule :wk "set scheduled")
       "dt" '(org-time-stamp :wk "add timestamp")
@@ -3273,12 +3297,12 @@ Normal agenda evil keys:
       "d-" '(org-agenda-do-date-earlier :wk "date -1")
       "dd" '(org-agenda-deadline :wk "add deadline")
       "dD" '((lambda () (interactive)
-              (let ((current-prefix-arg '(4)))
-                (call-interactively 'org-agenda-deadline))) :wk "remove deadline")
+               (let ((current-prefix-arg '(4)))
+                 (call-interactively 'org-agenda-deadline))) :wk "remove deadline")
       "ds" '(org-agenda-schedule :wk "schedule")
       "dS" '((lambda () (interactive)
-              (let ((current-prefix-arg '(4)))
-                (call-interactively 'org-agenda-schedule))) :wk "unschedule")
+               (let ((current-prefix-arg '(4)))
+                 (call-interactively 'org-agenda-schedule))) :wk "unschedule")
       "dt" '(org-agenda-date-prompt :wk "change date")
 
       "f"  '(nil :wk "filter")

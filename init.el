@@ -2405,6 +2405,24 @@ If you experience stuttering, increase this.")
   ;; Set up hooks for clock persistence.
   (org-clock-persistence-insinuate))
 
+;; Expiry
+;; Expire old entries.
+
+
+(use-package org-expiry
+  :ensure nil
+  :after org
+  :commands (org-expiry-insinuate
+             org-expiry-deinsinuate
+             org-expiry-insert-created
+             org-expiry-insert-expiry
+             org-expiry-add-keyword
+             org-expiry-archive-subtree
+             org-expiry-process-entry
+             org-expiry-process-entries)
+  :config
+  (org-expiry-insinuate))
+
 ;; Evil
 ;; Evil support in org-mode.
 
@@ -2485,6 +2503,8 @@ If you experience stuttering, increase this.")
 ;; | =​, C R=   | Update or create a table containing a report about clocked time         |
 ;; | =​, C r=   | Resolve all currently open Org clocks                                   |
 ;; | =​, d d=   | Insert the "DEADLINE:" string with a timestamp to make a deadline       |
+;; | =​, d e=   | Insert the "EXPIRE:" string with a timestamp make item expire sometime  |
+;; | =​, d E=   | Check expirity of all items                                             |
 ;; | =​, d s=   | Insert the SCHEDULED: string with a timestamp to schedule a TODO item   |
 ;; | =​, d t=   | Prompt for a date/time and insert a time stamp                          |
 ;; | =​, d T=   | Insert an inactive time stamp                                           |
@@ -2896,6 +2916,8 @@ If you experience stuttering, increase this.")
     "Cr" '(org-resolve-clocks :wk "resolve all")
 
     "d"  '(nil :wk "dates")
+    "de" '(org-expiry-insert-expiry :wk "set expirity")
+    "dE" '(org-expiry-process-entries :wk "expirity all")
     "dd" '(org-deadline :wk "set deadline")
     "ds" '(org-schedule :wk "set scheduled")
     "dt" '(org-time-stamp :wk "add timestamp")
@@ -3010,12 +3032,12 @@ If you experience stuttering, increase this.")
     "d-" '(org-agenda-do-date-earlier :wk "date -1")
     "dd" '(org-agenda-deadline :wk "add deadline")
     "dD" '((lambda () (interactive)
-            (let ((current-prefix-arg '(4)))
-              (call-interactively 'org-agenda-deadline))) :wk "remove deadline")
+             (let ((current-prefix-arg '(4)))
+               (call-interactively 'org-agenda-deadline))) :wk "remove deadline")
     "ds" '(org-agenda-schedule :wk "schedule")
     "dS" '((lambda () (interactive)
-            (let ((current-prefix-arg '(4)))
-              (call-interactively 'org-agenda-schedule))) :wk "unschedule")
+             (let ((current-prefix-arg '(4)))
+               (call-interactively 'org-agenda-schedule))) :wk "unschedule")
     "dt" '(org-agenda-date-prompt :wk "change date")
 
     "f"  '(nil :wk "filter")
