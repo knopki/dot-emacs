@@ -190,7 +190,7 @@ If you experience stuttering, increase this.")
 ;; | =g8= =ga=  | Print info on cursor position (on screen and within buffer)              |
 ;; | =gx=       | Ask a WWW browser to load the URL at or before point                     |
 ;; | =g;=       | Go to the point where the last edit was made in the current buffer       |
-;; | =g,=       | Go back to more recent changes after M-x goto-last-change have been used |
+;; | =g​,=       | Go back to more recent changes after M-x goto-last-change have been used |
 ;; | =zo=       | Open fold at point                                                       |
 ;; | =zO=       | Open fold at point recursively                                           |
 ;; | =zc=       | Close fold at point                                                      |
@@ -251,7 +251,7 @@ If you experience stuttering, increase this.")
 ;; | =%=     | Find the next item in this line after or under the cursor               |
 ;; |         | and jump to the corresponding one                                       |
 ;; | =`=     | Go to the marker specified by CHAR                                      |
-;; | ='=     | Go to the line of the marker specified by CHAR                          |
+;; | =​'=     | Go to the line of the marker specified by CHAR                          |
 ;; | =(=     | Move to the previous COUNT-th beginning of a sentence or paragraph      |
 ;; | =)=     | Move to the next COUNT-th beginning of a sentence or end of a paragraph |
 ;; | =]]=    | Move the cursor to the beginning of the COUNT-th next section           |
@@ -316,8 +316,8 @@ If you experience stuttering, increase this.")
 ;; | =[= =]=     | Select a square bracket           |
 ;; | =B= ={= =}= | Select a curly bracket ("brace")  |
 ;; | =<= =>=     | Select an angle bracket           |
-;; | ='=         | Select a single-quoted expression |
-;; | ="=         | Select a double-quoted expression |
+;; | =​'=         | Select a single-quoted expression |
+;; | =​"=         | Select a double-quoted expression |
 ;; | =`=         | Select a back-quoted expression   |
 ;; | =t=         | Select a tag block                |
 ;; | =o=         | Select a symbol                   |
@@ -346,7 +346,7 @@ If you experience stuttering, increase this.")
 ;; | =ju[mps]=                | Display the contents of the jump list                     |
 ;; | =noh[lsearch]=           | Disable the active search highlightings                   |
 ;; | =f[ile]=                 | Shows basic file information                              |
-;; | ===                      | Print the last line number                                |
+;; | =​==                      | Print the last line number                                |
 ;; | =!=                      | Execute a shell command                                   |
 ;; | =@:=                     | Repeats the last ex command                               |
 ;; | =mak[e]=                 | Call a build command in the current directory             |
@@ -1786,7 +1786,7 @@ If you experience stuttering, increase this.")
 ;; |               |                                                        |
 ;; | =#=           | Flag auto save files                                   |
 ;; | =.=           | Flag numerical backupd for deletion                    |
-;; | ===           | Flag backups for deletion                              |
+;; | =​==           | Flag backups for deletion                              |
 ;; |               |                                                        |
 ;; | =A=           | Flag all matches for regexp in all marked files        |
 ;; | =B=           | Byte compile marked files                              |
@@ -1808,7 +1808,7 @@ If you experience stuttering, increase this.")
 ;; | =!=           | Run shell command on marked files                      |
 ;; | =&=           | Run async shell command on marked files                |
 ;; |               |                                                        |
-;; | ===           | Dired diff                                             |
+;; | =​==           | Dired diff                                             |
 ;; |               |                                                        |
 ;; | =M-C-?=       | Unmark all files                                       |
 ;; | =M-C-d=       | Go down in tree                                        |
@@ -2000,9 +2000,9 @@ If you experience stuttering, increase this.")
 ;; | =C-.= | Replace the just repeated command with a previously executed command    |
 ;; | =M-.= | Same as evil-repeat-pop, but with negative COUNT                        |
 ;; | =.=   | Repeat the last editing command with count replaced by COUNT            |
-;; | ="=   | Use REGISTER for the next command                                       |
-;; | ===   | Invert case of character                                                |
-;; | ===   | Indent text                                                             |
+;; | =​"=   | Use REGISTER for the next command                                       |
+;; | =~=   | Invert case of character                                                |
+;; | =​==   | Indent text                                                             |
 ;; | =<=   | Shift text from BEG to END to the left                                  |
 ;; | =>=   | Shift text from BEG to END to the right                                 |
 ;; | =u=   | Undo some previous changes                                              |
@@ -2044,8 +2044,8 @@ If you experience stuttering, increase this.")
 ;; | =s[ubstitute]= | The Ex substitute command                               |
 ;; | =&=            | Repeat last substitute command                          |
 ;; | =&&=           | Same with last flags                                    |
-;; | ===            | Same with last search pattern                           |
-;; | ==&=           | Same with last search pattern and last flags            |
+;; | =~=            | Same with last search pattern                           |
+;; | =~&=           | Same with last search pattern and last flags            |
 ;; | =<=            | Shift text from BEG to END to the left                  |
 ;; | =>=            | Shift text from BEG to END to the right                 |
 ;; | =sor[t]=       | The Ex sort command                                     |
@@ -2122,15 +2122,15 @@ If you experience stuttering, increase this.")
 ;; | =SPC K e n= | Name last macro                                |
 ;; | =SPC K e r= | Store the last macro in register               |
 ;; | =SPC K e s= | Step edit and execute last macro               |
-;; | =SPC K k "= | Record keyboard input                          |
-;; | =SPC K K "= | End macro if currently defined or call last    |
+;; | =SPC K k "​= | Record keyboard input                          |
+;; | =SPC K K "​= | End macro if currently defined or call last    |
 ;; | =SPC K r L= | Display current head of macro ring             |
 ;; | =SPC K r d= | Delete current macro from ring                 |
 ;; | =SPC K r l= | Execute second macro in macro ring             |
 ;; | =SPC K r n= | Move to next macro in macro ring               |
 ;; | =SPC K r p= | Move to prev macro in macro ring               |
 ;; | =SPC K r s= | Swap first two elements in macro ring          |
-;; | =SPC K v "= | Display last macro"                            |
+;; | =SPC K v "​= | Display last macro                             |
 
 
 (general-leader
@@ -2263,21 +2263,21 @@ If you experience stuttering, increase this.")
 ;; =undo-tree-visualizer= keybindings:
 ;; | key                    | command                                |
 ;; |------------------------+----------------------------------------|
-;; | ~<up>~ ~k~ ~p~ ~C-p~   | Undo changes                           |
-;; | ~<down>~ ~j~ ~n~ ~C-n~ | Redo changes                           |
-;; | ~<left>~ ~h~ ~b~ ~C-b~ | Switch to previous undo-tree branch    |
-;; | ~<right> ~l~ ~f~ ~C-f~ | Switch to next undo-tree branch        |
-;; | ~C-<up>~ ~M-{~         | Undo changes up to last branch point   |
-;; | ~C-<down>~ ~M-}~       | Redo changes down to next branch point |
-;; | ~t~                    | Toggle display of time-stamps          |
-;; | ~d~                    | Toggle diff display                    |
-;; | ~s~                    | Toggle keyboard selection mode         |
-;; | ~q~                    | Quit undo-tree-visualizer              |
-;; | ~C-q~                  | Abort undo-tree-visualizer             |
-;; | ~<~                    | Scroll left                            |
-;; | ~>~                    | Scroll right                           |
-;; | ~<pgup>~ ~M-v~         | Scroll up                              |
-;; | ~<pgdown>~ ~C-v~       | Scroll down                            |
+;; | =<up>= =k= =p= =C-p=   | Undo changes                           |
+;; | =<down>= =j= =n= =C-n= | Redo changes                           |
+;; | =<left>= =h= =b= =C-b= | Switch to previous undo-tree branch    |
+;; | =<right> =l= =f= =C-f= | Switch to next undo-tree branch        |
+;; | =C-<up>= =M-{=         | Undo changes up to last branch point   |
+;; | =C-<down>= =M-}=       | Redo changes down to next branch point |
+;; | =t=                    | Toggle display of time-stamps          |
+;; | =d=                    | Toggle diff display                    |
+;; | =s=                    | Toggle keyboard selection mode         |
+;; | =q=                    | Quit undo-tree-visualizer              |
+;; | =C-q=                  | Abort undo-tree-visualizer             |
+;; | =<=                    | Scroll left                            |
+;; | =>=                    | Scroll right                           |
+;; | =<pgup>= =M-v=         | Scroll up                              |
+;; | =<pgdown>= =C-v=       | Scroll down                            |
 
 
 (use-package undo-tree
@@ -2411,7 +2411,7 @@ If you experience stuttering, increase this.")
 ;; Global keybindings for =org-mode=
 ;; | key           | describe                       |
 ;; |---------------+--------------------------------|
-;; | =SPC a o \#=  | org agenda list stuck projects |
+;; | =SPC a o #=   | org agenda list stuck projects |
 ;; | =SPC a o /=   | org occur in agenda files      |
 ;; | =SPC a o a=   | org agenda list                |
 ;; | =SPC a o c=   | org capture                    |
@@ -2435,7 +2435,7 @@ If you experience stuttering, increase this.")
 ;; =org-mode= normal state map:
 ;; | key       | describe                                                                |
 ;; |-----------+-------------------------------------------------------------------------|
-;; | =​, '=     | call a special editor for the element at point                          |
+;; | =​, '​=     | call a special editor for the element at point                          |
 ;; | =​, c=     | capture                                                                 |
 ;; | =​, L=     | Cycle at point right, depending on context                              |
 ;; | =​, H=     | Cycle at point left, depending on context                               |
@@ -2447,7 +2447,7 @@ If you experience stuttering, increase this.")
 ;; | =​, C-K=   | Change timestamps synchronously up in CLOCK log lines                   |
 ;; | =​, *=     | Compute table, or change heading status of lines                        |
 ;; | =​, -=     | Insert separator line in table or modify bullet status of line          |
-;; | =​, \#=    | Update the statistics cookie, either from TODO or from checkboxes       |
+;; | =​, #=     | Update the statistics cookie, either from TODO or from checkboxes       |
 ;; | =​, RET=   | Call org-table-hline-and-move or org-insert-heading dep. on context     |
 ;; | =​, M-RET= | Insert a new heading or wrap a region in a table                        |
 ;; | =​, A=     | The dispatcher for attachment commands                                  |
