@@ -2420,6 +2420,8 @@ If you experience stuttering, increase this.")
              org-expiry-archive-subtree
              org-expiry-process-entry
              org-expiry-process-entries)
+  :custom
+  (org-expiry-inactive-timestamps t "Create created/expired timestamps inactive")
   :config
   (org-expiry-insinuate))
 
