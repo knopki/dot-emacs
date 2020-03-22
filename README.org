@@ -3827,8 +3827,7 @@ LSP mode keybindings:
     (lsp-keep-workspace-alive nil "Auto-kill LSP server.")
     (lsp-diagnostic-package :flycheck)
     (lsp-response-timeout 3)
-    ;; TODO: enable on lsp-mode update
-    ;; (lsp-prefer-carp t "Prefer capr instead of company-lsp")
+    (lsp-prefer-carp t "Prefer capr instead of company-lsp")
 
     (lsp-pyls-configuration-sources ["flake8"])
     (lsp-pyls-plugins-autopep8-enabled nil)
@@ -3855,15 +3854,6 @@ Nice UI
               "j" 'lsp-ui-peek--select-next
               "k" 'lsp-ui-peek--select-prev
               "l" 'lsp-ui-peek--select-next-file))
-#+end_src
-
-Company integration.
-
-#+begin_src elisp
-  (use-package company-lsp
-    :commands company-lsp
-    :custom
-    (company-lsp-cache-candidates 'auto))
 #+end_src
 
 Ivy integration.

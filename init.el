@@ -3560,8 +3560,7 @@ If you experience stuttering, increase this.")
   (lsp-keep-workspace-alive nil "Auto-kill LSP server.")
   (lsp-diagnostic-package :flycheck)
   (lsp-response-timeout 3)
-  ;; TODO: enable on lsp-mode update
-  ;; (lsp-prefer-carp t "Prefer capr instead of company-lsp")
+  (lsp-prefer-carp t "Prefer capr instead of company-lsp")
 
   (lsp-pyls-configuration-sources ["flake8"])
   (lsp-pyls-plugins-autopep8-enabled nil)
@@ -3589,16 +3588,6 @@ If you experience stuttering, increase this.")
             "j" 'lsp-ui-peek--select-next
             "k" 'lsp-ui-peek--select-prev
             "l" 'lsp-ui-peek--select-next-file))
-
-
-
-;; Company integration.
-
-
-(use-package company-lsp
-  :commands company-lsp
-  :custom
-  (company-lsp-cache-candidates 'auto))
 
 
 
