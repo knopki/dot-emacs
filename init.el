@@ -3527,10 +3527,10 @@ If you experience stuttering, increase this.")
     ;; formatting
     "="  '(nil :wk "formatting")
     "==" '((lambda ()
-              (interactive)
-              (cond
-               ((derived-mode-p 'python-mode) (python-black-buffer))
-               (lsp-format-buffer))) :wk "format buffer")
+             (interactive)
+             (cond
+              ((derived-mode-p 'python-mode) (python-black-buffer))
+              (lsp-format-buffer))) :wk "format buffer")
     "=r" '(lsp-format-region :wk "format region")
 
     ;; folders
@@ -3594,6 +3594,8 @@ If you experience stuttering, increase this.")
   (lsp-keep-workspace-alive nil "Auto-kill LSP server.")
   (lsp-diagnostic-package :flycheck)
   (lsp-response-timeout 3)
+  ;; TODO: enable on lsp-mode update
+  ;; (lsp-prefer-carp t "Prefer capr instead of company-lsp")
 
   (lsp-pyls-configuration-sources ["flake8"])
   (lsp-pyls-plugins-autopep8-enabled nil)
