@@ -792,12 +792,13 @@ If you experience stuttering, increase this.")
 ;; Modeline
 ;; Use Doom modeline.
 
-;; TODO: set smaller font face after package upgrade
-
 
 (use-package doom-modeline
   :diminish
   :hook (after-init . doom-modeline-mode)
+  :custom-face
+  (mode-line ((t (:height 110))))
+  (mode-line-inactive ((t (:height 110))))
   :custom
   (doom-modeline-minor-modes t "Display minor modes.")
   (doom-modeline-unicode-fallback t "Use unicode when no icons.")
