@@ -276,10 +276,6 @@ Setup =use-package=.
     (package-refresh-contents)
     (package-install 'use-package))
 
-  ;; Should set before loading `use-package'
-  (eval-and-compile
-    (setq use-package-always-ensure t))
-
   (eval-when-compile
     (require 'use-package))
 
@@ -665,7 +661,6 @@ Application:
 ** Emacs variables that defined in C source code
 #+begin_src elisp
   (use-package emacs
-    :ensure nil
     :demand
     :init
     ;; UTF-8 as the default coding system.
@@ -764,7 +759,6 @@ Files, backups, etc.
 
 #+begin_src elisp
   (use-package files
-    :ensure nil
     :defer t
     :preface
     (defun my-backup-enable-predicate (name)
@@ -804,7 +798,6 @@ Point goes to the last place where it was when you previously visited the same f
 
 #+begin_src elisp
   (use-package saveplace
-    :ensure nil
     :defer t
     :config
     (save-place-mode 1))
@@ -815,7 +808,6 @@ often do anything about them besides changing packages upstream.
 
 #+begin_src elisp
   (use-package advice
-    :ensure nil
     :defer t
     :custom
     (ad-redefinition-action 'accept "Disable warnings."))
@@ -825,7 +817,6 @@ Make apropos omnipotent. It's more useful this way.
 
 #+begin_src elisp
   (use-package apropos
-    :ensure nil
     :defer t
     :custom
     (apropos-do-all t "Make apropos omnipotent."))
@@ -835,7 +826,6 @@ Exclude some files from =recentf= lists and save list on save and some times on 
 
 #+begin_src elisp
   (use-package recentf
-    :ensure nil
     :commands (recentf-open-files recentf-save-list)
     :hook (after-find-file . recentf-mode)
     :init
@@ -862,7 +852,6 @@ Exclude some files from =recentf= lists and save list on save and some times on 
 ** Save history
 #+begin_src elisp
   (use-package savehist
-    :ensure nil
     :hook (pre-command . savehist-mode)
     :custom
     (enable-recursive-minibuffers t "Allow minibuffer commands while in minibuffer.")
@@ -879,7 +868,6 @@ Revert buffer of file change on disk.
 
 #+begin_src elisp
   (use-package autorevert
-    :ensure nil
     :diminish
     :hook (after-init . global-auto-revert-mode)
     :custom
@@ -891,7 +879,6 @@ Restore last autosaved session.
 
 #+begin_src elisp
   (use-package desktop
-    :ensure nil
     :hook
     ;; Must be loaded after 'doom-modeline
     ;; See: https://github.com/seagle0128/doom-modeline/issues/216
@@ -914,7 +901,6 @@ Save *scratch* buffer content.
 ** Customization
 #+begin_src elisp
   (use-package cus-edit
-    :ensure nil
     :custom
     (custom-file (no-littering-expand-etc-file-name "custom.el"))
     :config
@@ -924,7 +910,6 @@ Save *scratch* buffer content.
 ** Mouse
 #+begin_src elisp
   (use-package mouse
-    :ensure nil
     :defer t
     :custom
     (mouse-yank-at-point t "Yanks at point instead of click."))
@@ -934,7 +919,6 @@ Mouse wheel settings.
 
 #+begin_src elisp
   (use-package mwheel
-    :ensure nil
     :defer t
     :custom
     (mouse-wheel-scroll-amount '(1 ((shift) . 5)) "Amount of scroll by mouse wheel.")
@@ -945,7 +929,6 @@ Don't display floating tooltips; display their contents in the echo-area.
 
 #+begin_src elisp
   (use-package tooltip
-    :ensure nil
     :defer t
     :custom
     (tooltip-mode nil))
@@ -953,7 +936,6 @@ Don't display floating tooltips; display their contents in the echo-area.
 ** Frame
 #+begin_src elisp
   (use-package frame
-    :ensure nil
     :hook
     ;; Display dividers between windows
     (window-setup . window-divider-mode)
@@ -1026,7 +1008,6 @@ Restore old window configurations.
 
 #+begin_src elisp
   (use-package winner
-    :ensure nil
     :commands (winner-undo winner-redo)
     :hook (after-init . winner-mode)
     :custom
@@ -1823,7 +1804,6 @@ Jump to bookmark.
 
 #+begin_src elisp
   (use-package bookmark
-    :ensure nil
     :defer t
     :general
     (general-leader
@@ -1899,7 +1879,6 @@ Some evil commands:
 ** Unique buffer names
 #+begin_src elisp
   (use-package uniquify
-    :ensure nil
     :custom
     (uniquify-buffer-name-style 'forward "bar/mumble/name"))
 #+end_src
@@ -1908,7 +1887,6 @@ Better buffer menu.
 
 #+begin_src elisp
   (use-package ibuffer
-    :ensure nil
     :functions (all-the-icons-icon-for-file
                 all-the-icons-icon-for-mode
                 all-the-icons-auto-mode-match?
@@ -2170,7 +2148,6 @@ Mode keys:
 
 #+begin_src elisp
   (use-package dired
-    :ensure nil
     :defer t
     :custom
     (dired-recursive-copy 'always)
@@ -2212,7 +2189,6 @@ Mode keys:
                   :override #'my-all-the-icons-dired--display)))
 
   (use-package dired-x
-    :ensure nil
     :general
     (general-leader
       "ad" 'dired
@@ -2321,7 +2297,6 @@ Some evil commands:
 ** Simple
 #+begin_src elisp
   (use-package simple
-    :ensure nil
     :diminish visual-line-mode auto-fill-function
     :hook
     (window-setup . size-indication-mode)
@@ -2346,7 +2321,6 @@ Some evil commands:
 ** Delete selection
 #+begin_src elisp
   (use-package delsel
-    :ensure nil
     :custom
     (delete-selection-mode t "Replace the active region just by typing text."))
 #+end_src
@@ -2355,7 +2329,6 @@ Delete trailing whitespaces on buffer save.
 
 #+begin_src elisp
   (use-package whitespace
-    :ensure nil
     :diminish
     :commands (whitespace-mode global-whitespace-mode)
     :general
@@ -2472,7 +2445,6 @@ Related keybindings:
 
 #+begin_src elisp
   (use-package flyspell
-    :ensure nil
     :diminish
     :commands
     (flyspell-mode flyspell-prog-mode flyspell-buffer flyspell-correct-wrapper)
@@ -2559,7 +2531,6 @@ Treat undo history as a branching tree of changes.
 *** Core
 #+begin_src elisp
   (use-package org
-    :ensure org-plus-contrib
     :hook
     (org-mode . visual-line-mode)
     (org-mode . org-indent-mode)
@@ -2674,7 +2645,6 @@ Expire old entries.
 
 #+begin_src elisp
   (use-package org-expiry
-    :ensure nil
     :after org
     :commands (org-expiry-insinuate
                org-expiry-deinsinuate
@@ -3416,7 +3386,6 @@ A comprehensive visual interface to diff & patch.
 
 #+begin_src elisp
   (use-package ediff
-    :ensure nil
     :hook
     ;; show org ediffs unfolded
     ((ediff-prepare-buffer . outline-show-all)
@@ -3508,7 +3477,6 @@ Open github/gitlab/bitbucket page.
 ** Eldoc
 #+begin_src elisp
   (use-package eldoc
-    :ensure nil
     :diminish eldoc-mode
     :defer 2
     :hook
@@ -3521,7 +3489,6 @@ Buffer re-tabbing.
 
 #+begin_src elisp
   (use-package tabify
-    :ensure nil
     :commands (tabify untabify)
     :config
     (setq tabify-regexp "^\t* [ \t]+"))
@@ -3529,7 +3496,6 @@ Buffer re-tabbing.
 ** Highlight matching parens
 #+begin_src elisp
   (use-package paren
-    :ensure nil
     :defer 2
     :hook (prog-mode . show-paren-mode)
     :custom
@@ -3538,7 +3504,6 @@ Buffer re-tabbing.
 ** Automatic parenthesis pairing
 #+begin_src elisp
   (use-package elec-pair
-    :ensure nil
     :defer 2
     :hook (prog-mode . electric-pair-mode)
     :custom
@@ -3547,7 +3512,6 @@ Buffer re-tabbing.
 ** Display line numbers
 #+begin_src elisp
   (use-package display-line-numbers
-    :ensure nil
     :hook (prog-mode . display-line-numbers-mode))
 #+end_src
 ** Highlight TODOs
@@ -3916,7 +3880,6 @@ TODO: lsp-treemacs
 *** Emacs Lisp
 #+begin_src elisp
   (use-package elisp-mode
-    :ensure nil
     :hook
     (emacs-lisp-mode . (lambda ()
                          (set (make-local-variable 'company-backends)
@@ -3930,7 +3893,6 @@ TODO: lsp-treemacs
 *** C/C++
 #+begin_src elisp
   (use-package cc-vars
-    :ensure nil
     :defer t
     :custom
     (c-basic-offset 4 "Default indentation.")
@@ -3948,22 +3910,18 @@ TODO: lsp-treemacs
 
 
   (use-package nix-drv-mode
-    :ensure nix-mode
     :mode "\\.drv\\'")
 
 
   (use-package nix-repl
-    :ensure nix-mode
     :commands (nix-repl))
 
 
   (use-package nix-shell
-    :ensure nix-mode
     :commands (nix-shell-unpack nix-shell-configure nix-shell-build))
 
 
   (use-package nix-format
-    :ensure nix-mode
     :custom
     (nix-nixfmt-bin "nixpkgs-fmt" "Use nixpkgs-fmt instead of nixfmt-bin.")
     :commands (nix-format-buffer))
@@ -3976,7 +3934,6 @@ Some normal state keybindings:
 
 #+begin_src elisp
   (use-package python
-    :ensure nil
     :defer t
     :hook (python-mode . lsp-deferred))
 #+end_src
@@ -3997,7 +3954,6 @@ Format buffer with =black=.
 *** Javascript
 #+begin_src elisp
   (use-package js
-    :ensure nil
     :defer t
     :custom
     (js-indent-level 2))

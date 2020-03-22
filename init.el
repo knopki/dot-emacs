@@ -79,10 +79,6 @@ If you experience stuttering, increase this.")
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; Should set before loading `use-package'
-(eval-and-compile
-  (setq use-package-always-ensure t))
-
 (eval-when-compile
   (require 'use-package))
 
@@ -466,7 +462,6 @@ If you experience stuttering, increase this.")
 ;; Emacs variables that defined in C source code
 
 (use-package emacs
-  :ensure nil
   :demand
   :init
   ;; UTF-8 as the default coding system.
@@ -564,7 +559,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package files
-  :ensure nil
   :defer t
   :preface
   (defun my-backup-enable-predicate (name)
@@ -603,7 +597,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package saveplace
-  :ensure nil
   :defer t
   :config
   (save-place-mode 1))
@@ -614,7 +607,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package advice
-  :ensure nil
   :defer t
   :custom
   (ad-redefinition-action 'accept "Disable warnings."))
@@ -624,7 +616,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package apropos
-  :ensure nil
   :defer t
   :custom
   (apropos-do-all t "Make apropos omnipotent."))
@@ -634,7 +625,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package recentf
-  :ensure nil
   :commands (recentf-open-files recentf-save-list)
   :hook (after-find-file . recentf-mode)
   :init
@@ -661,7 +651,6 @@ If you experience stuttering, increase this.")
 ;; Save history
 
 (use-package savehist
-  :ensure nil
   :hook (pre-command . savehist-mode)
   :custom
   (enable-recursive-minibuffers t "Allow minibuffer commands while in minibuffer.")
@@ -678,7 +667,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package autorevert
-  :ensure nil
   :diminish
   :hook (after-init . global-auto-revert-mode)
   :custom
@@ -690,7 +678,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package desktop
-  :ensure nil
   :hook
   ;; Must be loaded after 'doom-modeline
   ;; See: https://github.com/seagle0128/doom-modeline/issues/216
@@ -713,7 +700,6 @@ If you experience stuttering, increase this.")
 ;; Customization
 
 (use-package cus-edit
-  :ensure nil
   :custom
   (custom-file (no-littering-expand-etc-file-name "custom.el"))
   :config
@@ -722,7 +708,6 @@ If you experience stuttering, increase this.")
 ;; Mouse
 
 (use-package mouse
-  :ensure nil
   :defer t
   :custom
   (mouse-yank-at-point t "Yanks at point instead of click."))
@@ -733,7 +718,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package mwheel
-  :ensure nil
   :defer t
   :custom
   (mouse-wheel-scroll-amount '(1 ((shift) . 5)) "Amount of scroll by mouse wheel.")
@@ -744,7 +728,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package tooltip
-  :ensure nil
   :defer t
   :custom
   (tooltip-mode nil))
@@ -752,7 +735,6 @@ If you experience stuttering, increase this.")
 ;; Frame
 
 (use-package frame
-  :ensure nil
   :hook
   ;; Display dividers between windows
   (window-setup . window-divider-mode)
@@ -771,7 +753,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package winner
-  :ensure nil
   :commands (winner-undo winner-redo)
   :hook (after-init . winner-mode)
   :custom
@@ -1563,7 +1544,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package bookmark
-  :ensure nil
   :defer t
   :general
   (general-leader
@@ -1638,7 +1618,6 @@ If you experience stuttering, increase this.")
 ;; Unique buffer names
 
 (use-package uniquify
-  :ensure nil
   :custom
   (uniquify-buffer-name-style 'forward "bar/mumble/name"))
 
@@ -1647,7 +1626,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package ibuffer
-  :ensure nil
   :functions (all-the-icons-icon-for-file
               all-the-icons-icon-for-mode
               all-the-icons-auto-mode-match?
@@ -1908,7 +1886,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package dired
-  :ensure nil
   :defer t
   :custom
   (dired-recursive-copy 'always)
@@ -1950,7 +1927,6 @@ If you experience stuttering, increase this.")
                 :override #'my-all-the-icons-dired--display)))
 
 (use-package dired-x
-  :ensure nil
   :general
   (general-leader
     "ad" 'dired
@@ -2058,7 +2034,6 @@ If you experience stuttering, increase this.")
 ;; Simple
 
 (use-package simple
-  :ensure nil
   :diminish visual-line-mode auto-fill-function
   :hook
   (window-setup . size-indication-mode)
@@ -2083,7 +2058,6 @@ If you experience stuttering, increase this.")
 ;; Delete selection
 
 (use-package delsel
-  :ensure nil
   :custom
   (delete-selection-mode t "Replace the active region just by typing text."))
 
@@ -2092,7 +2066,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package whitespace
-  :ensure nil
   :diminish
   :commands (whitespace-mode global-whitespace-mode)
   :general
@@ -2209,7 +2182,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package flyspell
-  :ensure nil
   :diminish
   :commands
   (flyspell-mode flyspell-prog-mode flyspell-buffer flyspell-correct-wrapper)
@@ -2295,7 +2267,6 @@ If you experience stuttering, increase this.")
 ;; Core
 
 (use-package org
-  :ensure org-plus-contrib
   :hook
   (org-mode . visual-line-mode)
   (org-mode . org-indent-mode)
@@ -2410,7 +2381,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package org-expiry
-  :ensure nil
   :after org
   :commands (org-expiry-insinuate
              org-expiry-deinsinuate
@@ -3149,7 +3119,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package ediff
-  :ensure nil
   :hook
   ;; show org ediffs unfolded
   ((ediff-prepare-buffer . outline-show-all)
@@ -3240,7 +3209,6 @@ If you experience stuttering, increase this.")
 ;; Eldoc
 
 (use-package eldoc
-  :ensure nil
   :diminish eldoc-mode
   :defer 2
   :hook
@@ -3253,7 +3221,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package tabify
-  :ensure nil
   :commands (tabify untabify)
   :config
   (setq tabify-regexp "^\t* [ \t]+"))
@@ -3261,7 +3228,6 @@ If you experience stuttering, increase this.")
 ;; Highlight matching parens
 
 (use-package paren
-  :ensure nil
   :defer 2
   :hook (prog-mode . show-paren-mode)
   :custom
@@ -3270,7 +3236,6 @@ If you experience stuttering, increase this.")
 ;; Automatic parenthesis pairing
 
 (use-package elec-pair
-  :ensure nil
   :defer 2
   :hook (prog-mode . electric-pair-mode)
   :custom
@@ -3279,7 +3244,6 @@ If you experience stuttering, increase this.")
 ;; Display line numbers
 
 (use-package display-line-numbers
-  :ensure nil
   :hook (prog-mode . display-line-numbers-mode))
 
 ;; Highlight TODOs
@@ -3648,7 +3612,6 @@ If you experience stuttering, increase this.")
 ;; Emacs Lisp
 
 (use-package elisp-mode
-  :ensure nil
   :hook
   (emacs-lisp-mode . (lambda ()
                        (set (make-local-variable 'company-backends)
@@ -3662,7 +3625,6 @@ If you experience stuttering, increase this.")
 ;; C/C++
 
 (use-package cc-vars
-  :ensure nil
   :defer t
   :custom
   (c-basic-offset 4 "Default indentation.")
@@ -3680,22 +3642,18 @@ If you experience stuttering, increase this.")
 
 
 (use-package nix-drv-mode
-  :ensure nix-mode
   :mode "\\.drv\\'")
 
 
 (use-package nix-repl
-  :ensure nix-mode
   :commands (nix-repl))
 
 
 (use-package nix-shell
-  :ensure nix-mode
   :commands (nix-shell-unpack nix-shell-configure nix-shell-build))
 
 
 (use-package nix-format
-  :ensure nix-mode
   :custom
   (nix-nixfmt-bin "nixpkgs-fmt" "Use nixpkgs-fmt instead of nixfmt-bin.")
   :commands (nix-format-buffer))
@@ -3708,7 +3666,6 @@ If you experience stuttering, increase this.")
 
 
 (use-package python
-  :ensure nil
   :defer t
   :hook (python-mode . lsp-deferred))
 
@@ -3731,7 +3688,6 @@ If you experience stuttering, increase this.")
 ;; Javascript
 
 (use-package js
-  :ensure nil
   :defer t
   :custom
   (js-indent-level 2))
