@@ -2407,6 +2407,7 @@ If you experience stuttering, increase this.")
     "Cc" 'org-capture)
   (general-major-leader
     :keymaps 'org-mode-map
+    :major-modes t
     "'"  '(org-edit-special :wk "edit element at point")
     "c"  '(org-capture :wk "capture")
 
@@ -2574,6 +2575,7 @@ If you experience stuttering, increase this.")
     "xv" (local/org-emphasize local/org-verbatim ?=))
   (general-major-leader
     :keymaps 'org-agenda-mode-map
+    :major-modes t
     "a"  '(org-agenda :wk "agenda")
 
     "C"  '(:ignore t :wk "clocks")
@@ -2638,12 +2640,14 @@ If you experience stuttering, increase this.")
     "vy" '(org-agenda-year-view :wk "yearly"))
   (general-major-leader
     :keymaps 'org-capture-mode-map
+    :major-modes t
     "c" 'org-capture-finalize
     "k" 'org-capture-kill
     "a" 'org-capture-kill
     "r" 'org-capture-refile)
   (general-major-leader
     :keymaps 'org-src-mode-map
+    :major-modes t
     "c" 'org-edit-src-exit
     "k" 'org-edit-src-abort
     "a" 'org-edit-src-abort)
@@ -3058,85 +3062,18 @@ If you experience stuttering, increase this.")
 
 
 (use-package lsp-mode
-  ;; TODO: enable after upgrade
-  ;; :hook (lsp-mode . lsp-enable-which-key-integration)
   :commands (lsp lsp-deffered)
   :general
-  ;; TODO: merge with =lsp-command-map= after upgrade
   (general-major-leader
     :keymaps 'lsp-mode-map
-    ;; sessions
-    "s"  '(nil :wk "sessions")
-    "ss" '(lsp :wk "start server")
-    "sr" '(lsp-workspace-restart :wk "restart server")
-    "sq" '(lsp-workspace-shutdown :wk "shutdown server")
-    "sd" '(lsp-describe-session :wk "describe session")
-    "sD" '(lsp-disconnect :wk "disconnect")
-
-    ;; formatting
-    "="  '(nil :wk "formatting")
+    :major-modes t
+    "" '(:keymap lsp-command-map :package lsp-mode :wk "lsp")
+    "s"  '(:ignore t :wk "sessions")
     "==" '((lambda ()
              (interactive)
              (cond
               ((derived-mode-p 'python-mode) (python-black-buffer))
-              (lsp-format-buffer))) :wk "format buffer")
-    "=r" '(lsp-format-region :wk "format region")
-
-    ;; folders
-    "F"  '(nil :wk "folders")
-    "Fa" '(lsp-workspace-folders-add :wk "add folder")
-    "Fr" '(lsp-workspace-folders-remove :wk "remove folder")
-    "Fb" '(lsp-workspace-blacklist-remove :wk "un-blacklist folder")
-
-    ;; toggle
-    "T"  '(nil :wk "toggle")
-    "Tl" '(lsp-lens-mode :wk "toggle lenses")
-    "TL" '(lsp-toggle-trace-io :wk "toggle log io")
-    "Th" '(lsp-toggle-symbol-highlight :wk "toggle highlighting")
-    "Ts" '(lsp-toggle-signature-auto-activate :wk "toggle signature")
-    "TS" '(lsp-ui-sideline-mode :wk "toggle sideline")
-    "Td" '(lsp-ui-doc-mode :wk "toggle documentation popup")
-    "Tp" '(lsp-signature-mode :wk "toggle signature help")
-    "Tf" '(lsp-toggle-on-type-formatting :wk "toggle on type formatting")
-    "TT" '(lsp-treemacs-sync-mode :wk "toggle treemacs integration")
-
-    ;; goto
-    "g"  '(nil :wk "goto")
-    "gg" '(lsp-find-definition :wk "find definition")
-    "gr" '(lsp-find-references :wk "find references")
-    "gi" '(lsp-find-implementation :wk "find implementations")
-    "gd" '(lsp-find-declaration :wk "find declarations")
-    "gt" '(lsp-find-type-definition :wl "find type definition")
-    "gh" '(lsp-treemacs-call-hierarchy :wk "call hierarchy")
-    "ga" '(xref-find-apropos :wk "find symbol in workspace")
-    "gM" '(lsp-ui-imenu :wk "show navigation menu")
-    "ge" '(lsp-ui-flycheck-list :wk "show flyckeck errors")
-
-    ;; help
-    "h"  '(nil :wk "help")
-    "hh" '(lsp-describe-thing-at-point :wk "describe symbol at point")
-    "hs" '(lsp-signature-activate :wk "signature help")
-    "hg" '(lsp-ui-doc-glance :wk "doc popup")
-
-    ;; refactor
-    "r"  '(nil :wk "refactoring")
-    "rr" '(lsp-rename :wk "rename")
-    "ro" '(lsp-organize-imports :wk "organize imports")
-
-    ;; actions
-    "a"  '(nil :wk "code actions")
-    "aa" '(lsp-execute-code-action :wk "code actions")
-    "al" '(lsp-avy-lens :wk "lens")
-    "ah" '(lsp-document-highlight :wk "highlight symbol")
-
-    ;; peek
-    "G"  '(nil :wk "peek")
-    "Gg" '(lsp-ui-peek-find-definitions :wk "peek definitions")
-    "Gr" '(lsp-ui-peek-find-references :wk "peek references")
-    "Gi" '(lsp-ui-peek-find-implementation :wk "peek implementations")
-    "Gs" '(lsp-ui-peek-find-workspace-symbol :wk "peek workspace symbol")
-    "GN" '(lsp-ui-peek-jump-backward :wk "jump backward")
-    "Gn" '(lsp-ui-peek-jump-forward :wk "jump forward"))
+              (lsp-format-buffer))) :wk "format buffer"))
   :custom
   (read-process-output-max (* 1024 1024) "Performace.")
   (lsp-auto-guess-root t "Detect project root.")
@@ -3144,6 +3081,7 @@ If you experience stuttering, increase this.")
   (lsp-diagnostic-package :flycheck)
   (lsp-response-timeout 3)
   (lsp-prefer-carp t "Prefer capr instead of company-lsp")
+  (lsp-keymap-prefix ",")
 
   (lsp-pyls-configuration-sources ["flake8"])
   (lsp-pyls-plugins-autopep8-enabled nil)
@@ -3152,6 +3090,7 @@ If you experience stuttering, increase this.")
   (lsp-pyls-plugins-yapf-enabled nil)
 
   :config
+  (lsp-enable-which-key-integration)
   (lsp-register-custom-settings
    '(("pyls.plugins.pyls_mypy.enabled" t t)
      ("pyls.plugins.pyls_mypy.live_mode" nil t)
