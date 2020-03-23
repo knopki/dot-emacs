@@ -2751,13 +2751,7 @@ If you experience stuttering, increase this.")
 (use-package magit-todos
   :commands (ivy-magit-todos)
   ;; TODO: add keybindings
-  :hook (magit-mode . magit-todos-mode)
-  ;; TODO: remove after evil-collection updated with fix
-  :general
-  (:keymaps '(magit-todos-section-map magit-todos-item-section-map)
-            "jT" nil
-            "jl" nil
-            "j" nil))
+  :hook (magit-mode . magit-todos-mode))
 
 ;; Git Time Machine
 ;; Walk through git revisions of a file.
