@@ -393,18 +393,25 @@ If you experience stuttering, increase this.")
 
 (use-package general
   :commands (general-leader general-major-leader)
+  :custom
+  (local/leader-key "SPC" "Global leader key.")
+  (local/leader-key-alternate "M-SPC" "Global leader key in emacs state.")
+  (local/leader-major-key "," "Major leader key.")
+  (local/leader-major-key-alternate "M-," "Major leader key in emacs state.")
+  (local/universal-argument-key "u" "Universal argument key.")
   :config
   (general-evil-setup)
 
   (general-create-definer general-leader
     :keymaps 'override
     :states '(insert motion normal emacs)
-    :prefix "SPC"
-    :non-normal-prefix "M-SPC")
+    :prefix local/leader-key
+    :non-normal-prefix local/leader-key-alternate)
   (general-create-definer general-major-leader
     :states '(insert motion emacs)
-    :prefix ","
-    :non-normal-prefix "M-,")
+    :prefix local/leader-major-key
+    :non-normal-prefix local/leader-major-key-alternate)
+  (message local/leader-major-key)
   (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode"))
   (general-leader "u" '(universal-argument :wk "Universal argument")))
 
@@ -3075,12 +3082,11 @@ If you experience stuttering, increase this.")
     :keymaps 'lsp-mode-map
     :major-modes t
     "" '(:keymap lsp-command-map :package lsp-mode :wk "lsp")
-    "s"  '(:ignore t :wk "sessions")
-    "==" '((lambda ()
-             (interactive)
-             (cond
-              ((derived-mode-p 'python-mode) (python-black-buffer))
-              (lsp-format-buffer))) :wk "format buffer"))
+    [remap lsp-format-buffer] '((lambda ()
+                                  (interactive)
+                                  (cond
+                                   ((derived-mode-p 'python-mode) (python-black-buffer))
+                                   (lsp-format-buffer)))))
   :custom
   (read-process-output-max (* 1024 1024) "Performace.")
   (lsp-auto-guess-root t "Detect project root.")
@@ -3088,7 +3094,6 @@ If you experience stuttering, increase this.")
   (lsp-diagnostic-package :flycheck)
   (lsp-response-timeout 3)
   (lsp-prefer-carp t "Prefer capr instead of company-lsp")
-  (lsp-keymap-prefix ",")
 
   (lsp-pyls-configuration-sources ["flake8"])
   (lsp-pyls-plugins-autopep8-enabled nil)
@@ -3097,7 +3102,8 @@ If you experience stuttering, increase this.")
   (lsp-pyls-plugins-yapf-enabled nil)
 
   :config
-  (lsp-enable-which-key-integration)
+  (let ((lsp-keymap-prefix local/leader-major-key))
+    (lsp-enable-which-key-integration))
   (lsp-register-custom-settings
    '(("pyls.plugins.pyls_mypy.enabled" t t)
      ("pyls.plugins.pyls_mypy.live_mode" nil t)
