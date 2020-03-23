@@ -1809,6 +1809,7 @@ If you experience stuttering, increase this.")
 ;; =undo-tree-mode= and =global-undo-tree-mode= keybindings:
 ;; | key               | command                               |
 ;; |-------------------+---------------------------------------|
+;; | =:undol[ist]=     | Run Undo Tree Visualizer              |
 ;; | =SPC a u= =C-x u= | Run Undo Tree Visualizer              |
 ;; | =C-_= =C-/=       | Undo tree undo                        |
 ;; | =M-_= =M-/=       | Undo tree redo                        |
@@ -1829,18 +1830,24 @@ If you experience stuttering, increase this.")
 ;; | =s=                    | Toggle keyboard selection mode         |
 ;; | =q=                    | Quit undo-tree-visualizer              |
 ;; | =C-q=                  | Abort undo-tree-visualizer             |
-;; | =<=                    | Scroll left                            |
-;; | =>=                    | Scroll right                           |
 ;; | =<pgup>= =M-v=         | Scroll up                              |
 ;; | =<pgdown>= =C-v=       | Scroll down                            |
 
 
 (use-package undo-tree
   :diminish
-  :hook (after-find-file . global-undo-tree-mode)
+  :hook
+  (after-find-file . global-undo-tree-mode)
+  (undo-tree-visualizer-mode-map )
   :general
   (general-leader
     "au" 'undo-tree-visualize)
+  (general-define-key
+   :states '(normal visual)
+   :keymaps 'undo-tree-visualizer-mode-map
+   "d" 'undo-tree-visualizer-toggle-diff
+   "t" 'undo-tree-visualizer-timestamps
+   "s" 'undo-tree-visualizer-selection-mode)
   :custom
   (undo-tree-visualizer-timestamps t "Display timestamps.")
   (undo-tree-enable-undo-in-region nil "Do not undo changes only in region.")
