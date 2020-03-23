@@ -1140,7 +1140,13 @@ If you experience stuttering, increase this.")
   (which-key-allow-multiple-replacements t)
   (which-key-sort-order 'which-key-key-order-alpha)
   (which-key-allow-evil-operators t)
+  (which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL") "Truncate to one char")
   :config
+  (push '(("SPC" . nil) . ("␣" . nil)) which-key-replacement-alist)
+  (push '(("TAB" . nil) . ("↹" . nil)) which-key-replacement-alist)
+  (push '(("RET" . nil) . ("⏎" . nil)) which-key-replacement-alist)
+  (push '(("ESC" . nil) . ("␛" . nil)) which-key-replacement-alist)
+  (push '(("DEL" . nil) . ("⇤" . nil)) which-key-replacement-alist)
   (which-key-setup-side-window-right-bottom))
 
 ;; Better help
