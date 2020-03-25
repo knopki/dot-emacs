@@ -3122,7 +3122,10 @@ If you experience stuttering, increase this.")
             "h" 'lsp-ui-peek--select-prev-file
             "j" 'lsp-ui-peek--select-next
             "k" 'lsp-ui-peek--select-prev
-            "l" 'lsp-ui-peek--select-next-file))
+            "l" 'lsp-ui-peek--select-next-file)
+  :custom
+  (lsp-ui-peek-enable t)
+  (lsp-ui-doc-enable t))
 
 
 
