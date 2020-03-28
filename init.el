@@ -2710,6 +2710,15 @@ If you experience stuttering, increase this.")
   ;; In markdown too.
   (markdown-mode . toc-org-mode))
 
+;; Wakatime
+;; WakaTime measures coding time for programmers using open-source plugins for your
+;; text editor.
+
+
+(use-package wakatime-mode
+  :hook (prog-mode . global-wakatime-mode)
+  :defer 10)
+
 ;; diff-hl
 ;; Highlights uncommitted changes on the fringe.
 

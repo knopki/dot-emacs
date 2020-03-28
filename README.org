@@ -97,6 +97,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
     - [[#org-bullets][Org Bullets]]
     - [[#fancy-priorities][Fancy Priorities]]
     - [[#table-of-contents][Table of Contents]]
+  - [[#wakatime][Wakatime]]
 - [[#version-control][Version Control]]
   - [[#diff-hl][diff-hl]]
   - [[#ediff][Ediff]]
@@ -2973,6 +2974,15 @@ Generates an up-to-date table of contents in org files without exporting.
     (org-mode . toc-org-mode)
     ;; In markdown too.
     (markdown-mode . toc-org-mode))
+#+end_src
+** Wakatime
+WakaTime measures coding time for programmers using open-source plugins for your
+text editor.
+
+#+begin_src elisp
+  (use-package wakatime-mode
+    :hook (prog-mode . global-wakatime-mode)
+    :defer 10)
 #+end_src
 * Version Control
 ** diff-hl
