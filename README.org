@@ -93,6 +93,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#org-mode][Org mode]]
     - [[#core-1][Core]]
     - [[#expiry][Expiry]]
+    - [[#org-download][org-download]]
     - [[#evil][Evil]]
     - [[#org-bullets][Org Bullets]]
     - [[#fancy-priorities][Fancy Priorities]]
@@ -2261,7 +2262,20 @@ Expire old entries.
     :config
     (org-expiry-insinuate))
 #+end_src
+*** org-download
+Moving images.
 
+#+begin_src elisp
+  (use-package org-download
+    :after org
+    :hook (org-mode . org-download-enable)
+    :commands (org-download-enable
+               org-download-yank
+               org-download-screenshot)
+    :custom
+    (org-download-method 'attach)
+    (org-download-screenshot-method "slurp | grim -g - %s" "Sway/Wayland method"))
+#+end_src
 *** Evil
 Evil support in org-mode.
 
@@ -2352,6 +2366,8 @@ Global keybindings for =org-mode=
 | =​, f u=   | Get inbox items from all feeds in org-feed-alist                        |
 | =​, i b=   | Insert a block structure of the type #+begin_foo/#+end_foo              |
 | =​, i d=   | Insert a drawer at point                                                |
+| =​, i D y= | Insert image from kill-ring                                             |
+| =​, i D s= | Make screenshot and insert                                              |
 | =​, i e=   | Set the effort property of the current entry                            |
 | =​, i f=   | Insert a new footnote                                                   |
 | =​, i h=   | Insert a new heading or an item with the same depth at point            |
@@ -2785,7 +2801,8 @@ Normal agenda evil keys:
       "it" '(org-set-tags-command :wk "set tags")
 
       "iD" '(:ignore t :wk "download")
-      ;; TODO: org-download
+      "iDy" '(org-download-yank :wk "download image from kill-ring")
+      "iDs" '(org-download-screenshot :wk "make screenshot")
 
       "p"  '(org-priority :wk "change priority")
 

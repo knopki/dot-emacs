@@ -1998,6 +1998,20 @@ If you experience stuttering, increase this.")
   :config
   (org-expiry-insinuate))
 
+;; org-download
+;; Moving images.
+
+
+(use-package org-download
+  :after org
+  :hook (org-mode . org-download-enable)
+  :commands (org-download-enable
+             org-download-yank
+             org-download-screenshot)
+  :custom
+  (org-download-method 'attach)
+  (org-download-screenshot-method "slurp | grim -g - %s" "Sway/Wayland method"))
+
 ;; Evil
 ;; Evil support in org-mode.
 
@@ -2088,6 +2102,8 @@ If you experience stuttering, increase this.")
 ;; | =​, f u=   | Get inbox items from all feeds in org-feed-alist                        |
 ;; | =​, i b=   | Insert a block structure of the type #+begin_foo/#+end_foo              |
 ;; | =​, i d=   | Insert a drawer at point                                                |
+;; | =​, i D y= | Insert image from kill-ring                                             |
+;; | =​, i D s= | Make screenshot and insert                                              |
 ;; | =​, i e=   | Set the effort property of the current entry                            |
 ;; | =​, i f=   | Insert a new footnote                                                   |
 ;; | =​, i h=   | Insert a new heading or an item with the same depth at point            |
@@ -2521,7 +2537,8 @@ If you experience stuttering, increase this.")
     "it" '(org-set-tags-command :wk "set tags")
 
     "iD" '(:ignore t :wk "download")
-    ;; TODO: org-download
+    "iDy" '(org-download-yank :wk "download image from kill-ring")
+    "iDs" '(org-download-screenshot :wk "make screenshot")
 
     "p"  '(org-priority :wk "change priority")
 
