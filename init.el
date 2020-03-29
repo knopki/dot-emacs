@@ -1874,6 +1874,7 @@ If you experience stuttering, increase this.")
   (org-mode . visual-line-mode)
   (org-mode . org-indent-mode)
   (org-indent-mode . (lambda () (diminish 'org-indent-mode)))
+  :commands (orgtbl-mode)
   :custom-face (org-ellipsis ((t (:foreground nil))))
   :custom
   (org-modules '(org-checklist org-habit) "Always load modules.")
