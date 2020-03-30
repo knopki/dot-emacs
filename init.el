@@ -1893,6 +1893,7 @@ If you experience stuttering, increase this.")
   (org-archive-location
    (concat org-directory "/archive/%s_archive::datetree/")
    "The location where subtree should be archived.")
+  (org-extend-today-until 5)
 
   ;; Keywords
   (org-todo-keywords
@@ -1943,7 +1944,11 @@ If you experience stuttering, increase this.")
   (org-capture-templates
    '(("t" "My TODO task" entry
       (file "capture.org")
-      "* TODO  %?\nSCHEDULED: %t"))
+      "* TODO  %?\nSCHEDULED: %t")
+     ("j" "Journal entry" entry (function
+                                 (lambda ()
+                                   (org-journal-new-entry t) (goto-char (point-min))))
+      "* %(format-time-string org-journal-time-format)%^{Title}\n%i%?"))
    "Capture templates.")
 
   ;; Refile
@@ -2024,6 +2029,8 @@ If you experience stuttering, increase this.")
 ;; | =SPC a o a=   | org agenda list                |
 ;; | =SPC a o c=   | org capture                    |
 ;; | =SPC a o e=   | org store agenda views         |
+;; | =SPC a o j j= | org journal new entry          |
+;; | =SPC a o j s= | org journal search             |
 ;; | =SPC a o l=   | org store link                 |
 ;; | =SPC a o m=   | org tags view                  |
 ;; | =SPC a o o=   | org agenda                     |
@@ -2421,6 +2428,11 @@ If you experience stuttering, increase this.")
     "aoa"  '(org-agenda-list :wk "agenda list")
     "aoc"  '(org-capture :wk "capture")
     "aoe"  '(org-store-agenda-views :wk "store agenda views")
+
+    "aoj"  '(:ignore t :wk "journal")
+    "aojj" '(org-journal-new-entry :wk "new entry")
+    "aojs" '(org-journal-search-forever :wk "search")
+
     "aol"  '(org-store-link :wk "store link")
     "aom"  '(org-tags-view :wk "tags view")
     "aoo"  '(org-agenda :wk "agenda")
@@ -2694,6 +2706,57 @@ If you experience stuttering, increase this.")
    '(navigation insert return textobjects additional shift todo heading calendar)
    "Key themes to enable.")
   (evil-org-retain-visual-state-on-shift t "<> should retain selection in visual mode."))
+
+;; org-journal
+;; A simple personal diary.
+
+;; =org-journal-mode= normal state map:
+;; | key   | explanation    |
+;; |-------+----------------|
+;; | =​, j= | new entry      |
+;; | =​, n= | next entry     |
+;; | =​, p= | previous entry |
+;; | =​, s= | search         |
+
+;; =calendar-mode= normal state map:
+;; | key   | explanation                              |
+;; |-------+------------------------------------------|
+;; | =​, r= | Read entry for selected date             |
+;; | =​, i= | New entry for the date                   |
+;; | =​, n= | Go to the next date with entry           |
+;; | =​, p= | Go to the previous date with entry       |
+;; | =​, s= | Search everything                        |
+;; | =​, w= | Search for entries in the selected week  |
+;; | =​, m= | Search for entries in the selected month |
+;; | =​, y= | Search for entrues in the selected year  |
+
+
+(use-package org-journal
+  :defer t
+  :commands (org-journal-new-entry org-journal-search-forever)
+  :general
+  (general-major-leader
+    :keymaps 'org-journal-mode-map
+    :major-modes t
+    "j" '(org-journal-new-entry :wk "new entry")
+    "n" '(org-journal-open-next-entry :wk "next entry")
+    "p" '(org-journal-open-previous-entry :wk "previous entry")
+    "s" '(org-journal-search-forever :wk "search"))
+  (general-major-leader
+    :keymaps 'calendar-mode-map
+    "r" '(org-journal-read-entry :wk "journal entry for date")
+    "i" '(org-journal-new-date-entry :wk "journal new date entry")
+    "n" '(org-journal-next-entry :wk "journal goto next date with entry")
+    "p" '(org-journal-previous-entry :wk "journal goto prev date with entry")
+    "s" '(org-journal-search-forever :wk "journal search")
+    "w" '(org-journal-search-calendar-week :wk "journal search this week")
+    "m" '(org-journal-search-calendar-month :wk "journal search this month")
+    "y" '(org-journal-search-calendar-year :wk "journal search this year"))
+  :custom
+  (org-journal-dir "~/org/journal/" "Where to store journal entries.")
+  (org-journal-date-format "%F, %A" "Date format.")
+  (org-journal-file-type 'monthly "One file per month.")
+  (org-journal-enable-agenda-integration t "Add journal entries to agenda."))
 
 ;; Org Bullets
 ;; Replace bullets with unicode characters.
