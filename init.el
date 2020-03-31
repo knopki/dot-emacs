@@ -2812,7 +2812,7 @@ If you experience stuttering, increase this.")
 
 
 (use-package wakatime-mode
-  :hook (prog-mode . global-wakatime-mode)
+  :hook (after-init . global-wakatime-mode)
   :defer 10)
 
 ;; diff-hl
