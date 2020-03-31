@@ -1876,6 +1876,15 @@ If you experience stuttering, increase this.")
   (org-indent-mode . (lambda () (diminish 'org-indent-mode)))
   :commands (orgtbl-mode)
   :custom-face (org-ellipsis ((t (:foreground nil))))
+  :preface
+  (defun org-journal-find-location ()
+    (interactive)
+    ;; Open today's journal, but specify a non-nil prefix argument in order to
+    ;; inhibit inserting the heading; org-capture will insert the heading.
+    (org-journal-new-entry t)
+    ;; Position point on the journal's top-level heading so that org-capture
+    ;; will add the new entry as a child entry.
+    (ignore-errors (outline-up-heading 1)))
   :custom
   (org-modules '(org-checklist org-habit) "Always load modules.")
 
@@ -1942,13 +1951,18 @@ If you experience stuttering, increase this.")
    (expand-file-name "capture.org" org-directory)
    "Default target for storing notes.")
   (org-capture-templates
-   '(("t" "My TODO task" entry
+   '(("t" "Capture TODO" entry
       (file "capture.org")
-      "* TODO  %?\nSCHEDULED: %t")
-     ("j" "Journal entry" entry (function
-                                 (lambda ()
-                                   (org-journal-new-entry t) (goto-char (point-min))))
-      "* %(format-time-string org-journal-time-format)%^{Title}\n%i%?"))
+      "* TODO  %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:")
+     ("n" "Capture NOTE" entry
+      (file "capture.org")
+      "* NOTE  %?\n:PROPERTIES:\n:CREATED: %U\n:END:")
+     ("j" "Journal entry" entry
+      (function org-journal-find-location)
+      "* %(format-time-string org-journal-time-format)%^{Title}\n%i%?")
+     ("J" "Journal TODO entry" entry
+      (function org-journal-find-location)
+      "* TODO  %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:"))
    "Capture templates.")
 
   ;; Refile
@@ -2756,7 +2770,8 @@ If you experience stuttering, increase this.")
   (org-journal-dir "~/org/journal/" "Where to store journal entries.")
   (org-journal-date-format "%F, %A" "Date format.")
   (org-journal-file-type 'monthly "One file per month.")
-  (org-journal-enable-agenda-integration t "Add journal entries to agenda."))
+  (org-journal-enable-agenda-integration t "Add journal entries to agenda.")
+  (org-journal-carryover-delete-empty-journal 'always "Delete empty on carry over."))
 
 ;; Org Bullets
 ;; Replace bullets with unicode characters.
