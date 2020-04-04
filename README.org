@@ -3355,12 +3355,23 @@ Minor mode to aggressively keep your code always indented.
   (use-package aggressive-indent
     :diminish
     :defer 2
-    :hook ((prog-mode . global-aggressive-indent-mode)
-           ;; FIXME: Disable in big files due to the performance issues
-           ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
-           (find-file . (lambda ()
-                          (if (> (buffer-size) (* 3000 80))
-                              (aggressive-indent-mode -1)))))
+    :preface
+    ;; Fix leaking timers on org tangle
+    ;; TODO: remove func and hook when merged https://github.com/Malabarba/aggressive-indent-mode/pull/135
+    (defun aggressive-indent--on-buffer-kill ()
+      "Cancel the timer before buffer is killed"
+      (when (and (boundp 'aggressive-indent--idle-timer)
+                 (timerp aggressive-indent--idle-timer))
+        (cancel-timer aggressive-indent--idle-timer)
+        (setq aggressive-indent--idle-timer nil)))
+    :hook
+    ((prog-mode . aggressive-indent-mode)
+     ;; FIXME: Disable in big files due to the performance issues
+     ;; https://github.com/Malabarba/aggressive-indent-mode/issues/73
+     (find-file . (lambda ()
+                    (if (> (buffer-size) (* 3000 80))
+                        (aggressive-indent-mode -1))))
+     (kill-buffer . aggressive-indent--on-buffer-kill))
     :config
     ;; Disable in some modes
     (dolist (mode '(asm-mode web-mode html-mode css-mode go-mode prolog-inferior-mode))
