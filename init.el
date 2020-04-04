@@ -1931,6 +1931,8 @@ If you experience stuttering, increase this.")
   (setq holiday-local-holidays (append russian-holidays holiday-local-holidays)))
 
 ;; Core
+;; Core =org-mode= functionality with evil keys.
+
 
 (use-package org
   :hook
@@ -2017,9 +2019,6 @@ If you experience stuttering, increase this.")
    '(("t" "Capture TODO" entry
       (file "capture.org")
       "* TODO  %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:")
-     ("K" "Cliplink capture task" entry
-      (file "capture.org")
-      "* TODO %(org-cliplink-capture)\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:")
      ("n" "Capture NOTE" entry
       (file "capture.org")
       "* NOTE  %?\n:PROPERTIES:\n:CREATED: %U\n:END:")
@@ -2065,47 +2064,8 @@ If you experience stuttering, increase this.")
   ;; Set up hooks for clock persistence.
   (org-clock-persistence-insinuate))
 
-;; Expiry
-;; Expire old entries.
 
 
-(use-package org-expiry
-  :after org
-  :commands (org-expiry-insinuate
-             org-expiry-deinsinuate
-             org-expiry-insert-created
-             org-expiry-insert-expiry
-             org-expiry-add-keyword
-             org-expiry-archive-subtree
-             org-expiry-process-entry
-             org-expiry-process-entries)
-  :custom
-  (org-expiry-inactive-timestamps t "Create created/expired timestamps inactive")
-  :config
-  (org-expiry-insinuate))
-
-;; org-download
-;; Moving images.
-
-
-(use-package org-download
-  :after org
-  :hook (org-mode . org-download-enable)
-  :commands (org-download-enable
-             org-download-yank
-             org-download-screenshot)
-  :custom
-  (org-download-method 'attach)
-  (org-download-screenshot-method "slurp | grim -g - %s" "Sway/Wayland method"))
-
-;; org-cliplink
-;; A simple command that takes a URL from the clipboard and inserts an org-mode link with a title of a page found by the URL into the current buffer.
-
-
-(use-package org-cliplink
-  :defer t)
-
-;; Evil
 ;; Evil support in org-mode.
 
 ;; Global keybindings for =org-mode=
@@ -2116,8 +2076,6 @@ If you experience stuttering, increase this.")
 ;; | =SPC a o a=   | org agenda list                |
 ;; | =SPC a o c=   | org capture                    |
 ;; | =SPC a o e=   | org store agenda views         |
-;; | =SPC a o j j= | org journal new entry          |
-;; | =SPC a o j s= | org journal search             |
 ;; | =SPC a o l=   | org store link                 |
 ;; | =SPC a o m=   | org tags view                  |
 ;; | =SPC a o o=   | org agenda                     |
@@ -2197,15 +2155,12 @@ If you experience stuttering, increase this.")
 ;; | =​, f u=   | Get inbox items from all feeds in org-feed-alist                        |
 ;; | =​, i b=   | Insert a block structure of the type #+begin_foo/#+end_foo              |
 ;; | =​, i d=   | Insert a drawer at point                                                |
-;; | =​, i D y= | Insert image from kill-ring                                             |
-;; | =​, i D s= | Make screenshot and insert                                              |
 ;; | =​, i e=   | Set the effort property of the current entry                            |
 ;; | =​, i f=   | Insert a new footnote                                                   |
 ;; | =​, i h=   | Insert a new heading or an item with the same depth at point            |
 ;; | =​, i H=   | Insert a new heading with same level as current, after current subtree  |
 ;; | =​, i i=   | Insert a new item at the current level                                  |
 ;; | =​, i l=   | Insert a link.  At the prompt, enter the link                           |
-;; | =​, i L=   | Insert a link from kill-ring with =org-cliplink=                        |
 ;; | =​, i n=   | Add a note to the current entry                                         |
 ;; | =​, i p=   | In the current entry, set PROPERTY to VALUE                             |
 ;; | =​, i s=   | Insert a new subheading and demote it                                   |
@@ -2318,15 +2273,6 @@ If you experience stuttering, increase this.")
 ;; - =vae= to select a paragraph
 ;; - =daR= to delete a subtree
 ;; - =yiR= to yank the contents of a subtree
-
-;; Calendar:
-;; | evil key          | emacs key                | explanation           |
-;; |-------------------+--------------------------+-----------------------|
-;; | =M-h= / =M-l=     | =S-left= / =S-right=     | next / previous day   |
-;; | =M-j= / =M-k=     | =S-down= / =S-up=        | next / previous week  |
-;; | =M-S-h= / =M-S-l= | =M-S-left= / =M-S-right= | next / previous month |
-;; | =M-S-j= / =M-S-k= | =M-S-down= / =M-S-up=    | next / previous year  |
-;; | =C-f= / =C-b=     | =M-v= / =C-v=            | scroll down /up       |
 
 ;; Additional:
 ;; | key         | On headings       | On tables         |
@@ -2493,7 +2439,7 @@ If you experience stuttering, increase this.")
 
 (use-package evil-org
   :diminish
-  :after (:all (org evil))
+  ;; :after (:all (org evil))
   :commands (evil-org-mode evil-org-recompute-clocks evil-org-key-theme)
   :preface
   (defmacro local/org-emphasize (fname char)
@@ -2516,11 +2462,6 @@ If you experience stuttering, increase this.")
     "aoa"  '(org-agenda-list :wk "agenda list")
     "aoc"  '(org-capture :wk "capture")
     "aoe"  '(org-store-agenda-views :wk "store agenda views")
-
-    "aoj"  '(:ignore t :wk "journal")
-    "aojj" '(org-journal-new-entry :wk "new entry")
-    "aojs" '(org-journal-search-forever :wk "search")
-
     "aol"  '(org-store-link :wk "store link")
     "aom"  '(org-tags-view :wk "tags view")
     "aoo"  '(org-agenda :wk "agenda")
@@ -2632,15 +2573,10 @@ If you experience stuttering, increase this.")
     "iH" '(org-insert-heading-after-current :wk "heading with same level")
     "ii" '(org-insert-item :wk "item on current level")
     "il" '(org-insert-link :wk "link")
-    "iL" '(org-cliplink :wk "cliplink")
     "in" '(org-add-note :wk "note")
     "ip" '(org-set-property :wk "set property")
     "is" '(org-insert-subheading :wk "subheading and demote it")
     "it" '(org-set-tags-command :wk "set tags")
-
-    "iD" '(:ignore t :wk "download")
-    "iDy" '(org-download-yank :wk "download image from kill-ring")
-    "iDs" '(org-download-screenshot :wk "make screenshot")
 
     "p"  '(org-priority :wk "change priority")
 
@@ -2796,8 +2732,86 @@ If you experience stuttering, increase this.")
    "Key themes to enable.")
   (evil-org-retain-visual-state-on-shift t "<> should retain selection in visual mode."))
 
+;; Expiry
+;; Expire old entries.
+
+
+(use-package org-expiry
+  :after org
+  :commands (org-expiry-insinuate
+             org-expiry-deinsinuate
+             org-expiry-insert-created
+             org-expiry-insert-expiry
+             org-expiry-add-keyword
+             org-expiry-archive-subtree
+             org-expiry-process-entry
+             org-expiry-process-entries)
+  :custom
+  (org-expiry-inactive-timestamps t "Create created/expired timestamps inactive")
+  :config
+  (org-expiry-insinuate))
+
+;; org-download
+;; Moving images.
+
+;; =org-mode= normal state map:
+;; | key       | describe                    |
+;; |-----------+-----------------------------|
+;; | =​, i D y= | Insert image from kill-ring |
+;; | =​, i D s= | Make screenshot and insert  |
+
+
+(use-package org-download
+  :after org
+  :hook (org-mode . org-download-enable)
+  :commands (org-download-enable
+             org-download-yank
+             org-download-screenshot)
+  :general
+  (general-major-leader
+    :keymaps 'org-mode-map
+    :major-modes t
+    "iD" '(:ignore t :wk "download")
+    "iDy" '(org-download-yank :wk "download image from kill-ring")
+    "iDs" '(org-download-screenshot :wk "make screenshot"))
+  :custom
+  (org-download-method 'attach)
+  (org-download-screenshot-method "slurp | grim -g - %s" "Sway/Wayland method"))
+
+;; org-cliplink
+;; A simple command that takes a URL from the clipboard and inserts an org-mode link with a title of a page found by the URL into the current buffer.
+
+;; =org-mode= normal state map:
+;; | key     | describe                                         |
+;; |---------+--------------------------------------------------|
+;; | =​, i L= | Insert a link from kill-ring with =org-cliplink= |
+
+
+(use-package org-cliplink
+  :after org
+  :commands (org-cliplink org-cliplink-capture)
+  :general
+  (general-major-leader
+    :keymaps 'org-mode-map
+    :major-modes t
+    "iL" '(org-cliplink :wk "cliplink"))
+  :custom
+  (org-capture-templates
+   (append
+    org-capture-templates
+    '(("K" "Cliplink capture task" entry
+       (file "capture.org")
+       "* TODO %(org-cliplink-capture)\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:")))
+   "Add cliplink capture template"))
+
 ;; org-journal
 ;; A simple personal diary.
+
+;; Global keybindings for =org-mode=
+;; | key | describe |
+;; |-----+----------|
+;; | =SPC a o j j= | org journal new entry          |
+;; | =SPC a o j s= | org journal search             |
 
 ;; =org-journal-mode= normal state map:
 ;; | key   | explanation    |
@@ -2824,6 +2838,10 @@ If you experience stuttering, increase this.")
   :defer t
   :commands (org-journal-new-entry org-journal-search-forever)
   :general
+  (general-leader
+    "aoj"  '(:ignore t :wk "journal")
+    "aojj" '(org-journal-new-entry :wk "new entry")
+    "aojs" '(org-journal-search-forever :wk "search"))
   (general-major-leader
     :keymaps 'org-journal-mode-map
     :major-modes t
