@@ -1913,11 +1913,22 @@ If you experience stuttering, increase this.")
 ;; | =q= =ZZ=        | Close calendar window and related buffers                  |
 
 
-(use-package calendar :ensure nil)
+(use-package calendar
+  :ensure nil
+  :custom
+  (calenday-week-start-day 1 "Start week from monday.")
+  (calendar-day-name-array ["Воскресенье" "Понедельник" "Вторник" "Среда"
+                            "Четверг" "Пятница" "Суббота"])
+  (calendar-day-header-array ["Вс" "Пн" "Вт" "Ср" "Чт" "Пт" "Сб"])
+  (calendar-day-abbrev-array ["Вск" "Пнд" "Втр" "Сре" "Чтв" "Птн" "Суб"])
+  (calendar-month-name-array ["Январь" "Февраль" "Март" "Апрель" "Май"
+                              "Июнь" "Июль" "Август" "Сентябрь"
+                              "Октябрь" "Ноябрь" "Декабрь"]))
+
 (use-package russian-holidays
   :after calendar
   :config
-  (setq calendar-holidays (append calendar-holidays russian-holidays)))
+  (setq holiday-local-holidays (append russian-holidays holiday-local-holidays)))
 
 ;; Core
 
