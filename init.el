@@ -1867,6 +1867,58 @@ If you experience stuttering, increase this.")
   (undo-tree-visualizer-lazy-drawing 100 "Switch too lazy drawing after N nodes.")
   (undo-tree-auto-save-history t "Save history to file."))
 
+;; Calendar
+;; Calendar with russian holidays.
+
+;; =calendar-mode= normal state map:
+;; | key             | describe                                                   |
+;; |-----------------+------------------------------------------------------------|
+;; | =h=             | Move the cursor back ARG days                              |
+;; | =j=             | Move the cursor forward ARG weeks                          |
+;; | =k=             | Move the cursor back ARG weeks                             |
+;; | =l=             | Move the cursor forward ARG days                           |
+;; | =0= =^=         | Move the cursor back ARG calendar-week-start-day's         |
+;; | =$=             | Move the cursor forward ARG calendar-week-start-day+6's    |
+;; | =[[=            | Move the cursor backward ARG years                         |
+;; | =]]=            | Move the cursor forward by ARG years                       |
+;; | =M-<=           | Move the cursor backward ARG year beginnings               |
+;; | =M->=           | Move the cursor forward ARG year beginnings                |
+;; | =(=             | Move the cursor backward ARG month beginnings              |
+;; | =)=             | Move the cursor forward ARG month ends                     |
+;; | =SPC=           | Scroll next window upward ARG lines; or near full screen   |
+;; | =S-SPC= =<del>= | Scroll the "other window" down                             |
+;; | =<=             | Scroll the displayed calendar window right by ARG months   |
+;; | =>=             | Scroll the displayed calendar left by ARG months           |
+;; | =C-b=           | Scroll the displayed calendar window right by 3*ARG months |
+;; | =C-f=           | Scroll the displayed calendar window left by 3*ARG months  |
+;; | ={= =C-k= =gk=  | Move the cursor backward by ARG months                     |
+;; | =}= =C-j= =gj=  | Move the cursor forward ARG months                         |
+;; | =v=             | Mark the date under the cursor, or jump to marked date     |
+;; | =.=             | Reposition the calendar window to the current date         |
+;; | =gd=            | Move cursor to DATE                                        |
+;; | =D=             | Display diary entries from an alternative diary file       |
+;; | =d=             | Prepare and display a buffer with diary entries            |
+;; | =m=             | Mark days in the calendar window that have diary entries   |
+;; | =s=             | Show all of the diary entries in the diary file            |
+;; | =u=             | Delete all diary marks/highlighting from the calendar      |
+;; | =x=             | Mark notable days in the calendar window                   |
+;; | =gm=            | Show lunar phases for the current calendar window          |
+;; | =gs=            | Local time of sunrise and sunset for date under cursor     |
+;; | =gh=            | Show the holidays for the current calendar window          |
+;; | =gc=            | Compute the Org agenda for the calendar date at the cursor |
+;; | =r=             | Find holidays for the date at the cursor                   |
+;; | =gr=            | Redraw the calendar display                                |
+;; | =?= =g?=        | Go to the info node for the calendar                       |
+;; | =M-==           | Count days (inclusive) between point and the mark          |
+;; | =q= =ZZ=        | Close calendar window and related buffers                  |
+
+
+(use-package calendar :ensure nil)
+(use-package russian-holidays
+  :after calendar
+  :config
+  (setq calendar-holidays (append calendar-holidays russian-holidays)))
+
 ;; Core
 
 (use-package org
