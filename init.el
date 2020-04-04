@@ -1954,6 +1954,9 @@ If you experience stuttering, increase this.")
    '(("t" "Capture TODO" entry
       (file "capture.org")
       "* TODO  %?\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:")
+     ("K" "Cliplink capture task" entry
+      (file "capture.org")
+      "* TODO %(org-cliplink-capture)\nSCHEDULED: %t\n:PROPERTIES:\n:CREATED: %U\n:END:")
      ("n" "Capture NOTE" entry
       (file "capture.org")
       "* NOTE  %?\n:PROPERTIES:\n:CREATED: %U\n:END:")
@@ -2031,6 +2034,13 @@ If you experience stuttering, increase this.")
   :custom
   (org-download-method 'attach)
   (org-download-screenshot-method "slurp | grim -g - %s" "Sway/Wayland method"))
+
+;; org-cliplink
+;; A simple command that takes a URL from the clipboard and inserts an org-mode link with a title of a page found by the URL into the current buffer.
+
+
+(use-package org-cliplink
+  :defer t)
 
 ;; Evil
 ;; Evil support in org-mode.
@@ -2132,6 +2142,7 @@ If you experience stuttering, increase this.")
 ;; | =​, i H=   | Insert a new heading with same level as current, after current subtree  |
 ;; | =​, i i=   | Insert a new item at the current level                                  |
 ;; | =​, i l=   | Insert a link.  At the prompt, enter the link                           |
+;; | =​, i L=   | Insert a link from kill-ring with =org-cliplink=                        |
 ;; | =​, i n=   | Add a note to the current entry                                         |
 ;; | =​, i p=   | In the current entry, set PROPERTY to VALUE                             |
 ;; | =​, i s=   | Insert a new subheading and demote it                                   |
@@ -2558,6 +2569,7 @@ If you experience stuttering, increase this.")
     "iH" '(org-insert-heading-after-current :wk "heading with same level")
     "ii" '(org-insert-item :wk "item on current level")
     "il" '(org-insert-link :wk "link")
+    "iL" '(org-cliplink :wk "cliplink")
     "in" '(org-add-note :wk "note")
     "ip" '(org-set-property :wk "set property")
     "is" '(org-insert-subheading :wk "subheading and demote it")
