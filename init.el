@@ -3366,7 +3366,8 @@ If you experience stuttering, increase this.")
                                company-yasnippet
                                company-dabbrev-code)))
                        company-dabbrev-code
-                       (company-mode t))))
+                       (company-mode t)))
+  (emacs-lisp-mode . prettify-symbols-mode))
 
 ;; C/C++
 
