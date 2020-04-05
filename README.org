@@ -97,9 +97,9 @@ Clone repository to =~/.emacs.d= and run Emacs.
     - [[#org-download][org-download]]
     - [[#org-cliplink][org-cliplink]]
     - [[#org-journal][org-journal]]
-    - [[#org-bullets][Org Bullets]]
-    - [[#fancy-priorities][Fancy Priorities]]
     - [[#table-of-contents][Table of Contents]]
+    - [[#org-superstar-mode][org-superstar-mode]]
+    - [[#org-fancy-priorities][org-fancy-priorities]]
   - [[#wakatime][Wakatime]]
 - [[#version-control][Version Control]]
   - [[#diff-hl][diff-hl]]
@@ -3141,17 +3141,26 @@ Global keybindings for =org-mode=
     (org-journal-enable-agenda-integration t "Add journal entries to agenda.")
     (org-journal-carryover-delete-empty-journal 'always "Delete empty on carry over."))
 #+end_src
-*** Org Bullets
-Replace bullets with unicode characters.
+*** Table of Contents
+Generates an up-to-date table of contents in org files without exporting.
 
 #+begin_src elisp
-  (use-package org-bullets
-    :diminish
-    :hook (org-mode . org-bullets-mode)
-    :custom
-    (org-ellipsis "…"))
+  (use-package toc-org
+    :hook
+    (org-mode . toc-org-mode)
+    ;; In markdown too.
+    (markdown-mode . toc-org-mode))
 #+end_src
-*** Fancy Priorities
+*** org-superstar-mode
+Prettify headings and plain lists in Org mode.
+
+#+begin_src elisp
+  (use-package org-superstar
+    :hook (org-mode . (lambda () (org-superstar-mode 1)))
+    :custom
+    (org-superstar-special-todo-items t))
+#+end_src
+*** org-fancy-priorities
 Displays org priorities as custom strings.
 
 #+begin_src elisp
@@ -3163,16 +3172,6 @@ Displays org priorities as custom strings.
      (if (char-displayable-p ?⚡)
          '("⚡" "⬆" "⬇" "☕")
        '("HI" "MID" "LOW" "OPT"))))
-#+end_src
-*** Table of Contents
-Generates an up-to-date table of contents in org files without exporting.
-
-#+begin_src elisp
-  (use-package toc-org
-    :hook
-    (org-mode . toc-org-mode)
-    ;; In markdown too.
-    (markdown-mode . toc-org-mode))
 #+end_src
 ** Wakatime
 WakaTime measures coding time for programmers using open-source plugins for your

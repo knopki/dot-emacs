@@ -1977,6 +1977,7 @@ If you experience stuttering, increase this.")
    (concat org-directory "/archive/%s_archive::datetree/")
    "The location where subtree should be archived.")
   (org-extend-today-until 5)
+  (org-ellipsis "⤵")
 
   ;; Keywords
   (org-todo-keywords
@@ -2876,17 +2877,26 @@ If you experience stuttering, increase this.")
   (org-journal-enable-agenda-integration t "Add journal entries to agenda.")
   (org-journal-carryover-delete-empty-journal 'always "Delete empty on carry over."))
 
-;; Org Bullets
-;; Replace bullets with unicode characters.
+;; Table of Contents
+;; Generates an up-to-date table of contents in org files without exporting.
 
 
-(use-package org-bullets
-  :diminish
-  :hook (org-mode . org-bullets-mode)
+(use-package toc-org
+  :hook
+  (org-mode . toc-org-mode)
+  ;; In markdown too.
+  (markdown-mode . toc-org-mode))
+
+;; org-superstar-mode
+;; Prettify headings and plain lists in Org mode.
+
+
+(use-package org-superstar
+  :hook (org-mode . (lambda () (org-superstar-mode 1)))
   :custom
-  (org-ellipsis "…"))
+  (org-superstar-special-todo-items t))
 
-;; Fancy Priorities
+;; org-fancy-priorities
 ;; Displays org priorities as custom strings.
 
 
@@ -2898,16 +2908,6 @@ If you experience stuttering, increase this.")
    (if (char-displayable-p ?⚡)
        '("⚡" "⬆" "⬇" "☕")
      '("HI" "MID" "LOW" "OPT"))))
-
-;; Table of Contents
-;; Generates an up-to-date table of contents in org files without exporting.
-
-
-(use-package toc-org
-  :hook
-  (org-mode . toc-org-mode)
-  ;; In markdown too.
-  (markdown-mode . toc-org-mode))
 
 ;; Wakatime
 ;; WakaTime measures coding time for programmers using open-source plugins for your
