@@ -1940,7 +1940,12 @@ If you experience stuttering, increase this.")
   (org-mode . org-indent-mode)
   (org-indent-mode . (lambda () (diminish 'org-indent-mode)))
   :commands (orgtbl-mode)
-  :custom-face (org-ellipsis ((t (:foreground nil))))
+  :custom-face
+  (org-document-title ((t (:height 1.5))))
+  (org-level-1 ((t (:inherit 'outline-1 :height 1.4))))
+  (org-level-2 ((t (:inherit 'outline-2 :height 1.3))))
+  (org-level-3 ((t (:inherit 'outline-3 :height 1.2))))
+  (org-level-4 ((t (:inherit 'outline-4 :height 1.1))))
   :preface
   (defun org-journal-find-location ()
     (interactive)
@@ -1993,6 +1998,7 @@ If you experience stuttering, increase this.")
                       "Faces for specific Priorities.")
 
   ;; Tags
+  (org-tags-column -60 "The column to which tags should be indented in a headline.")
   (org-tags-exclude-from-inheritance
    '(olga)
    "List of tags that should never be inherited.")

@@ -4,7 +4,7 @@
 #+PROPERTY: header-args:elisp :tangle "init.el" :tangle-mode (identity #o444) :comments org
 #+OPTIONS: ^:{}
 
-* About                                                            :noexport:
+* About                                           :noexport:
 This is my Emacs configuration, built with =use-package= and
 =org-mode=. =use-package= allows declarative description of packages and it’s
 settings, =org-mode= allows to represent this configuration as document and
@@ -12,10 +12,10 @@ generate config from it.
 
 This file declares local variable hook - run =org-babel-tangle= on every save.
 
-** Usage                                                          :noexport:
+** Usage                                         :noexport:
 Clone repository to =~/.emacs.d= and run Emacs.
 
-** Table of Contents                                           :TOC@3:QUOTE:
+** Table of Contents                          :TOC@3:QUOTE:
 #+BEGIN_QUOTE
 - [[#initialization][Initialization]]
   - [[#header][Header]]
@@ -2206,7 +2206,12 @@ Core =org-mode= functionality with evil keys.
     (org-mode . org-indent-mode)
     (org-indent-mode . (lambda () (diminish 'org-indent-mode)))
     :commands (orgtbl-mode)
-    :custom-face (org-ellipsis ((t (:foreground nil))))
+    :custom-face
+    (org-document-title ((t (:height 1.5))))
+    (org-level-1 ((t (:inherit 'outline-1 :height 1.4))))
+    (org-level-2 ((t (:inherit 'outline-2 :height 1.3))))
+    (org-level-3 ((t (:inherit 'outline-3 :height 1.2))))
+    (org-level-4 ((t (:inherit 'outline-4 :height 1.1))))
     :preface
     (defun org-journal-find-location ()
       (interactive)
@@ -2259,6 +2264,7 @@ Core =org-mode= functionality with evil keys.
                         "Faces for specific Priorities.")
 
     ;; Tags
+    (org-tags-column -60 "The column to which tags should be indented in a headline.")
     (org-tags-exclude-from-inheritance
      '(olga)
      "List of tags that should never be inherited.")
