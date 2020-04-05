@@ -597,7 +597,11 @@ If you experience stuttering, increase this.")
 
   (auto-save-file-name-transforms
    `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
-   "Transforms to apply to buffer file name before auto-save."))
+   "Transforms to apply to buffer file name before auto-save.")
+
+  (safe-local-variable-values
+   '((eval add-hook 'after-save-hook (lambda nil (org-babel-tangle)) nil t))
+   "Variable-value pairs that are considered safe"))
 
 ;; Save place
 ;; Point goes to the last place where it was when you previously visited the same file.
