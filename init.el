@@ -38,34 +38,14 @@ If you experience stuttering, increase this.")
                       (lambda () (setq gc-cons-threshold knopki/gc-cons-threshold)))))
 
 ;; Initialize 'use-package
-;; =use-package= package is the central gear of my configuration.
+;; =use-package= package is the central gear of my configuration. I assume that all
+;; packages are installed using an external package manager (=nix=) and
+;; =use-package= or =package.el= are not used for installing packages at all.
 
-;; HACK: DO NOT copy package-selected-packages to init/custom file forcibly - [[https://github.com/jwiegley/use-package/issues/383#issuecomment-247801751][ref]]
-
-
-(defun my-save-selected-packages (&optional value)
-  "Set `package-selected-packages' to VALUE but don't save to `custom-file'."
-  (when value
-    (setq package-selected-packages value)))
-(advice-add 'package--save-selected-packages :override #'my-save-selected-packages)
-
-
-
-;; Setup package archives.
+;; Initialize =package.el=.
 
 
 (require 'package)
-(customize-set-variable 'package-archives
-      (append (eval (car (get 'package-archives 'standard-value)))
-              '(("org" . "http://orgmode.org/elpa/")
-                ("gnu"          . "https://elpa.gnu.org/packages/")
-                ("melpa" . "http://melpa.org/packages/"))))
-
-
-
-;; Initialize packages.
-
-
 (unless (bound-and-true-p package--initialized) ; To avoid warnings in 27
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
@@ -85,14 +65,6 @@ If you experience stuttering, increase this.")
 ;; Required by `use-package'
 (use-package diminish)
 (use-package bind-key)
-
-
-
-;; Update GPG keyring for GNU ELPA.
-
-
-(use-package gnu-elpa-keyring-update
-  :commands (gnu-elpa-keyring-update))
 
 ;; Benchmarking
 ;; Enable startup benchmarking if started with =EMACS_BENCHMARK= environment
