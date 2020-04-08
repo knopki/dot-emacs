@@ -383,7 +383,6 @@ If you experience stuttering, increase this.")
     :states '(insert motion emacs)
     :prefix local/leader-major-key
     :non-normal-prefix local/leader-major-key-alternate)
-  (message local/leader-major-key)
   (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode"))
   (general-leader "u" '(universal-argument :wk "Universal argument")))
 
