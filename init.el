@@ -384,6 +384,7 @@ If you experience stuttering, increase this.")
     :prefix local/leader-major-key
     :non-normal-prefix local/leader-major-key-alternate)
   (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode"))
+  (general-leader "" nil)
   (general-leader "u" '(universal-argument :wk "Universal argument")))
 
 ;; Reverse-im
@@ -412,7 +413,6 @@ If you experience stuttering, increase this.")
 
 
 (general-leader
-  "" nil
   "K" '(:ignore t :wk "macros")
   "R" '(:ignore t :wk "rectangles")
   "a" '(:ignore t :wk "applications")

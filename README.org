@@ -586,6 +586,7 @@ by =SPC m=.
       :prefix local/leader-major-key
       :non-normal-prefix local/leader-major-key-alternate)
     (general-nmap "SPC m" (general-simulate-key "," :which-key "major mode"))
+    (general-leader "" nil)
     (general-leader "u" '(universal-argument :wk "Universal argument")))
 #+end_src
 ** Reverse-im
@@ -614,7 +615,6 @@ Common prefixes:
 
 #+begin_src elisp
   (general-leader
-    "" nil
     "K" '(:ignore t :wk "macros")
     "R" '(:ignore t :wk "rectangles")
     "a" '(:ignore t :wk "applications")
