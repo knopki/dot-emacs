@@ -1028,6 +1028,7 @@ Setup Doom themes (use One Dark), set font face.
            org-checkbox-statistics-todo
            org-date
            org-done
+           org-hide
            org-indent
            org-link
            org-list-checkbox

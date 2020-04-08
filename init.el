@@ -770,6 +770,7 @@ If you experience stuttering, increase this.")
          org-checkbox-statistics-todo
          org-date
          org-done
+         org-hide
          org-indent
          org-link
          org-list-checkbox
