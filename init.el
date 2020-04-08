@@ -52,13 +52,10 @@ If you experience stuttering, increase this.")
 
 
 
-;; Setup =use-package=.
+;; Load =use-package=.
 
 
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
+(setq use-package-verbose t)
 (eval-when-compile
   (require 'use-package))
 
@@ -340,6 +337,7 @@ If you experience stuttering, increase this.")
   (evil-vsplit-window-right t "Like vim's 'splitright'.")
   (evil-split-window-below t "Like vim's 'splitbelow'.")
   (evil-want-C-u-scroll t "Enable C-u scroll.")
+  (evil-respect-visual-line-mode t "Work with visual lines, not logical.")
   :config
   ;; Visually selected text gets replaced by the latest copy action
   ;; Amazing hack lifted from: http://emacs.stackexchange.com/a/15054/12585
@@ -754,7 +752,9 @@ If you experience stuttering, increase this.")
 
 
 (use-package doom-themes
-  :custom-face (default ((t (:family "FuraCode Nerd Font Mono" :height 120))))
+  :custom-face
+  (default ((t (:family "FuraCode Nerd Font Mono" :height 120))))
+  (variable-pitch ((t (:family "Source Sans Pro" :height 120))))
   :defines doom-themes-treemacs-theme
   :functions doom-themes-hide-modeline
   :init (load-theme 'doom-one t)
@@ -770,6 +770,25 @@ If you experience stuttering, increase this.")
   (doom-themes-treemacs-config)
   (with-eval-after-load 'treemacs
     (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)))
+
+;; Mixed Pitch
+
+(use-package mixed-pitch
+  :config
+  (dolist
+      (item
+       '(org-checkbox-statistics-done
+         org-checkbox-statistics-todo
+         org-date
+         org-done
+         org-indent
+         org-link
+         org-list-checkbox
+         org-list-dt
+         org-special-keyword
+         org-superstar-header-bullet
+         org-todo))
+    (push item mixed-pitch-fixed-pitch-faces)))
 
 ;; Modeline
 ;; Use Doom modeline.
@@ -1903,16 +1922,22 @@ If you experience stuttering, increase this.")
 
 (use-package org
   :hook
-  (org-mode . visual-line-mode)
-  (org-mode . org-indent-mode)
-  (org-indent-mode . (lambda () (diminish 'org-indent-mode)))
-  :commands (orgtbl-mode)
+  (org-mode . (lambda ()
+                (org-indent-mode t)
+                (turn-on-visual-line-mode)
+                (turn-off-auto-fill)
+                (mixed-pitch-mode t)))
+  (org-indent-mode . (lambda ()
+                       (diminish 'org-indent-mode)
+                       (diminish 'buffer-face-mode)))
+  (org-archive . org-save-all-org-buffers)
+  :commands (org-agenda-mode orgtbl-mode)
   :custom-face
   (org-document-title ((t (:height 1.5))))
-  (org-level-1 ((t (:inherit 'outline-1 :height 1.4))))
-  (org-level-2 ((t (:inherit 'outline-2 :height 1.3))))
-  (org-level-3 ((t (:inherit 'outline-3 :height 1.2))))
-  (org-level-4 ((t (:inherit 'outline-4 :height 1.1))))
+  (org-level-1 ((t (:inherit outline-1 :height 1.4))))
+  (org-level-2 ((t (:inherit outline-2 :height 1.3))))
+  (org-level-3 ((t (:inherit outline-3 :height 1.2))))
+  (org-level-4 ((t (:inherit outline-4 :height 1.1))))
   :preface
   (defun org-journal-find-location ()
     (interactive)
@@ -1939,8 +1964,10 @@ If you experience stuttering, increase this.")
   (org-archive-location
    (concat org-directory "/archive/%s_archive::datetree/")
    "The location where subtree should be archived.")
-  (org-extend-today-until 5)
-  (org-ellipsis "⤵")
+  (org-extend-today-until 5 "Today ends at 5 am.")
+  (org-ellipsis "⤵" "Instead of ...")
+  (org-startup-with-inline-images t)
+  (org-startup-truncated nil "Don't truncate long lines.")
 
   ;; Keywords
   (org-todo-keywords
@@ -1966,7 +1993,7 @@ If you experience stuttering, increase this.")
                       "Faces for specific Priorities.")
 
   ;; Tags
-  (org-tags-column -60 "The column to which tags should be indented in a headline.")
+  (org-tags-column 0 "Show tags directly after heading.")
   (org-tags-exclude-from-inheritance
    '(olga)
    "List of tags that should never be inherited.")
@@ -2413,7 +2440,7 @@ If you experience stuttering, increase this.")
 
 (use-package evil-org
   :diminish
-  ;; :after (:all (org evil))
+  :after (:all (org evil))
   :commands (evil-org-mode evil-org-recompute-clocks evil-org-key-theme)
   :preface
   (defmacro local/org-emphasize (fname char)
@@ -2977,6 +3004,15 @@ If you experience stuttering, increase this.")
   :mode ("/\\.gitignore\\'"
          "/info/exclude\\'"
          "/git/ignore\\'"))
+
+;; Prog Mode
+;; Mother of all programming modes.
+
+
+(use-package prog-mode
+  :ensure nil
+  :custom
+  (prettify-symbols-unprettify-at-point 'right-edge))
 
 ;; Eldoc
 
