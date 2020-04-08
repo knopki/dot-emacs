@@ -1111,20 +1111,6 @@ A generic completion frontend.
     :diminish ivy-mode
     :defer t
     :hook (pre-command . ivy-mode)
-    :preface
-    (defun my-ivy-format-function-arrow (cands)
-      "Transform CANDS into a string for minibuffer."
-      (ivy--format-function-generic
-       (lambda (str)
-         (concat (if (display-graphic-p)
-                     (all-the-icons-octicon "chevron-right" :height 0.8 :v-adjust -0.05)
-                   ">")
-                 (propertize " " 'display `(space :align-to 2))
-                 (ivy--add-face str 'ivy-current-match)))
-       (lambda (str)
-         (concat (propertize " " 'display `(space :align-to 2)) str))
-       cands
-       "\n"))
     :custom
     (ivy-use-selectable-prompt t "Make the prompt line selectable like a candidate.")
     (ivy-use-virtual-buffers t "Add recent files/bookmarks to ivy-switch-buffer.")
@@ -1135,7 +1121,7 @@ A generic completion frontend.
     (ivy-initial-inputs-alist nil)
     (ivy-format-functions-alist
      '((counsel-describe-face . counsel--faces-format-function)
-       (t . my-ivy-format-function-arrow))
+       (t . ivy-format-function-default))
      "Functions that transform the list of candidates into string."))
 #+end_src
 *** Ivy prescient
@@ -1222,7 +1208,13 @@ Fancy icons.
 
 #+begin_src elisp
   (use-package all-the-icons-ivy-rich
-    :init (all-the-icons-ivy-rich-mode 1))
+    :init (all-the-icons-ivy-rich-mode t)
+    :preface
+    ;; This overrides upstream with tab-width == 1 and fixes column align
+    (defun all-the-icons-ivy-rich-align-icons ()
+      (setq-local tab-width 2))
+    :custom
+    (all-the-icons-ivy-rich-icon-size 0.85 "Prevent misalign of column"))
 #+end_src
 ** Company
 Modular in-buffer completion framework.
