@@ -4,18 +4,15 @@
 #+PROPERTY: header-args:elisp :tangle "init.el" :tangle-mode (identity #o444) :comments org
 #+OPTIONS: ^:{}
 
-* About                                           :noexport:
-This is my Emacs configuration, built with =use-package= and
-=org-mode=. =use-package= allows declarative description of packages and it’s
-settings, =org-mode= allows to represent this configuration as document and
-generate config from it.
+* About :noexport:
+This is my Emacs configuration, built with =use-package= and =org-mode=. =use-package= allows declarative description of packages and it’s settings, =org-mode= allows to represent this configuration as document and generate config from it.
 
 This file declares local variable hook - run =org-babel-tangle= on every save.
 
-** Usage                                         :noexport:
+** Usage :noexport:
 Clone repository to =~/.emacs.d= and run Emacs.
 
-** Table of Contents                          :TOC@3:QUOTE:
+** Table of Contents :TOC@3:QUOTE:
 #+BEGIN_QUOTE
 - [[#initialization][Initialization]]
   - [[#header][Header]]
@@ -154,8 +151,7 @@ Initial bootstrapping and things related to package management.
 #+end_src
 
 ** Early Init - performance hacks
-Emacs HEAD (27+) introduces =early-init.el=, which is run before =init.el=,
-before package and UI initialization happens. So, some performance hack lives here.
+Emacs HEAD (27+) introduces =early-init.el=, which is run before =init.el=, before package and UI initialization happens. So, some performance hack lives here.
 
 #+begin_src elisp :tangle "early-init.el" :comments no
   ;;; early-init.el -- My Emacs Configuration.
@@ -217,8 +213,7 @@ before package and UI initialization happens. So, some performance hack lives he
 #+end_src
 
 ** Garbage collector hack
-Set garbage collection threshold to the normal value on setup complete. Run GC
-on idle. Don't run GC in minibuffer and run on exit.
+Set garbage collection threshold to the normal value on setup complete. Run GC on idle. Don't run GC in minibuffer and run on exit.
 
 #+begin_src elisp
   (defvar knopki/gc-cons-threshold (* 30 1024 1024)
@@ -244,9 +239,7 @@ on idle. Don't run GC in minibuffer and run on exit.
 #+end_src
 
 ** Initialize 'use-package
-=use-package= package is the central gear of my configuration. I assume that all
-packages are installed using an external package manager (=nix=) and
-=use-package= or =package.el= are not used for installing packages at all.
+=use-package= package is the central gear of my configuration. I assume that all packages are installed using an external package manager (=nix=) and =use-package= or =package.el= are not used for installing packages at all.
 
 Initialize =package.el=.
 
@@ -269,8 +262,7 @@ Load =use-package=.
   (use-package bind-key)
 #+end_src
 ** Benchmarking
-Enable startup benchmarking if started with =EMACS_BENCHMARK= environment
-variable is set.
+Enable startup benchmarking if started with =EMACS_BENCHMARK= environment variable is set.
 
 #+begin_src elisp
   (when (getenv "EMACS_BENCHMARK")
@@ -285,12 +277,7 @@ variable is set.
         (add-to-list 'swiper-font-lock-exclude 'benchmark-init/tree-mode))))
 #+end_src
 ** Setup standard file paths
-The default paths used to store configuration files and persistent data are not
-consistent across Emacs packages. This package sets out to fix this by changing
-the values of path variables to put configuration files in
-no-littering-etc-directory (defaulting to =~/.emacs.d/etc/=) and persistent data
-files in no-littering-var-directory (defaulting to =~/.emacs.d/var/=), and by
-using descriptive file names and subdirectories when appropriate.
+The default paths used to store configuration files and persistent data are not consistent across Emacs packages. This package sets out to fix this by changing the values of path variables to put configuration files in no-littering-etc-directory (defaulting to =~/.emacs.d/etc/=) and persistent data files in no-littering-var-directory (defaulting to =~/.emacs.d/var/=), and by using descriptive file names and subdirectories when appropriate.
 
 #+begin_src elisp
   (use-package no-littering :demand)
@@ -562,8 +549,7 @@ More convenient method for binding keys. Setup leader key definers.
 
 =SPC= is the leader key with =M-SPC= alternative in some states.
 
-=​,= is the major mode leader key with =M-,= alternative in some states. Aliased
-by =SPC m=.
+=​,= is the major mode leader key with =M-,= alternative in some states. Aliased by =SPC m=.
 
 =SPC u= is the universal argument instead of standard =C-u=.
 
@@ -737,7 +723,6 @@ Application:
     (history-length 1000 "Max length of history lists.")
     (history-delete-duplicates t "Delete dups in history."))
 #+end_src
-
 ** Files
 Files, backups, etc.
 
@@ -791,8 +776,7 @@ Point goes to the last place where it was when you previously visited the same f
     (save-place-mode 1))
 #+end_src
 ** Advice
-Disable warnings from legacy advice system. They aren't useful, and we can't
-often do anything about them besides changing packages upstream.
+Disable warnings from legacy advice system. They aren't useful, and we can't often do anything about them besides changing packages upstream.
 
 #+begin_src elisp
   (use-package advice
@@ -3078,10 +3062,10 @@ A simple command that takes a URL from the clipboard and inserts an org-mode lin
 A simple personal diary.
 
 Global keybindings for =org-mode=
-| key | describe |
-|-----+----------|
-| =SPC a o j j= | org journal new entry          |
-| =SPC a o j s= | org journal search             |
+| key           | describe              |
+|---------------+-----------------------|
+| =SPC a o j j= | org journal new entry |
+| =SPC a o j s= | org journal search    |
 
 =org-journal-mode= normal state map:
 | key   | explanation    |
@@ -3169,8 +3153,7 @@ Displays org priorities as custom strings.
        '("HI" "MID" "LOW" "OPT"))))
 #+end_src
 ** Wakatime
-WakaTime measures coding time for programmers using open-source plugins for your
-text editor.
+WakaTime measures coding time for programmers using open-source plugins for your text editor.
 
 #+begin_src elisp
   (use-package wakatime-mode
@@ -3226,7 +3209,7 @@ Awesome git frontend.
     :after (:all (magit evil)))
 #+end_src
 ** Magit TODO
-Show source files' TODOs (and FIXMEs, etc) in Magit status buffer.
+Show source files' =TODOs= (and =FIXMEs=, etc) in Magit status buffer.
 
 #+begin_src elisp
   (use-package magit-todos
@@ -3326,7 +3309,7 @@ Buffer re-tabbing.
     :hook (prog-mode . display-line-numbers-mode))
 #+end_src
 ** Highlight TODOs
-Highlight TODO and similar keywords in comments and strings.
+Highlight =TODO= and similar keywords in comments and strings.
 
 #+begin_src elisp
   (use-package hl-todo

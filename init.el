@@ -12,8 +12,7 @@
                      (file-name-directory (or load-file-name buffer-file-name)))))
 
 ;; Garbage collector hack
-;; Set garbage collection threshold to the normal value on setup complete. Run GC
-;; on idle. Don't run GC in minibuffer and run on exit.
+;; Set garbage collection threshold to the normal value on setup complete. Run GC on idle. Don't run GC in minibuffer and run on exit.
 
 
 (defvar knopki/gc-cons-threshold (* 30 1024 1024)
@@ -38,9 +37,7 @@ If you experience stuttering, increase this.")
                       (lambda () (setq gc-cons-threshold knopki/gc-cons-threshold)))))
 
 ;; Initialize 'use-package
-;; =use-package= package is the central gear of my configuration. I assume that all
-;; packages are installed using an external package manager (=nix=) and
-;; =use-package= or =package.el= are not used for installing packages at all.
+;; =use-package= package is the central gear of my configuration. I assume that all packages are installed using an external package manager (=nix=) and =use-package= or =package.el= are not used for installing packages at all.
 
 ;; Initialize =package.el=.
 
@@ -64,8 +61,7 @@ If you experience stuttering, increase this.")
 (use-package bind-key)
 
 ;; Benchmarking
-;; Enable startup benchmarking if started with =EMACS_BENCHMARK= environment
-;; variable is set.
+;; Enable startup benchmarking if started with =EMACS_BENCHMARK= environment variable is set.
 
 
 (when (getenv "EMACS_BENCHMARK")
@@ -80,12 +76,7 @@ If you experience stuttering, increase this.")
       (add-to-list 'swiper-font-lock-exclude 'benchmark-init/tree-mode))))
 
 ;; Setup standard file paths
-;; The default paths used to store configuration files and persistent data are not
-;; consistent across Emacs packages. This package sets out to fix this by changing
-;; the values of path variables to put configuration files in
-;; no-littering-etc-directory (defaulting to =~/.emacs.d/etc/=) and persistent data
-;; files in no-littering-var-directory (defaulting to =~/.emacs.d/var/=), and by
-;; using descriptive file names and subdirectories when appropriate.
+;; The default paths used to store configuration files and persistent data are not consistent across Emacs packages. This package sets out to fix this by changing the values of path variables to put configuration files in no-littering-etc-directory (defaulting to =~/.emacs.d/etc/=) and persistent data files in no-littering-var-directory (defaulting to =~/.emacs.d/var/=), and by using descriptive file names and subdirectories when appropriate.
 
 
 (use-package no-littering :demand)
@@ -355,8 +346,7 @@ If you experience stuttering, increase this.")
 
 ;; =SPC= is the leader key with =M-SPC= alternative in some states.
 
-;; =​,= is the major mode leader key with =M-,= alternative in some states. Aliased
-;; by =SPC m=.
+;; =​,= is the major mode leader key with =M-,= alternative in some states. Aliased by =SPC m=.
 
 ;; =SPC u= is the universal argument instead of standard =C-u=.
 
@@ -582,8 +572,7 @@ If you experience stuttering, increase this.")
   (save-place-mode 1))
 
 ;; Advice
-;; Disable warnings from legacy advice system. They aren't useful, and we can't
-;; often do anything about them besides changing packages upstream.
+;; Disable warnings from legacy advice system. They aren't useful, and we can't often do anything about them besides changing packages upstream.
 
 
 (use-package advice
@@ -2809,10 +2798,10 @@ If you experience stuttering, increase this.")
 ;; A simple personal diary.
 
 ;; Global keybindings for =org-mode=
-;; | key | describe |
-;; |-----+----------|
-;; | =SPC a o j j= | org journal new entry          |
-;; | =SPC a o j s= | org journal search             |
+;; | key           | describe              |
+;; |---------------+-----------------------|
+;; | =SPC a o j j= | org journal new entry |
+;; | =SPC a o j s= | org journal search    |
 
 ;; =org-journal-mode= normal state map:
 ;; | key   | explanation    |
@@ -2900,8 +2889,7 @@ If you experience stuttering, increase this.")
      '("HI" "MID" "LOW" "OPT"))))
 
 ;; Wakatime
-;; WakaTime measures coding time for programmers using open-source plugins for your
-;; text editor.
+;; WakaTime measures coding time for programmers using open-source plugins for your text editor.
 
 
 (use-package wakatime-mode
@@ -2956,7 +2944,7 @@ If you experience stuttering, increase this.")
   :after (:all (magit evil)))
 
 ;; Magit TODO
-;; Show source files' TODOs (and FIXMEs, etc) in Magit status buffer.
+;; Show source files' =TODOs= (and =FIXMEs=, etc) in Magit status buffer.
 
 
 (use-package magit-todos
@@ -3055,7 +3043,7 @@ If you experience stuttering, increase this.")
   :hook (prog-mode . display-line-numbers-mode))
 
 ;; Highlight TODOs
-;; Highlight TODO and similar keywords in comments and strings.
+;; Highlight =TODO= and similar keywords in comments and strings.
 
 
 (use-package hl-todo
