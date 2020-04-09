@@ -47,6 +47,7 @@ Clone repository to =~/.emacs.d= and run Emacs.
   - [[#window][Window]]
   - [[#winner-mode][Winner mode]]
   - [[#doom-theme][Doom theme]]
+  - [[#fira-code-mode][Fira Code Mode]]
   - [[#mixed-pitch][Mixed Pitch]]
   - [[#modeline][Modeline]]
   - [[#solaire-mode][Solaire mode]]
@@ -1018,6 +1019,17 @@ Setup Doom themes (use One Dark), set font face.
     (doom-themes-treemacs-config)
     (with-eval-after-load 'treemacs
       (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)))
+#+end_src
+** Fira Code Mode
+This is a simple minor mode for Fira Code ligatures.
+
+#+begin_src elisp
+  (use-package fira-code-mode
+    :commands (fira-code-mode)
+    :custom
+    (fira-code-mode-disabled-ligatures
+     '("x")
+     "List of ligatures to turn off."))
 #+end_src
 ** Mixed Pitch
 #+begin_src elisp
@@ -3268,6 +3280,8 @@ Mother of all programming modes.
 #+begin_src elisp
   (use-package prog-mode
     :ensure nil
+    :hook
+    (prog-mode . fira-code-mode)
     :custom
     (prettify-symbols-unprettify-at-point 'right-edge))
 #+end_src
@@ -3617,14 +3631,19 @@ TODO: lsp-treemacs
   (use-package elisp-mode
     :hook
     (emacs-lisp-mode . (lambda ()
+                         ;; Autocomplete
                          (set (make-local-variable 'company-backends)
                               '((company-capf
                                  company-files
                                  company-yasnippet
                                  company-dabbrev-code)))
                          company-dabbrev-code
-                         (company-mode t)))
-    (emacs-lisp-mode . prettify-symbols-mode))
+                         (company-mode t)
+                         ;; Pretty Symbols
+                         (push '("defun"    . ?ƒ) prettify-symbols-alist)
+                         (push '("defmacro" . ?μ) prettify-symbols-alist)
+                         (push '("defvar"   . ?ν) prettify-symbols-alist)
+                         (prettify-symbols-mode t))))
 #+end_src
 *** C/C++
 #+begin_src elisp
@@ -3671,7 +3690,19 @@ Some normal state keybindings:
 #+begin_src elisp
   (use-package python
     :defer t
-    :hook (python-mode . lsp-deferred))
+    :hook
+    (python-mode . (lambda ()
+                     (lsp-deferred)
+                     ;; Pretty Symbols
+                     (push '("def"    . ?ƒ) prettify-symbols-alist)
+                     (push '("sum"    . ?Σ) prettify-symbols-alist)
+                     (push '("**2"    . ?²) prettify-symbols-alist)
+                     (push '("**3"    . ?³) prettify-symbols-alist)
+                     (push '("None"   . ?∅) prettify-symbols-alist)
+                     (push '("in"     . ?∈) prettify-symbols-alist)
+                     (push '("not in" . ?∉) prettify-symbols-alist)
+                     (push '("return" . ?➡) prettify-symbols-alist)
+                     (prettify-symbols-mode t))))
 #+end_src
 
 Live coding in Python.

@@ -761,6 +761,17 @@ If you experience stuttering, increase this.")
   (with-eval-after-load 'treemacs
     (remove-hook 'treemacs-mode-hook #'doom-themes-hide-modeline)))
 
+;; Fira Code Mode
+;; This is a simple minor mode for Fira Code ligatures.
+
+
+(use-package fira-code-mode
+  :commands (fira-code-mode)
+  :custom
+  (fira-code-mode-disabled-ligatures
+   '("x")
+   "List of ligatures to turn off."))
+
 ;; Mixed Pitch
 
 (use-package mixed-pitch
@@ -3002,6 +3013,8 @@ If you experience stuttering, increase this.")
 
 (use-package prog-mode
   :ensure nil
+  :hook
+  (prog-mode . fira-code-mode)
   :custom
   (prettify-symbols-unprettify-at-point 'right-edge))
 
@@ -3350,14 +3363,19 @@ If you experience stuttering, increase this.")
 (use-package elisp-mode
   :hook
   (emacs-lisp-mode . (lambda ()
+                       ;; Autocomplete
                        (set (make-local-variable 'company-backends)
                             '((company-capf
                                company-files
                                company-yasnippet
                                company-dabbrev-code)))
                        company-dabbrev-code
-                       (company-mode t)))
-  (emacs-lisp-mode . prettify-symbols-mode))
+                       (company-mode t)
+                       ;; Pretty Symbols
+                       (push '("defun"    . ?ƒ) prettify-symbols-alist)
+                       (push '("defmacro" . ?μ) prettify-symbols-alist)
+                       (push '("defvar"   . ?ν) prettify-symbols-alist)
+                       (prettify-symbols-mode t))))
 
 ;; C/C++
 
@@ -3404,7 +3422,19 @@ If you experience stuttering, increase this.")
 
 (use-package python
   :defer t
-  :hook (python-mode . lsp-deferred))
+  :hook
+  (python-mode . (lambda ()
+                   (lsp-deferred)
+                   ;; Pretty Symbols
+                   (push '("def"    . ?ƒ) prettify-symbols-alist)
+                   (push '("sum"    . ?Σ) prettify-symbols-alist)
+                   (push '("**2"    . ?²) prettify-symbols-alist)
+                   (push '("**3"    . ?³) prettify-symbols-alist)
+                   (push '("None"   . ?∅) prettify-symbols-alist)
+                   (push '("in"     . ?∈) prettify-symbols-alist)
+                   (push '("not in" . ?∉) prettify-symbols-alist)
+                   (push '("return" . ?➡) prettify-symbols-alist)
+                   (prettify-symbols-mode t))))
 
 
 
