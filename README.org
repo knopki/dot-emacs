@@ -254,6 +254,7 @@ Load =use-package=.
 
 #+begin_src elisp
   (setq use-package-verbose t)
+  (setq use-package-compute-statistics t)
   (eval-when-compile
     (require 'use-package))
 
@@ -3136,6 +3137,7 @@ Prettify headings and plain lists in Org mode.
 
 #+begin_src elisp
   (use-package org-superstar
+    :defer 5
     :hook (org-mode . (lambda () (org-superstar-mode 1)))
     :custom
     (org-superstar-special-todo-items t))

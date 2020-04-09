@@ -53,6 +53,7 @@ If you experience stuttering, increase this.")
 
 
 (setq use-package-verbose t)
+(setq use-package-compute-statistics t)
 (eval-when-compile
   (require 'use-package))
 
@@ -2872,6 +2873,7 @@ If you experience stuttering, increase this.")
 
 
 (use-package org-superstar
+  :defer 5
   :hook (org-mode . (lambda () (org-superstar-mode 1)))
   :custom
   (org-superstar-special-todo-items t))
