@@ -2962,9 +2962,11 @@ If you experience stuttering, increase this.")
 
 
 (use-package magit-todos
-  :commands (ivy-magit-todos)
+  :commands (magit-todos-mode ivy-magit-todos)
   ;; TODO: add keybindings
-  :hook (magit-mode . magit-todos-mode))
+  :hook (magit-mode . (lambda ()
+                        (let ((inhibit-message t))
+                          (magit-todos-mode t)))))
 
 ;; Git Time Machine
 ;; Walk through git revisions of a file.

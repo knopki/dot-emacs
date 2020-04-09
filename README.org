@@ -3228,9 +3228,11 @@ Show source files' =TODOs= (and =FIXMEs=, etc) in Magit status buffer.
 
 #+begin_src elisp
   (use-package magit-todos
-    :commands (ivy-magit-todos)
+    :commands (magit-todos-mode ivy-magit-todos)
     ;; TODO: add keybindings
-    :hook (magit-mode . magit-todos-mode))
+    :hook (magit-mode . (lambda ()
+                          (let ((inhibit-message t))
+                            (magit-todos-mode t)))))
 #+end_src
 ** Git Time Machine
 Walk through git revisions of a file.
