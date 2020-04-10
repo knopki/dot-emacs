@@ -874,6 +874,8 @@ If you experience stuttering, increase this.")
   :diminish ivy-mode
   :defer t
   :hook (pre-command . ivy-mode)
+  :custom-face
+  (ivy-org ((t (:inherit outline-4))))
   :custom
   (ivy-use-selectable-prompt t "Make the prompt line selectable like a candidate.")
   (ivy-use-virtual-buffers t "Add recent files/bookmarks to ivy-switch-buffer.")
@@ -954,21 +956,7 @@ If you experience stuttering, increase this.")
   (swiper-action-recenter t "Recenter after exiting swiper."))
 
 ;; Ivy rich
-;; More friendly display transformer for Ivy.
-
-
-(use-package ivy-rich
-  :after (:all (ivy counsel-projectile all-the-icons))
-  :hook ((counsel-projectile-mode . ivy-rich-mode) ; Must load after `counsel-projectile'
-         (ivy-rich-mode . (lambda ()
-                            (setq ivy-virtual-abbreviate
-                                  (or (and ivy-rich-mode 'abbreviate) 'name)))))
-  :custom
-  (ivy-rich-parse-remote-buffer nil "For better performance."))
-
-
-
-;; Fancy icons.
+;; Fancy icons. Enable it before =ivy-rich-mode= for better performance.
 
 
 (use-package all-the-icons-ivy-rich
@@ -977,8 +965,25 @@ If you experience stuttering, increase this.")
   ;; This overrides upstream with tab-width == 1 and fixes column align
   (defun all-the-icons-ivy-rich-align-icons ()
     (setq-local tab-width 2))
+  :hook (ivy-rich . all-the-icons-ivy-rich-mode)
   :custom
   (all-the-icons-ivy-rich-icon-size 0.85 "Prevent misalign of column"))
+
+
+
+;; More friendly display transformer for Ivy.
+
+
+(use-package ivy-rich
+  :after (:all (ivy counsel-projectile all-the-icons))
+  :hook
+  ;; Must load after `counsel-projectile'
+  (counsel-projectile-mode . ivy-rich-mode)
+  (ivy-rich-mode . (lambda ()
+                     (setq ivy-virtual-abbreviate
+                           (or (and ivy-rich-mode 'abbreviate) 'name))))
+  :custom
+  (ivy-rich-parse-remote-buffer nil "For better performance."))
 
 ;; Core
 
