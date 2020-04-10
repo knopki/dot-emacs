@@ -1909,7 +1909,7 @@ If you experience stuttering, increase this.")
 (use-package calendar
   :ensure nil
   :custom
-  (calenday-week-start-day 1 "Start week from monday.")
+  (calendar-week-start-day 1 "Start week from monday.")
   (calendar-day-name-array ["Воскресенье" "Понедельник" "Вторник" "Среда"
                             "Четверг" "Пятница" "Суббота"])
   (calendar-day-header-array ["Вс" "Пн" "Вт" "Ср" "Чт" "Пт" "Сб"])
