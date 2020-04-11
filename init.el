@@ -3405,7 +3405,6 @@ If you experience stuttering, increase this.")
                                company-files
                                company-yasnippet
                                company-dabbrev-code)))
-                       company-dabbrev-code
                        (company-mode t)
                        ;; Pretty Symbols
                        (push '("defun"    . ?ƒ) prettify-symbols-alist)
