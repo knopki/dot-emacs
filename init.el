@@ -384,15 +384,16 @@ If you experience stuttering, increase this.")
 
   ;; Common leader prefixes
   (leader-def
-    "S" '(:prefix-command my-leader-spell-command-map :wk "spell")
-    "a" '(:prefix-command my-leader-apps-command-map :wk "apps")
-    "e" '(:prefix-command my-leader-errors-command-map :wk "errors")
-    "f" '(:prefix-command my-leader-files-command-map :wk "files")
-    "h" '(:prefix-command my-leader-help-command-map :wk "help")
-    "j" '(:prefix-command my-leader-jump-command-map :wk "jump/join/split")
-    "m" (general-simulate-key "," :which-key "major mode")
-    "t" '(:prefix-command my-leader-toggles-command-map :wk "toggles")
-    "u" '(universal-argument :wk "universal argument"))
+    "S"   '(:prefix-command my-leader-spell-command-map :wk "spell")
+    "SPC" '(counsel-M-x :wk "M-x")
+    "a"   '(:prefix-command my-leader-apps-command-map :wk "apps")
+    "e"   '(:prefix-command my-leader-errors-command-map :wk "errors")
+    "f"   '(:prefix-command my-leader-files-command-map :wk "files")
+    "h"   '(:prefix-command my-leader-help-command-map :wk "help")
+    "j"   '(:prefix-command my-leader-jump-command-map :wk "jump/join/split")
+    "m"   (general-simulate-key "," :which-key "major mode")
+    "t"   '(:prefix-command my-leader-toggles-command-map :wk "toggles")
+    "u"   '(universal-argument :wk "universal argument"))
 
   ;; Some applications
   (general-define-key
