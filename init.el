@@ -2992,10 +2992,14 @@ If you experience stuttering, increase this.")
 
 (use-package magit-todos
   :commands (magit-todos-mode ivy-magit-todos)
+  :hook
+  (magit-mode . (lambda ()
+                  ;; Suppress annoying "Not overriding bind of 'jT'..." output
+                  (let ((inhibit-message t))
+                    (magit-todos-mode t))))
   ;; TODO: add keybindings
-  :hook (magit-mode . (lambda ()
-                        (let ((inhibit-message t))
-                          (magit-todos-mode t)))))
+  :custom
+  (magit-todos-update 86400 "Update once a day."))
 
 ;; Git Time Machine
 ;; Walk through git revisions of a file.

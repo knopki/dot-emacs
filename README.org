@@ -3260,9 +3260,13 @@ Show source files' =TODOs= (and =FIXMEs=, etc) in Magit status buffer.
   (use-package magit-todos
     :commands (magit-todos-mode ivy-magit-todos)
     ;; TODO: add keybindings
-    :hook (magit-mode . (lambda ()
-                          (let ((inhibit-message t))
-                            (magit-todos-mode t)))))
+    :hook
+    (magit-mode . (lambda ()
+                    ;; Suppress annoying "Not overriding bind of 'jT'..." output
+                    (let ((inhibit-message t))
+                      (magit-todos-mode t))))
+    :custom
+    (magit-todos-update 86400 "Update once a day."))
 #+end_src
 ** Git Time Machine
 Walk through git revisions of a file.
