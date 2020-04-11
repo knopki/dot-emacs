@@ -356,7 +356,7 @@ If you experience stuttering, increase this.")
 
 
 (use-package general
-  :commands (general-leader major-leader-def)
+  :commands (general-vmap leader-def major-leader-def)
   :custom
   (local/leader-major-key "," "Major mode leader key.")
   :config
@@ -1617,9 +1617,27 @@ If you experience stuttering, increase this.")
 ;; | =sor[t]=       | The Ex sort command                                     |
 
 
+(defun my-evil-shift-left ()
+  "vnoremap < <gv"
+  (interactive)
+  (evil-shift-left (region-beginning) (region-end))
+  (evil-normal-state)
+  (evil-visual-restore))
+
+(defun my-evil-shift-right ()
+  "vnoremap > >gv"
+  (interactive)
+  (evil-shift-right (region-beginning) (region-end))
+  (evil-normal-state)
+  (evil-visual-restore))
+
 (general-vmap
+  ;; Move selected block up and down
   "J" (concat ":m '>+1" (kbd "RET") "gv=gv")
-  "K" (concat ":m '<-2" (kbd "RET") "gv=gv"))
+  "K" (concat ":m '<-2" (kbd "RET") "gv=gv")
+  ;; Save visual selection after indent
+  [remap evil-shift-left] 'my-evil-shift-left
+  [remap evil-shift-right] 'my-evil-shift-right)
 
 ;; Simple
 
