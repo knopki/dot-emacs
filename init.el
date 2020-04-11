@@ -354,6 +354,11 @@ If you experience stuttering, increase this.")
 
 ;; =SPC u= is the universal argument instead of standard =C-u=.
 
+;; Global keybindings:
+;; | key       | command                                         |
+;; |-----------+-------------------------------------------------|
+;; | =SPC h g= | Show all keys that have been bound with general |
+
 
 (use-package general
   :commands (general-vmap leader-def major-leader-def)
@@ -395,7 +400,13 @@ If you experience stuttering, increase this.")
    :wk-full-keys nil
    "P" '(proced :wk "list system processes")
    "c" '(calc-dispatch :wk "calc")
-   "p" '(list-processes :wk "list subprocesses")))
+   "p" '(list-processes :wk "list subprocesses"))
+
+  ;; General.el keys
+  (general-define-key
+   :keymaps 'my-leader-help-command-map
+   :wk-full-keys nil
+   "g" '(general-describe-keybindings :wk "general.el keys")))
 
 ;; Reverse-im
 ;; Use bindings while the non-default system layout is active.
@@ -3010,12 +3021,12 @@ If you experience stuttering, increase this.")
 
 (use-package magit-todos
   :commands (magit-todos-mode ivy-magit-todos)
+  ;; TODO: add keybindings
   :hook
   (magit-mode . (lambda ()
                   ;; Suppress annoying "Not overriding bind of 'jT'..." output
                   (let ((inhibit-message t))
                     (magit-todos-mode t))))
-  ;; TODO: add keybindings
   :custom
   (magit-todos-update 86400 "Update once a day."))
 
