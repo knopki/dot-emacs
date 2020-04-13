@@ -286,33 +286,33 @@ If you experience stuttering, increase this.")
 ;; | =O= | Rearrange corners in Visual Block mode                           |
 
 ;; Some evil commands:
-;; | command                  | describe                                                  |
-;; |--------------------------+-----------------------------------------------------------|
-;; | =q[uit]=                 | Closes the current window, current frame, Emacs           |
-;; | =wq=                     | Saves the current buffer and closes the window            |
-;; | =quita[ll]= =qa[ll]=     | Exits Emacs, asking for saving                            |
-;; | =cq[uit]=                | Exits Emacs without saving, with an non-zero error code   |
-;; | =wqa[ll]= =xa[ll]=       | Save all buffers and exit Emacs                           |
-;; | =x[it]= =exi[t]=         | Saves the current buffer and closes the window            |
-;; | =g[lobal]=               | The Ex global command                                     |
-;; | =v[global]=              | The Ex vglobal command                                    |
-;; | =norm[al]=               | The Ex normal command                                     |
-;; | =registers=              | Shows the contents of all registers                       |
-;; | =marks=                  | Shows all marks                                           |
-;; | =delm[arks]=             | Delete all marks                                          |
-;; | =ju[mps]=                | Display the contents of the jump list                     |
-;; | =noh[lsearch]=           | Disable the active search highlightings                   |
-;; | =f[ile]=                 | Shows basic file information                              |
-;; | =​==                      | Print the last line number                                |
-;; | =!=                      | Execute a shell command                                   |
-;; | =@:=                     | Repeats the last ex command                               |
-;; | =mak[e]=                 | Call a build command in the current directory             |
-;; | =cc=                     | Go to error number COUNT                                  |
-;; | =cfir[st]= =cr[ewind]=   | Restart at the first error                                |
-;; | =cn[ext]=                | Visit next error and corresponding source code            |
-;; | =cp[revious]=            | Visit previous error and corresponding source code        |
-;; | =set-initial-state=      | Set initial state for the current major mode to STATE     |
-;; | =show-digraphs=          | Shows a list of all available digraphs                    |
+;; | command                | describe                                                |
+;; |------------------------+---------------------------------------------------------|
+;; | =q[uit]=               | Closes the current window, current frame, Emacs         |
+;; | =wq=                   | Saves the current buffer and closes the window          |
+;; | =quita[ll]= =qa[ll]=   | Exits Emacs, asking for saving                          |
+;; | =cq[uit]=              | Exits Emacs without saving, with an non-zero error code |
+;; | =wqa[ll]= =xa[ll]=     | Save all buffers and exit Emacs                         |
+;; | =x[it]= =exi[t]=       | Saves the current buffer and closes the window          |
+;; | =g[lobal]=             | The Ex global command                                   |
+;; | =v[global]=            | The Ex vglobal command                                  |
+;; | =norm[al]=             | The Ex normal command                                   |
+;; | =registers=            | Shows the contents of all registers                     |
+;; | =marks=                | Shows all marks                                         |
+;; | =delm[arks]=           | Delete all marks                                        |
+;; | =ju[mps]=              | Display the contents of the jump list                   |
+;; | =noh[lsearch]=         | Disable the active search highlightings                 |
+;; | =f[ile]=               | Shows basic file information                            |
+;; | =​==                    | Print the last line number                              |
+;; | =!=                    | Execute a shell command                                 |
+;; | =@:=                   | Repeats the last ex command                             |
+;; | =mak[e]=               | Call a build command in the current directory           |
+;; | =cc=                   | Go to error number COUNT                                |
+;; | =cfir[st]= =cr[ewind]= | Restart at the first error                              |
+;; | =cn[ext]=              | Visit next error and corresponding source code          |
+;; | =cp[revious]=          | Visit previous error and corresponding source code      |
+;; | =set-initial-state=    | Set initial state for the current major mode to STATE   |
+;; | =show-digraphs=        | Shows a list of all available digraphs                  |
 
 
 (use-package evil
@@ -352,12 +352,13 @@ If you experience stuttering, increase this.")
 
 ;; =​,= is the major mode leader key with =M-,= alternative in some states. Aliased by =SPC m=.
 
-;; =SPC u= is the universal argument instead of standard =C-u=.
-
 ;; Global keybindings:
-;; | key       | command                                         |
-;; |-----------+-------------------------------------------------|
-;; | =SPC h g= | Show all keys that have been bound with general |
+;; | key       | command                                       |
+;; |-----------+-----------------------------------------------|
+;; | =SPC ?=   | Show keybindings                              |
+;; | =SPC SPC= | =M-x=                                         |
+;; | =SPC m=   | Major mode alternative prefix                 |
+;; | =SPC u=   | Universal argument, instead of standard =C-u= |
 
 
 (use-package general
@@ -372,8 +373,8 @@ If you experience stuttering, increase this.")
     :states '(insert motion normal emacs)
     :prefix "SPC"
     :non-normal-prefix "M-SPC"
-    :prefix-command 'my-leader-command-map
-    :prefix-map 'my-leader-mode-map
+    :prefix-command 'local/leader/cmds
+    :prefix-map 'local/leader/map
     :wk "general leader")
   ;; Major leader definer
   (general-create-definer major-leader-def
@@ -381,33 +382,31 @@ If you experience stuttering, increase this.")
     :prefix local/leader-major-key
     :non-normal-prefix "M-,"
     :wk "major leader")
-
   ;; Common leader prefixes
   (leader-def
-    "S"   '(:prefix-command my-leader-spell-command-map :wk "spell")
+    "S"   '(:prefix-command local/leader/spell/cmds :wk "spell")
+    "T"   '(:prefix-command local/leader/themes/cmds :wk "themes")
     "SPC" '(counsel-M-x :wk "M-x")
-    "a"   '(:prefix-command my-leader-apps-command-map :wk "apps")
-    "e"   '(:prefix-command my-leader-errors-command-map :wk "errors")
-    "f"   '(:prefix-command my-leader-files-command-map :wk "files")
-    "h"   '(:prefix-command my-leader-help-command-map :wk "help")
-    "j"   '(:prefix-command my-leader-jump-command-map :wk "jump/join/split")
+    "a"   '(:prefix-command local/leader/apps/cmds :wk "apps")
+    "e"   '(:prefix-command local/leader/errors/cmds :wk "errors")
+    "f"   '(:prefix-command local/leader/files/cmds :wk "files")
+    "g"   '(:prefix-command local/leader/vc/cmds :wk "version control")
+    "h"   '(:prefix-command local/leader/help/cmds :wk "help")
+    "s"   '(:prefix-command local/leader/search/cmds :wk "search")
+    "i"   '(:prefix-command local/leader/insert/cmds :wk "insert")
+    "j"   '(:prefix-command local/leader/jump/cmds :wk "jump/join/split")
     "m"   (general-simulate-key "," :which-key "major mode")
-    "t"   '(:prefix-command my-leader-toggles-command-map :wk "toggles")
+    "r"   '(:prefix-command local/leader/registers/cmds :wk "registers/rings")
+    "t"   '(:prefix-command local/leader/toggles/cmds :wk "toggles")
     "u"   '(universal-argument :wk "universal argument"))
 
   ;; Some applications
   (general-define-key
-   :keymaps 'my-leader-apps-command-map
+   :keymaps 'local/leader/apps/cmds
    :wk-full-keys nil
    "P" '(proced :wk "list system processes")
    "c" '(calc-dispatch :wk "calc")
-   "p" '(list-processes :wk "list subprocesses"))
-
-  ;; General.el keys
-  (general-define-key
-   :keymaps 'my-leader-help-command-map
-   :wk-full-keys nil
-   "g" '(general-describe-keybindings :wk "general.el keys")))
+   "p" '(list-processes :wk "list subprocesses")))
 
 ;; Reverse-im
 ;; Use bindings while the non-default system layout is active.
@@ -730,8 +729,13 @@ If you experience stuttering, increase this.")
                            "*esh command on file*"
                            "*inferior-lisp*")))
 
-;; Doom theme
+;; Themes
 ;; Setup Doom themes (use One Dark), set font face.
+
+;; Global keybindings:
+;; | key       | command               |
+;; |-----------+-----------------------|
+;; | =SPC T s= | Select and load theme |
 
 
 (use-package doom-themes
@@ -740,6 +744,11 @@ If you experience stuttering, increase this.")
   (variable-pitch ((t (:family "Source Sans Pro" :height 120))))
   :defines doom-themes-treemacs-theme
   :functions doom-themes-hide-modeline
+  :general
+  (general-define-key
+   :keymaps 'local/leader/themes/cmds
+   :wk-full-keys nil
+   "s" '(counsel-load-theme :wk "load"))
   :init (load-theme 'doom-one t)
   :custom
   (doom-themes-treemacs-theme "doom-colors")
@@ -930,6 +939,42 @@ If you experience stuttering, increase this.")
   :diminish counsel-mode
   :after (ivy-prescient)
   :hook (ivy-mode . counsel-mode)
+  :commands (counsel-rg)
+  :preface
+  (defun local/counsel-rg (&optional use-initial-input initial-directory)
+    "Search with `counsel-rg' in current or some dir with input or thing at point"
+    (interactive)
+    (let ((initial-input (if use-initial-input
+                             (if (region-active-p)
+                                 (buffer-substring-no-properties
+                                  (region-beginning) (region-end))
+                               (thing-at-point 'symbol t))
+                           ""))
+          (default-directory
+            (or initial-directory (read-directory-name "Start from directory: "))))
+      (counsel-rg initial-input default-directory nil
+                  (format "rg from [%s]: " default-directory))))
+  (defun local/counsel-rg-at-point-arbitary-directory ()
+    (interactive) (local/counsel-rg t))
+  (defun local/counsel-rg-at-point-current-directory ()
+    (interactive) (local/counsel-rg t default-directory))
+  (defun local/counsel-rg-current-directory ()
+    (interactive) (local/counsel-rg nil default-directory))
+  (defun local/counsel-jump-in-buffer ()
+    "Jump in buffer with `counsel-imenu' or `counsel-org-goto' if in org-mode"
+    (interactive)
+    (call-interactively
+     (cond
+      ((eq major-mode 'org-mode) 'counsel-org-goto)
+      (t 'counsel-imenu))))
+  (defun local/counsel-git-grep-region-or-symbol ()
+    "`counsel-git-grep' with thing at point."
+    (interactive)
+    (let ((input (if (region-active-p)
+                     (buffer-substring-no-properties
+                      (region-beginning) (region-end))
+                   (thing-at-point 'symbol t))))
+      (counsel-git-grep input)))
   :custom
   (counsel-find-file-at-point t "" "Add file-at-point to the list of candidates.")
   (counsel-yank-pop-separator
@@ -945,6 +990,25 @@ If you experience stuttering, increase this.")
 
 
 (use-package swiper
+  :preface
+  (defun local/counsel-current-region-or-symbol ()
+    "Return contents of the region or symbol at point."
+    (if (region-active-p)
+        (prog1 (buffer-substring-no-properties (region-beginning) (region-end))
+          (deactivate-mark))
+      (thing-at-point 'symbol t)))
+
+  (defun local/swiper-region-or-symbol ()
+    "Run `swiper' with initial input."
+    (interactive)
+    (let ((input (local/counsel-current-region-or-symbol)))
+      (swiper input)))
+
+  (defun local/swiper-all-region-or-symbol ()
+    "Run `swiper-all' with initial input."
+    (interactive)
+    (let ((input (local/counsel-current-region-or-symbol)))
+      (swiper-all input)))
   :custom
   (swiper-action-recenter t "Recenter after exiting swiper."))
 
@@ -1104,6 +1168,36 @@ If you experience stuttering, increase this.")
           (Template . ,(all-the-icons-material "format_align_left" :height 0.85 :v-adjust -0.2)))
         company-box-icons-alist 'company-box-icons-all-the-icons))
 
+;; Help & manual
+;; Global keybindings:
+;; | key         | command                                         |
+;; |-------------+-------------------------------------------------|
+;; | =SPC h d F= | Describe face                                   |
+;; | =SPC h d a= | Apropos                                         |
+;; | =SPC h d f= | Describe function                               |
+;; | =SPC h d m= | Describe mode                                   |
+;; | =SPC h d v= | Describe variable                               |
+;; | =SPC h g=   | Show all keys that have been bound with general |
+;; | =SPC h i=   | Lookup symbol in the info system                |
+;; | =SPC h m=   | Show man page                                   |
+
+
+(general-define-key
+ :keymaps 'local/leader/help/cmds
+ :wk-full-keys nil
+ "d" '(:prefix-command local/leader/help/describe/cmds :wk "describe")
+ "g" '(general-describe-keybindings :wk "general.el keys")
+ "i" '(counsel-info-lookup-symbol :wk "lookup symbol")
+ "m" '(woman :wk "man"))
+(general-define-key
+ :keymaps 'local/leader/help/describe/cmds
+ :wk-full-keys nil
+ "F" '(counsel-describe-face :wk "face")
+ "a" '(counsel-apropos :wk "apropos")
+ "f" '(counsel-describe-function :wk "function")
+ "m" '(describe-mode :wk "mode")
+ "v" '(counsel-describe-variable :wk "variable"))
+
 ;; Which key
 ;; Displays the key bindings following your currently entered incomplete command (a
 ;; prefix) in a popup.
@@ -1125,23 +1219,34 @@ If you experience stuttering, increase this.")
 (use-package which-key
   :diminish which-key-mode
   :hook (pre-command . (lambda () (which-key-mode +1)))
+  :commands (which-key-show-top-level
+             which-key-add-key-based-replacements
+             which-key-add-major-mode-key-based-replacements)
   :general
   (general-define-key
-   :keymaps 'my-leader-help-command-map
+   :keymaps 'local/leader/help/cmds
    :wk-full-keys nil
    "k" '(which-key-show-top-level :wk "top level keybindings"))
   :custom
+  (which-key-idle-delay 0.25)
   (which-key-max-description-length 32)
   (which-key-allow-multiple-replacements t)
   (which-key-sort-order 'which-key-key-order-alpha)
   (which-key-allow-evil-operators t)
   (which-key-special-keys '("SPC" "TAB" "RET" "ESC" "DEL") "Truncate to one char")
   :config
-  (push '(("SPC" . nil) . ("␣" . nil)) which-key-replacement-alist)
-  (push '(("TAB" . nil) . ("↹" . nil)) which-key-replacement-alist)
-  (push '(("RET" . nil) . ("⏎" . nil)) which-key-replacement-alist)
-  (push '(("ESC" . nil) . ("␛" . nil)) which-key-replacement-alist)
-  (push '(("DEL" . nil) . ("⇤" . nil)) which-key-replacement-alist)
+  ;; Pretty symbols
+  (dolist (pair '((("SPC") . ("␣"))
+                  (("TAB") . ("↹"))
+                  (("RET") . ("⏎"))
+                  (("ESC") . ("␛"))
+                  (("DEL") . ("⇤"))))
+    (push pair which-key-replacement-alist))
+
+  ;; Replace projectile description prefixes
+  (push '((nil . "projectile-\\(.+\\)") . (nil . "\\1"))
+        which-key-replacement-alist)
+
   (which-key-setup-side-window-right-bottom))
 
 ;; Better help
@@ -1161,6 +1266,49 @@ If you experience stuttering, increase this.")
   (counsel-describe-function-function #'helpful-callable)
   (counsel-describe-variable-function #'helpful-variable))
 
+;; Searching
+;; Global keybindings:
+;; | key       | command                                                        |
+;; |-----------+----------------------------------------------------------------|
+;; | =SPC *=   | Search thing at point in the project root or current directory |
+;; | =SPC /=   | Start searching in the project root or current directory       |
+;; | =SPC s F= | Search thing at point in an arbitary directory                 |
+;; | =SPC s f= | Start searching in an arbitary directory                       |
+;; | =SPC s D= | Search thing at point in the current directory                 |
+;; | =SPC s d= | Start searching in the current directory                       |
+;; | =SPC s j= | Jump in buffer                                                 |
+;; | =SPC s P= | Search thing at point in the current project                   |
+;; | =SPC s p= | Start searching in the current project                         |
+;; | =SPC s G= | Search thing at point via git grep                             |
+;; | =SPC s g= | Start searching via git grep                                   |
+;; |           |                                                                |
+;; | =SPC s S= | Search thing at point in the current buffer with swiper        |
+;; | =SPC s s= | Start searching in the current buffer with swiper              |
+;; | =SPC s B= | Search thing at point in all buffers with swiper               |
+;; | =SPC s b= | Start searching in all buffers with swiper                     |
+
+
+(leader-def
+  "*" '(local/counsel-projectile-rg-maybe :wk "find thing")
+  "/" '(local/counsel-projectile-rg-maybe-with-input :wk "find"))
+
+(general-define-key
+ :keymaps 'local/leader/search/cmds
+ :wk-full-keys nil
+ "F" '(local/counsel-rg-at-point-arbitary-directory :wk "find thing in dir")
+ "f" '(local/counsel-rg :wk "find in dir")
+ "D" '(local/counsel-rg-at-point-current-directory :wk "find thing in curr dir")
+ "d" '(local/counsel-rg-current-directory :wk "find in curr dir")
+ "G" '(local/counsel-git-grep-region-or-symbol :wk "git grep thing")
+ "g" '(counsel-git-grep :wk "git grep")
+ "j" '(local/counsel-jump-in-buffer :wk "jump in buffer")
+ "P" '(counsel-projectile-rg :wk "find thing in project")
+ "p" '(local/counsel-projectile-rg-maybe-with-input-req-proj :wk "find in project")
+ "S" '(local/swiper-region-or-symbol :wk "find thing in buffer")
+ "s" '(swiper :wk "find in buffer")
+ "B" '(local/swiper-all-region-or-symbol :wk "find thing in all buffers")
+ "b" '(swiper-all :wk "find in all buffers"))
+
 ;; Bookmarks
 ;; Jump to bookmark.
 
@@ -1173,7 +1321,7 @@ If you experience stuttering, increase this.")
   :defer t
   :general
   (general-define-key
-   :keymaps 'my-leader-files-command-map
+   :keymaps 'local/leader/files/cmds
    :wk-full-keys nil
    "b" '(bookmark-jump :wk "bookmarks")))
 
@@ -1200,6 +1348,7 @@ If you experience stuttering, increase this.")
 ;; | key                    | command                                                    |
 ;; |------------------------+------------------------------------------------------------|
 ;; | =SPC TAB=              | Switch between last two buffers                            |
+;; | =SPC b b=              | Switch to another buffer                                   |
 ;; | =SPC b d= =:bd[elete]= | Kill this buffer (without window)                          |
 ;; | =SPC b e=              | Erase buffer                                               |
 ;; | =SPC b n=              | Next buffer                                                |
@@ -1228,22 +1377,27 @@ If you experience stuttering, increase this.")
 
 (leader-def
   "TAB" '(mode-line-other-buffer :wk "alternate buffer")
-  "b" '(:prefix-command my-leader-buffers-command-map :wk "buffers"))
+  "b"   '(:prefix-command local/leader/buffers/cmds :wk "buffers"))
 
 (general-define-key
- :keymaps 'my-leader-buffers-command-map
+ :keymaps 'local/leader/buffers/cmds
  :wk-full-keys nil
- "d"     '(kill-this-buffer :wk "kill this buffer")
- "e"     '(erase-buffer :wk "erase buffer")
- "n"     '(next-buffer :wk "next buffer")
- "N"     '(:ignored t :wk "indirect")
- "N C-i" '(make-indirect-buffer :wk "create indirect buffer")
- "Ni"    '(clone-indirect-buffer :wk "indirect buffer from current")
- "NI"    '(clone-indirect-buffer-other-window
-           :wk "indirect buffer from current in other window")
- "p"     '(previous-buffer :wk "previous buffer")
- "x"     '(kill-buffer-and-window :wk "kill buffer with window")
- "w"     '(read-only-mode :wk "read only buffer"))
+ "b" '(ivy-switch-buffer :wk "switch buffer")
+ "d" '(kill-this-buffer :wk "kill this buffer")
+ "e" '(erase-buffer :wk "erase buffer")
+ "n" '(next-buffer :wk "next buffer")
+ "N" '(:prefix-command local/leader/buffers/indirect/cmds :wk "indirect")
+ "p" '(previous-buffer :wk "previous buffer")
+ "x" '(kill-buffer-and-window :wk "kill buffer with window")
+ "w" '(read-only-mode :wk "read only buffer"))
+
+(general-define-key
+ :keymaps 'local/leader/buffers/indirect/cmds
+ :wk-full-keys nil
+ "C-i" '(make-indirect-buffer :wk "create indirect buffer")
+ "i"    '(clone-indirect-buffer :wk "indirect buffer from current")
+ "I"    '(clone-indirect-buffer-other-window
+          :wk "indirect buffer from current in other window"))
 
 ;; Kill buffer without window
 (eval-after-load 'evil-mode
@@ -1360,12 +1514,49 @@ If you experience stuttering, increase this.")
   :defer t
   :after (projectile)
   :hook (after-init . counsel-projectile-mode)
+  :preface
+  (defun local/counsel-projectile-rg-maybe (&optional require-input require-project)
+    "Call `counsel-projectile-rg' with project or not with default input or not"
+    (interactive)
+    (let ((projectile-require-project-root (when require-project 'prompt))
+          (counsel-projectile-rg-initial-input
+           (when (not require-input) counsel-projectile-rg-initial-input)))
+      (counsel-projectile-rg)))
+  (defun local/counsel-projectile-rg-maybe-with-input ()
+    (interactive) (local/counsel-projectile-rg-maybe t nil))
+  (defun local/counsel-projectile-rg-maybe-with-input-req-proj ()
+    (interactive) (local/counsel-projectile-rg-maybe t t))
   :custom
   (counsel-projectile-rg-initial-input
    '(projectile-symbol-or-selection-at-point)
    "Initial minibuffer input.")
   :config
   (define-obsolete-function-alias 'counsel-more-chars 'ivy-more-chars "26.3"))
+
+;; File management
+
+;; Global keybindings:
+;; | key         | command                     |
+;; |-------------+-----------------------------|
+;; | =SPC f L=   | Locate                      |
+;; | =SPC f e l= | Find and open emacs library |
+;; | =SPC f f=   | Find and open file          |
+;; | =SPC f r=   | Find and open recent file   |
+
+
+(general-define-key
+ :keymaps 'local/leader/files/cmds
+ :wk-full-keys nil
+ "L" '(counsel-locate :wk "locate")
+ "e" '(:prefix-command local/leader/files/emacs/cmds :wk "emacs")
+ "f" '(counsel-find-file :wk "open file")
+ "r" '(counsel-recentf :wk "recent"))
+
+(general-define-key
+ :keymaps 'local/leader/files/emacs/cmds
+ :wk-full-keys nil
+ "l" '(counsel-find-library :wk "open library")
+ )
 
 ;; Dired
 ;; Standard file manager.
@@ -1523,15 +1714,15 @@ If you experience stuttering, increase this.")
 (use-package dired-x
   :general
   (general-define-key
-   :keymaps 'my-leader-apps-command-map
+   :keymaps 'local/leader/apps/cmds
    :wk-full-keys nil
    "d" 'dired)
   (general-define-key
-   :keymaps 'my-leader-files-command-map
+   :keymaps 'local/leader/files/cmds
    :wk-full-keys nil
    "j" '(dired-jump :wk "dired"))
   (general-define-key
-   :keymaps 'my-leader-jump-command-map
+   :keymaps 'local/leader/jump/cmds
    :wk-full-keys nil
    "d" '(dired-jump :wk "dired")
    "D" '(dired-jump-other-window :wk "dired other"))
@@ -1651,6 +1842,22 @@ If you experience stuttering, increase this.")
   [remap evil-shift-left] 'my-evil-shift-left
   [remap evil-shift-right] 'my-evil-shift-right)
 
+;; Insertion
+;; Global keybindings:
+;; | key       | command                  |
+;; |-----------+--------------------------|
+;; | =SPC i u= | Insert unicode character |
+;; | =SPC i c= | Insert emacs color       |
+;; | =SPC i C= | Insert web color         |
+
+
+(general-define-key
+ :keymaps 'local/leader/insert/cmds
+ :wk-full-keys nil
+ "C" '(counsel-colors-emacs :wk "emacs color")
+ "c" '(counsel-colors-web :wk "web color")
+ "u" '(counsel-unicode-char :wk "unicode char"))
+
 ;; Simple
 
 (use-package simple
@@ -1690,10 +1897,28 @@ If you experience stuttering, increase this.")
   :commands (whitespace-mode global-whitespace-mode)
   :general
   (general-define-key
-   :keymaps 'my-leader-toggles-command-map
+   :keymaps 'local/leader/toggles/cmds
    :wk-full-keys nil
    "w"   '(whitespace-mode :wk "whitespace mode")
    "C-w" '(global-whitespace-mode :wk "global whitespace mode")))
+
+;; Registers/rings/resume
+;; Global keybindings:
+;; | key       | command                                                      |
+;; |-----------+--------------------------------------------------------------|
+;; | =SPC r e= | Show evil registers                                          |
+;; | =SPC r l= | Resume the last completion session                           |
+;; | =SPC r m= | Browse =mark-ring=                                           |
+;; | =SPC r y= | Replace just-yanked stretch of text with a different stretch |
+
+
+(general-define-key
+ :keymaps 'local/leader/registers/cmds
+ :wk-full-keys nil
+ "e" '(counsel-evil-registers :wk "evil registers")
+ "l" '(ivy-resume :wk "ivy resume")
+ "m" '(counsel-mark-ring :wk "mark ring")
+ "y" '(counsel-yank-pop :wk "yank pop"))
 
 ;; Macros
 ;; Macros keybindings.
@@ -1729,30 +1954,45 @@ If you experience stuttering, increase this.")
 
 
 (leader-def
-  "K" '(:prefix-command my-leader-macros-command-map :wk "macros"))
+  "K" '(:prefix-command local/leader/macros/cmds :wk "macros"))
 
 (general-define-key
- :keymaps 'my-leader-macros-command-map
+ :keymaps 'local/leader/macros/cmds
  :wk-full-keys nil
- "ca" '(kmacro-add-counter :wk "add the value of numeric prefix")
- "cc" '(kmacro-insert-counter :wk "insert current value of counter then increment")
- "cC" '(kmacro-set-counter :wk "set value of counter")
- "cf" '(kmacro-set-format :wk "set the format of counter")
- "eb" '(kmacro-bind-to-key :wk "bind last macro to key")
- "ee" '(kmacro-edit-macro-repeat :wk "edit last keyboard macro")
- "el" '(kmacro-edit-lossage :wk "edit most recent 300 keystrokes as macro")
- "en" '(kmacro-name-last-macro :wk "name last macro")
- "er" '(kmacro-to-register :wk "store the last macro in register")
- "es" '(kmacro-step-edit-macro :wk "step edit and execute last macro")
- "k"  '(kmacro-start-macro-or-insert-counter :wk "record keyboard input")
- "K"  '(kmacro-end-or-call-macro :wk "end macro if currently defined or call last")
- "rL" '(kmacro-view-ring-2nd :wk "display current head of macro ring")
- "rd" '(kmacro-delete-ring-head :wk "delete current macro from ring")
- "rl" '(kmacro-call-ring-2nd-repeat :wk "execute second macro in macro ring")
- "rn" '(kmacro-cycle-ring-next :wk "move to next macro in macro ring")
- "rp" '(kmacro-cycle-ring-previous :wk "move to prev macro in macro ring")
- "rs" '(kmacro-swap-ring :wk "swap first two elements in macro ring")
- "v"  '(kmacro-view-macro-repeat :wk "display last macro"))
+ "c" '(:prefix-command local/leader/macros/counters/cmds :wk "counters")
+ "e" '(:prefix-command local/leader/macros/edit/cmds :wk "edit")
+ "k" '(kmacro-start-macro-or-insert-counter :wk "record keyboard input")
+ "K" '(kmacro-end-or-call-macro :wk "end macro if currently defined or call last")
+ "r" '(:prefix-command local/leader/macros/ring/cmds :wk "ring")
+ "v" '(kmacro-view-macro-repeat :wk "display last macro"))
+
+(general-define-key
+ :keymaps 'local/leader/macros/counters/cmds
+ :wk-full-keys nil
+ "a" '(kmacro-add-counter :wk "add the value of numeric prefix")
+ "c" '(kmacro-insert-counter :wk "insert current value of counter then increment")
+ "C" '(kmacro-set-counter :wk "set value of counter")
+ "f" '(kmacro-set-format :wk "set the format of counter"))
+
+(general-define-key
+ :keymaps 'local/leader/macros/edit/cmds
+ :wk-full-keys nil
+ "b" '(kmacro-bind-to-key :wk "bind last macro to key")
+ "e" '(kmacro-edit-macro-repeat :wk "edit last keyboard macro")
+ "l" '(kmacro-edit-lossage :wk "edit most recent 300 keystrokes as macro")
+ "n" '(kmacro-name-last-macro :wk "name last macro")
+ "r" '(kmacro-to-register :wk "store the last macro in register")
+ "s" '(kmacro-step-edit-macro :wk "step edit and execute last macro"))
+
+(general-define-key
+ :keymaps 'local/leader/macros/ring/cmds
+ :wk-full-keys nil
+ "L" '(kmacro-view-ring-2nd :wk "display current head of macro ring")
+ "d" '(kmacro-delete-ring-head :wk "delete current macro from ring")
+ "l" '(kmacro-call-ring-2nd-repeat :wk "execute second macro in macro ring")
+ "n" '(kmacro-cycle-ring-next :wk "move to next macro in macro ring")
+ "p" '(kmacro-cycle-ring-previous :wk "move to prev macro in macro ring")
+ "s" '(kmacro-swap-ring :wk "swap first two elements in macro ring"))
 
 ;; Rectangles
 
@@ -1777,10 +2017,10 @@ If you experience stuttering, increase this.")
 
 
 (leader-def
-  "R" '(:prefix-command my-leader-rectangles-command-map :wk "rectangles"))
+  "R" '(:prefix-command local/leader/rectangles/cmds :wk "rectangles"))
 
 (general-define-key
- :keymaps 'my-leader-rectangles-command-map
+ :keymaps 'local/leader/rectangles/cmds
  :wk-full-keys nil
  "!" '(clear-rectangle :wk "blank out the rect")
  "c" '(close-rectangle :wk "delete all whitespace following column in each line")
@@ -1828,11 +2068,11 @@ If you experience stuttering, increase this.")
       (flyspell-mode-off)))
   :general
   (general-define-key
-   :keymaps 'my-leader-toggles-command-map
+   :keymaps 'local/leader/toggles/cmds
    :wk-full-keys nil
    "S" '(knopki/flyspell-or-flyspell-prog-mode :wk "flyspell"))
   (general-define-key
-   :keymaps 'my-leader-spell-command-map
+   :keymaps 'local/leader/spell/cmds
    :wk-full-keys nil
    "b" '(flyspell-buffer :wk "check buffer"))
   :init
@@ -1894,7 +2134,7 @@ If you experience stuttering, increase this.")
   (after-find-file . global-undo-tree-mode)
   :general
   (general-define-key
-   :keymaps 'my-leader-apps-command-map
+   :keymaps 'local/leader/apps/cmds
    :wk-full-keys nil
    "u" '(undo-tree-visualize :wk "undo tree"))
   (general-define-key
@@ -2501,8 +2741,7 @@ If you experience stuttering, increase this.")
   :preface
   (defmacro local/org-emphasize (fname char)
     "Make function for setting the emphasis in org mode"
-    `(defun ,fname () (interactive)
-            (org-emphasize ,char)))
+    `(defun ,fname () (interactive) (org-emphasize ,char)))
   :hook
   (org-mode . evil-org-mode)
   (evil-org-mode . (lambda () (evil-org-set-key-theme)))
@@ -2512,42 +2751,48 @@ If you experience stuttering, increase this.")
                        (evil-org-agenda-set-keys)))
   :general
   (:keymaps 'org-src-mode-map [remap evil-write] 'org-edit-src-save)
-  (general-define-key
-   :keymaps 'my-leader-apps-command-map
-   :wk-full-keys nil
-   "o" '(:prefix-command my-leader-org-command-map :wk "org"))
-  (general-define-key
-   :keymaps 'my-leader-org-command-map
-   :wk-full-keys nil
-   "#"  '(org-agenda-list-stuck-projects :wk "list stuck projects")
-   "/"  '(org-occur-in-agenda-files :wk "occur in agenda files")
-   "a"  '(org-agenda-list :wk "agenda list")
-   "c"  '(org-capture :wk "capture")
-   "e"  '(org-store-agenda-views :wk "store agenda views")
-   "l"  '(org-store-link :wk "store link")
-   "m"  '(org-tags-view :wk "tags view")
-   "o"  '(org-agenda :wk "agenda")
-   "s"  '(org-search-view :wk "search view")
-   "t"  'org-todo-list
 
-   "f"  '(:ignore t :wk "feeds")
-   "fi" '(org-feed-goto-inbox :wk "goto inbox")
-   "fu" '(org-feed-update-all :wk "update all")
+  (general-define-key
+   :keymaps 'local/leader/apps/cmds
+   :wk-full-keys nil
+   "o" '(:prefix-command local/leader/org/cmds :wk "org"))
+  (general-define-key
+   :keymaps 'local/leader/org/cmds
+   :wk-full-keys nil
+   "#" '(org-agenda-list-stuck-projects :wk "list stuck projects")
+   "/" '(org-occur-in-agenda-files :wk "occur in agenda files")
+   "a" '(org-agenda-list :wk "agenda list")
+   "c" '(org-capture :wk "capture")
+   "e" '(org-store-agenda-views :wk "store agenda views")
+   "l" '(org-store-link :wk "store link")
+   "m" '(org-tags-view :wk "tags view")
+   "o" '(org-agenda :wk "agenda")
+   "s" '(org-search-view :wk "search view")
+   "t" 'org-todo-list
+   "f" '(:prefix-command local/leader/org/feeds/cmds :wk "feeds")
+   "C" '(:prefix-command local/leader/org/clocks/cmds :wk "clocks"))
+  (general-define-key
+   :keymaps 'local/leader/org/feeds/cmds
+   :wk-full-keys nil
+   "i" '(org-feed-goto-inbox :wk "goto inbox")
+   "u" '(org-feed-update-all :wk "update all"))
+  (general-define-key
+   :keymaps 'local/leader/org/clocks/cmds
+   :wk-full-keys nil
+   "c" '(org-clock-cancel :wk "cancel")
+   "g" '(org-clock-goto :wk "goto last clocked-in clock")
+   "i" '(org-clock-in :wk "clock in")
+   "I" '(org-clock-in-last :wk "clock in last")
+   "j" '((lambda () (interactive)
+           (org-clock-jump-to-current-clock)) :wk "jump to current")
+   "o" '(org-clock-out :wk "clock out")
+   "r" '(org-resolve-clocks :wk "resolve clocks"))
 
-   "C"  '(:ignore t :wk "clock")
-   "Cc" '(org-clock-cancel :wk "cancel")
-   "Cg" '(org-clock-goto :wk "goto last clocked-in clock")
-   "Ci" '(org-clock-in :wk "clock in")
-   "CI" '(org-clock-in-last :wk "clock in last")
-   "Cj" '((lambda () (interactive)
-            (org-clock-jump-to-current-clock)) :wk "jump to current")
-   "Co" '(org-clock-out :wk "clock out")
-   "Cr" '(org-resolve-clocks :wk "resolve clocks"))
   (major-leader-def
     :keymaps 'org-mode-map
     :major-modes t
-    "'"  '(org-edit-special :wk "edit element at point")
-    "c"  '(org-capture :wk "capture")
+    "'" '(org-edit-special :wk "edit element at point")
+    "c" '(org-capture :wk "capture")
 
     ;; More cycling options (timestamps, headlines, items, properties)
     "L" '(org-shiftright :wk "cycle right")
@@ -2569,210 +2814,252 @@ If you experience stuttering, increase this.")
     "M-RET" '(org-meta-return :wk "new heading/wrap a region")
 
     "A"  '(org-attach :wk "attachments")
-
     "a"  '(org-agenda :wk "agenda")
+    "b" '(:prefix-command local/org-mode-map/babel/cmds :wk "babel")
+    "C" '(:prefix-command local/org-mode-map/clocks/cmds :wk "clocks")
+    "d" '(:prefix-command local/org-mode-map/dates/cmds :wk "dates")
+    "e" '(:prefix-command local/org-mode-map/export/cmds :wk "export")
+    "f" '(:prefix-command local/org-mode-map/feeds/cmds :wk "feeds")
+    "i" '(:prefix-command local/org-mode-map/insert/cmds :wk "insert")
+    "p" '(org-priority :wk "change priority")
+    "s" '(:prefix-command local/org-mode-map/subtrees/cmds :wk "subtrees")
+    "T" '(:prefix-command local/org-mode-map/toggles/cmds :wk "toggles")
+    "t" '(:prefix-command local/org-mode-map/tables/cmds :wk "tables")
+    "x" '(:prefix-command local/org-mode-map/text/cmds :wk "text"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/babel/cmds
+   :wk-full-keys nil
+   "p" '(org-babel-previous-src-block :wk "jump to prev src block")
+   "n" '(org-babel-next-src-block :wk "jump to next src block")
+   "e" '(org-babel-execute-maybe :wk "exec maybe")
+   "o" '(org-babel-open-src-block-result :wk "open results of src block")
+   "v" '(org-babel-expand-src-block :wk "expand src block")
+   "u" '(org-babel-goto-src-block-head :wk "goto beginning of src block")
+   "g" '(org-babel-goto-named-src-block :wk "goto named src block")
+   "r" '(org-babel-goto-named-result :wk "goto named result")
+   "b" '(org-babel-execute-buffer :wk "exec buffer src blocks")
+   "s" '(org-babel-execute-subtree :wk "exec subtree src blocks")
+   "d" '(org-babel-demarcate-block :wk "wrap/split code")
+   "t" '(org-babel-tangle :wk "tangle buffer")
+   "f" '(org-babel-tangle-file :wk "tangle to file")
+   "c" '(org-babel-check-src-block :wk "check src block")
+   "j" '(org-babel-insert-header-arg :wk "insert header arg")
+   "l" '(org-babel-load-in-session :wk "load in session")
+   "i" '(org-babel-lob-ingest :wk "add file blocks to library")
+   "I" '(org-babel-view-src-block-info :wk "view src block info")
+   "z" '(org-babel-switch-to-session :wk "switch to session")
+   "Z" '(org-babel-switch-to-session-with-code :wk "switch to session w/ code")
+   "a" '(org-babel-sha1-hash :wk "gen sha1 hash")
+   "x" '(org-babel-do-key-sequence-in-edit-buffer :wk "read key seq and exec"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/clocks/cmds
+   :wk-full-keys nil
+   "c" '(org-clock-cancel :wk "cancel clock")
+   "d" '(org-clock-display :wk "show timers")
+   "e" '(org-evaluate-time-range :wk "evaluate time range")
+   "g" '(org-clock-goto :wk "goto current")
+   "i" '(org-clock-in :wk "start clock on current item")
+   "I" '(org-clock-in-last :wl "start last clock")
+   "j" '((lambda () (interactive)
+           (org-clock-jump-to-current-clock)) :wk "jump to current")
+   "o" '(org-clock-out :wk "stop current clock")
+   "R" '(org-clock-report :wk "update report")
+   "r" '(org-resolve-clocks :wk "resolve all"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/dates/cmds
+   :wk-full-keys nil
+   "e" '(org-expiry-insert-expiry :wk "set expirity")
+   "E" '(org-expiry-process-entries :wk "expirity all")
+   "d" '(org-deadline :wk "set deadline")
+   "s" '(org-schedule :wk "set scheduled")
+   "t" '(org-time-stamp :wk "add timestamp")
+   "T" '(org-time-stamp-inactive :wk "add inactive timestamp"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/export/cmds
+   :wk-full-keys nil
+   "e" '(org-export-dispatch :wk "export dispatcher"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/feeds/cmds
+   :wk-full-keys nil
+   "i" '(org-feed-goto-inbox :wk "goto inbox")
+   "u" '(org-feed-update-all :wk "update all"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/insert/cmds
+   :wk-full-keys nil
+   "b" '(org-insert-structure-template :wk "block structure of type")
+   "d" '(org-insert-drawer :wk "drawer at point")
+   "e" '(org-set-effort :wk "set effort")
+   "f" '(org-footnote-new :wk "footnote")
+   "h" '(org-insert-heading :wk "heading")
+   "H" '(org-insert-heading-after-current :wk "heading with same level")
+   "i" '(org-insert-item :wk "item on current level")
+   "l" '(org-insert-link :wk "link")
+   "n" '(org-add-note :wk "note")
+   "p" '(org-set-property :wk "set property")
+   "s" '(org-insert-subheading :wk "subheading and demote it")
+   "t" '(org-set-tags-command :wk "set tags"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/subtrees/cmds
+   :wk-full-keys nil
+   "a" '(org-toggle-archive-tag :wk "toggle archive")
+   "A" '(org-archive-subtree :wk "move to archive")
+   "b" '(org-tree-to-indirect-buffer :wk "create indirect buffer")
+   "d" '(org-cut-subtree :wk "cut to clipboard")
+   "h" '(org-promote-subtree :wk "promote")
+   "j" '(org-move-subtree-down :wk "move down")
+   "k" '(org-move-subtree-up :wk "move up")
+   "l" '(org-demote-subtree :wk "demote subtree")
+   "n" '(org-narrow-to-subtree :wk "narrow buffer")
+   "N" '(widen :wk "widen buffer")
+   "r" '(org-refile :wk "refile")
+   "s" '(org-sparse-tree :wk "create sparse tree")
+   "S" '(org-sort :wk "sort"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/toggles/cmds
+   :wk-full-keys nil
+   "c" '(org-toggle-checkbox :wk "checkbox")
+   "e" '(org-toggle-pretty-entities :wk "pretty entities")
+   "i" '(org-toggle-inline-images :wk "inline images")
+   "l" '(org-toggle-link-display :wk "link display")
+   "t" '(org-show-todo-tree :wk "todo tree")
+   "T" '(org-todo :wk "change todo state")
+   "x" '(org-latex-preview :wk "preview latex"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/tables/cmds
+   :wk-full-keys nil
+   "a" '(org-table-align :wk "align")
+   "b" '(org-table-blank-field :wk "blank field")
+   "c" '(org-table-convert :wk "convert table.el")
+   "e" '(org-table-eval-formula :wk "replace by calculation")
+   "E" '(org-table-export :wk "export")
+   "f" '(org-table-field-info :wk "field info")
+   "h" '(org-table-previous-field :wk "goto prev field")
+   "H" '(org-table-move-column-left :wk "move column left")
+   "I" '(org-table-import :wk "import file")
+   "j" '(org-table-next-row :wk "goto next row")
+   "J" '(org-table-move-row-down :wk "move row down")
+   "K" '(org-table-move-row-up :wk "move row up")
+   "l" '(org-table-next-field :wk "goto next field")
+   "L" '(org-table-move-column-right :wk "move column right")
+   "n" '(org-table-create :wk "create table")
+   "N" '(org-table-create-with-table.el :wk "create table.el")
+   "r" '(org-table-recalculate :wk "recalculate line")
+   "s" '(org-table-sort-lines :wk "sort by column")
+   "w" '(org-table-wrap-region :wk "wrap region")
+   "d" '(:prefix-command local/org-mode-map/tables/delete/cmds :wk "delete")
+   "i" '(:prefix-command local/org-mode-map/tables/insert/cmds :wk "insert")
+   "t" '(:prefix-command local/org-mode-map/tables/toggle/cmds :wk "toggle"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/tables/delete/cmds
+   :wk-full-keys nil
+   "c" '(org-table-delete-column :wk "column")
+   "r" '(org-table-kill-row :wk "row"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/tables/insert/cmds
+   :wk-full-keys nil
+   "c" '(org-table-insert-column :wk "column")
+   "h" '(org-table-insert-hline :wk "hline")
+   "H" '(org-table-hline-and-move :wk "hline and jump after")
+   "r" '(org-table-insert-row :wk "row above"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/tables/toggle/cmds
+   :wk-full-keys nil
+   "f" '(org-table-toggle-formula-debugger :wk "formula debugger")
+   "o" '(org-table-toggle-coordinate-overlays :wk "row/column numbers"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/text/cmds
+   :wk-full-keys nil
+   "b" (local/org-emphasize local/org-bold ?*)
+   "c" (local/org-emphasize local/org-code ?~)
+   "i" (local/org-emphasize local/org-italic ?/)
+   "o" 'org-open-at-point
+   "r" (local/org-emphasize local/org-clear ? )
+   "s" (local/org-emphasize local/org-strike-through ?+)
+   "u" (local/org-emphasize local/org-underline ?_)
+   "v" (local/org-emphasize local/org-verbatim ?=))
 
-    "b"  '(:ignore t :wk "babel")
-    "bp" '(org-babel-previous-src-block :wk "jump to prev src block")
-    "bn" '(org-babel-next-src-block :wk "jump to next src block")
-    "be" '(org-babel-execute-maybe :wk "exec maybe")
-    "bo" '(org-babel-open-src-block-result :wk "open results of src block")
-    "bv" '(org-babel-expand-src-block :wk "expand src block")
-    "bu" '(org-babel-goto-src-block-head :wk "goto beginning of src block")
-    "bg" '(org-babel-goto-named-src-block :wk "goto named src block")
-    "br" '(org-babel-goto-named-result :wk "goto named result")
-    "bb" '(org-babel-execute-buffer :wk "exec buffer src blocks")
-    "bs" '(org-babel-execute-subtree :wk "exec subtree src blocks")
-    "bd" '(org-babel-demarcate-block :wk "wrap/split code")
-    "bt" '(org-babel-tangle :wk "tangle buffer")
-    "bf" '(org-babel-tangle-file :wk "tangle to file")
-    "bc" '(org-babel-check-src-block :wk "check src block")
-    "bj" '(org-babel-insert-header-arg :wk "insert header arg")
-    "bl" '(org-babel-load-in-session :wk "load in session")
-    "bi" '(org-babel-lob-ingest :wk "add file blocks to library")
-    "bI" '(org-babel-view-src-block-info :wk "view src block info")
-    "bz" '(org-babel-switch-to-session :wk "switch to session")
-    "bZ" '(org-babel-switch-to-session-with-code :wk "switch to session w/ code")
-    "ba" '(org-babel-sha1-hash :wk "gen sha1 hash")
-    "bx" '(org-babel-do-key-sequence-in-edit-buffer :wk "read key seq and exec")
-
-    "C"  '(:ignore t :wk "clocks")
-    "Cc" '(org-clock-cancel :wk "cancel clock")
-    "Cd" '(org-clock-display :wk "show timers")
-    "Ce" '(org-evaluate-time-range :wk "evaluate time range")
-    "Cg" '(org-clock-goto :wk "goto current")
-    "Ci" '(org-clock-in :wk "start clock on current item")
-    "CI" '(org-clock-in-last :wl "start last clock")
-    "Cj" '((lambda () (interactive)
-             (org-clock-jump-to-current-clock)) :wk "jump to current")
-    "Co" '(org-clock-out :wk "stop current clock")
-    "CR" '(org-clock-report :wk "update report")
-    "Cr" '(org-resolve-clocks :wk "resolve all")
-
-    "d"  '(:ignore t :wk "dates")
-    "de" '(org-expiry-insert-expiry :wk "set expirity")
-    "dE" '(org-expiry-process-entries :wk "expirity all")
-    "dd" '(org-deadline :wk "set deadline")
-    "ds" '(org-schedule :wk "set scheduled")
-    "dt" '(org-time-stamp :wk "add timestamp")
-    "dT" '(org-time-stamp-inactive :wk "add inactive timestamp")
-
-    "e"  '(:ignore t :wk "export")
-    "ee" '(org-export-dispatch :wk "export dispatcher")
-
-    "f"  '(:ignore t :wk "feeds")
-    "fi" '(org-feed-goto-inbox :wk "goto inbox")
-    "fu" '(org-feed-update-all :wk "update all")
-
-    "i"  '(:ignore t :wk "insert")
-    "ib" '(org-insert-structure-template :wk "block structure of type")
-    "id" '(org-insert-drawer :wk "drawer at point")
-    "ie" '(org-set-effort :wk "set effort")
-    "if" '(org-footnote-new :wk "footnote")
-    "ih" '(org-insert-heading :wk "heading")
-    "iH" '(org-insert-heading-after-current :wk "heading with same level")
-    "ii" '(org-insert-item :wk "item on current level")
-    "il" '(org-insert-link :wk "link")
-    "in" '(org-add-note :wk "note")
-    "ip" '(org-set-property :wk "set property")
-    "is" '(org-insert-subheading :wk "subheading and demote it")
-    "it" '(org-set-tags-command :wk "set tags")
-
-    "p"  '(org-priority :wk "change priority")
-
-    "s"  '(:ignore t :wk "subtrees")
-    "sa" '(org-toggle-archive-tag :wk "toggle archive")
-    "sA" '(org-archive-subtree :wk "move to archive")
-    "sb" '(org-tree-to-indirect-buffer :wk "create indirect buffer")
-    "sd" '(org-cut-subtree :wk "cut to clipboard")
-    "sh" '(org-promote-subtree :wk "promote")
-    "sj" '(org-move-subtree-down :wk "move down")
-    "sk" '(org-move-subtree-up :wk "move up")
-    "sl" '(org-demote-subtree :wk "demote subtree")
-    "sn" '(org-narrow-to-subtree :wk "narrow buffer")
-    "sN" '(widen :wk "widen buffer")
-    "sr" '(org-refile :wk "refile")
-    "ss" '(org-sparse-tree :wk "create sparse tree")
-    "sS" '(org-sort :wk "sort")
-
-    "T"  '(:ignore t :wk "toggles")
-    "Tc" '(org-toggle-checkbox :wk "checkbox")
-    "Te" '(org-toggle-pretty-entities :wk "pretty entities")
-    "Ti" '(org-toggle-inline-images :wk "inline images")
-    "Tl" '(org-toggle-link-display :wk "link display")
-    "Tt" '(org-show-todo-tree :wk "todo tree")
-    "TT" '(org-todo :wk "change todo state")
-    "Tx" '(org-latex-preview :wk "preview latex")
-
-    "t"  '(:ignore t :wk "tables")
-    "ta" '(org-table-align :wk "align")
-    "tb" '(org-table-blank-field :wk "blank field")
-    "tc" '(org-table-convert :wk "convert table.el")
-    "te" '(org-table-eval-formula :wk "replace by calculation")
-    "tE" '(org-table-export :wk "export")
-    "tf" '(org-table-field-info :wk "field info")
-    "th" '(org-table-previous-field :wk "goto prev field")
-    "tH" '(org-table-move-column-left :wk "move column left")
-    "tI" '(org-table-import :wk "import file")
-    "tj" '(org-table-next-row :wk "goto next row")
-    "tJ" '(org-table-move-row-down :wk "move row down")
-    "tK" '(org-table-move-row-up :wk "move row up")
-    "tl" '(org-table-next-field :wk "goto next field")
-    "tL" '(org-table-move-column-right :wk "move column right")
-    "tn" '(org-table-create :wk "create table")
-    "tN" '(org-table-create-with-table.el :wk "create table.el")
-    "tr" '(org-table-recalculate :wk "recalculate line")
-    "ts" '(org-table-sort-lines :wk "sort by column")
-    "tw" '(org-table-wrap-region :wk "wrap region")
-
-    "td"  '(:ignore t :wk "delete")
-    "tdc" '(org-table-delete-column :wk "column")
-    "tdr" '(org-table-kill-row :wk "row")
-
-    "ti"  '(:ignore t :wk "insert")
-    "tic" '(org-table-insert-column :wk "column")
-    "tih" '(org-table-insert-hline :wk "hline")
-    "tiH" '(org-table-hline-and-move :wk "hline and jump after")
-    "tir" '(org-table-insert-row :wk "row above")
-
-    "tt"  '(:ignore t :wk "toggle")
-    "ttf" '(org-table-toggle-formula-debugger :wk "formula debugger")
-    "tto" '(org-table-toggle-coordinate-overlays :wk "row/column numbers")
-
-    "x"  '(:ignore t :wk "text")
-    "xb" (local/org-emphasize local/org-bold ?*)
-    "xc" (local/org-emphasize local/org-code ?~)
-    "xi" (local/org-emphasize local/org-italic ?/)
-    "xo" 'org-open-at-point
-    "xr" (local/org-emphasize local/org-clear ? )
-    "xs" (local/org-emphasize local/org-strike-through ?+)
-    "xu" (local/org-emphasize local/org-underline ?_)
-    "xv" (local/org-emphasize local/org-verbatim ?=))
   (major-leader-def
     :keymaps 'org-agenda-mode-map
     :major-modes t
     "a"  '(org-agenda :wk "agenda")
+    "C" '(:prefix-command local/org-agenda-mode/clocks/cmds :wk "clocks")
+    "d" '(:prefix-command local/org-agenda-mode/dates/cmds :wk "dates")
+    "f" '(:prefix-command local/org-agenda-mode/filter/cmds :wk "filter")
+    "h" '(:prefix-command local/org-agenda-mode/headline/cmds :wk "headline")
+    "i" '(:prefix-command local/org-agenda-mode/insert/cmds :wk "insert")
+    "s" '(:prefix-command local/org-agenda-mode/subtrees/cmds :wk "subtrees")
+    "t" '(:prefix-command local/org-agenda-mode/toggles/cmds :wk "toggles")
+    "v" '(:prefix-command local/org-agenda-mode/view/cmds :wk "view"))
+  (general-define-key
+   :keymaps 'local/org-agenda-mode/clocks/cmds
+   :wk-full-keys nil
+   "c" '(org-agenda-clock-cancel :wk "cancel")
+   "i" '(org-agenda-clock-in :wk "start")
+   "j" '(org-agenda-clock-goto :wk "jump to current")
+   "o" '(org-agenda-clock-out :wk "stop"))
+  (general-define-key
+   :keymaps 'local/org-agenda-mode/dates/cmds
+   :wk-full-keys nil
+   "+" '(org-agenda-do-date-later :wk "date +1")
+   "-" '(org-agenda-do-date-earlier :wk "date -1")
+   "d" '(org-agenda-deadline :wk "add deadline")
+   "D" '((lambda () (interactive)
+           (let ((current-prefix-arg '(4)))
+             (call-interactively 'org-agenda-deadline))) :wk "remove deadline")
+   "s" '(org-agenda-schedule :wk "schedule")
+   "S" '((lambda () (interactive)
+           (let ((current-prefix-arg '(4)))
+             (call-interactively 'org-agenda-schedule))) :wk "unschedule")
+   "t" '(org-agenda-date-prompt :wk "change date"))
+  (general-define-key
+   :keymaps 'local/org-agenda-mode/filter/cmds
+   :wk-full-keys nil
+   "c" '(org-agenda-filter-by-category :wk "by category")
+   "d" '(org-agenda-filter-remove-all :wk "remove")
+   "h" '(org-agenda-filter-by-top-headline :wk "same descendants")
+   "r" 'org-agenda-filter-by-tag-refine
+   "t" '(org-agenda-filter-by-tag "by tag")
+   "x" '(org-agenda-filter-by-regexp :wk "by regexp"))
+  (general-define-key
+   :keymaps 'local/org-agenda-mode/headline/cmds
+   :wk-full-keys nil
+   ":" '(org-agenda-set-tags :wk "set tags")
+   "A" '(org-agenda-archive-default :wk "archive")
+   "k" '(org-agenda-kill :wk "kill")
+   "p" '(org-agenda-priority :wk "set priority")
+   "r" '(org-agenda-refile :wk "refile")
+   "t" '(org-agenda-todo :wk "cycle state"))
+  (general-define-key
+   :keymaps 'local/org-agenda-mode/insert/cmds
+   :wk-full-keys nil
+   "e" '(org-agenda-set-effort :wk "effort")
+   "p" '(org-agenda-set-property :wk "property")
+   "t" '(org-agenda-set-tags :wk "tags"))
+  (general-define-key
+   :keymaps 'local/org-agenda-mode/subtrees/cmds
+   :wk-full-keys nil
+   "r" '(org-agenda-refile :wk "refile"))
+  (general-define-key
+   :keymaps 'local/org-agenda-mode/toggles/cmds
+   :wk-full-keys nil
+   "a" '(org-agenda-archives-mode :wk "show archive")
+   "d" '(org-agenda-toggle-diary :wk "show diary")
+   "f" '(org-agenda-follow-mode :wk "follow")
+   "i" '(org-agenda-show-clocking-issues :wk "show issues/clocks")
+   "l" '(org-agenda-log-mode :wk "log mode")
+   "r" '(org-agenda-clockreport-mode :wk "clocktable"))
+  (general-define-key
+   :keymaps 'local/org-agenda-mode/view/cmds
+   :wk-full-keys nil
+   "vd" '(org-agenda-day-view :wk "daily")
+   "vm" '(org-agenda-month-view :wk "monthly")
+   "vn" '(org-agenda-later :wk "forward in plan")
+   "vp" '(org-agenda-earlier :wk "go backward")
+   "vr" '(org-agenda-reset-view :wk "reset")
+   "vt" '(org-agenda-fortnight-view :wk "fortnight")
+   "vw" '(org-agenda-week-view :wk "weekly")
+   "vy" '(org-agenda-year-view :wk "yearly"))
 
-    "C"  '(:ignore t :wk "clocks")
-    "Cc" '(org-agenda-clock-cancel :wk "cancel")
-    "Ci" '(org-agenda-clock-in :wk "start")
-    "Cj" '(org-agenda-clock-goto :wk "jump to current")
-    "Co" '(org-agenda-clock-out :wk "stop")
-
-    "d"  '(:ignore t :wk "dates")
-    "d+" '(org-agenda-do-date-later :wk "date +1")
-    "d-" '(org-agenda-do-date-earlier :wk "date -1")
-    "dd" '(org-agenda-deadline :wk "add deadline")
-    "dD" '((lambda () (interactive)
-             (let ((current-prefix-arg '(4)))
-               (call-interactively 'org-agenda-deadline))) :wk "remove deadline")
-    "ds" '(org-agenda-schedule :wk "schedule")
-    "dS" '((lambda () (interactive)
-             (let ((current-prefix-arg '(4)))
-               (call-interactively 'org-agenda-schedule))) :wk "unschedule")
-    "dt" '(org-agenda-date-prompt :wk "change date")
-
-    "f"  '(:ignore t :wk "filter")
-    "fc" '(org-agenda-filter-by-category :wk "by category")
-    "fd" '(org-agenda-filter-remove-all :wk "remove")
-    "fh" '(org-agenda-filter-by-top-headline :wk "same descendants")
-    "fr" 'org-agenda-filter-by-tag-refine
-    "ft" '(org-agenda-filter-by-tag "by tag")
-    "fx" '(org-agenda-filter-by-regexp :wk "by regexp")
-
-    "h"  '(:ignore t :wk "headline")
-    "h:" '(org-agenda-set-tags :wk "set tags")
-    "hA" '(org-agenda-archive-default :wk "archive")
-    "hk" '(org-agenda-kill :wk "kill")
-    "hp" '(org-agenda-priority :wk "set priority")
-    "hr" '(org-agenda-refile :wk "refile")
-    "ht" '(org-agenda-todo :wk "cycle state")
-
-    "i"  '(:ignore t :wk "insert")
-    "ie" '(org-agenda-set-effort :wk "effort")
-    "ip" '(org-agenda-set-property :wk "property")
-    "it" '(org-agenda-set-tags :wk "tags")
-
-    "s"  '(:ignore t :wk "subtrees")
-    "sr" '(org-agenda-refile :wk "refile")
-
-    "t"  '(:ignore t :wk "toggles")
-    "ta" '(org-agenda-archives-mode :wk "show archive")
-    "td" '(org-agenda-toggle-diary :wk "show diary")
-    "tf" '(org-agenda-follow-mode :wk "follow")
-    "ti" '(org-agenda-show-clocking-issues :wk "show issues/clocks")
-    "tl" '(org-agenda-log-mode :wk "log mode")
-    "tr" '(org-agenda-clockreport-mode :wk "clocktable")
-
-    "v"  '(:ignore t :wk "view")
-    "vd" '(org-agenda-day-view :wk "daily")
-    "vm" '(org-agenda-month-view :wk "monthly")
-    "vn" '(org-agenda-later :wk "forward in plan")
-    "vp" '(org-agenda-earlier :wk "go backward")
-    "vr" '(org-agenda-reset-view :wk "reset")
-    "vt" '(org-agenda-fortnight-view :wk "fortnight")
-    "vw" '(org-agenda-week-view :wk "weekly")
-    "vy" '(org-agenda-year-view :wk "yearly"))
   (major-leader-def
     :keymaps 'org-capture-mode-map
     :major-modes t
@@ -2828,12 +3115,15 @@ If you experience stuttering, increase this.")
              org-download-yank
              org-download-screenshot)
   :general
-  (major-leader-def
-    :keymaps 'org-mode-map
-    :major-modes t
-    "iD" '(:ignore t :wk "download")
-    "iDy" '(org-download-yank :wk "download image from kill-ring")
-    "iDs" '(org-download-screenshot :wk "make screenshot"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/insert/cmds
+   :wk-full-keys nil
+   "D" '(:prefix-command local/org-mode-map/insert/download/cmds :wk "download"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/insert/download/cmds
+   :wk-full-keys nil
+   "y" '(org-download-yank :wk "download from kill-ring")
+   "s" '(org-download-screenshot :wk "make screenshot"))
   :custom
   (org-download-method 'attach)
   (org-download-screenshot-method "slurp | grim -g - %s" "Sway/Wayland method"))
@@ -2851,10 +3141,10 @@ If you experience stuttering, increase this.")
   :after org
   :commands (org-cliplink org-cliplink-capture)
   :general
-  (major-leader-def
-    :keymaps 'org-mode-map
-    :major-modes t
-    "iL" '(org-cliplink :wk "cliplink"))
+  (general-define-key
+   :keymaps 'local/org-mode-map/insert/cmds
+   :wk-full-keys nil
+   "L" '(org-cliplink :wk "cliplink"))
   :custom
   (org-capture-templates
    (append
@@ -2899,11 +3189,14 @@ If you experience stuttering, increase this.")
   :commands (org-journal-new-entry org-journal-search-forever)
   :general
   (general-define-key
-   :keymaps 'my-leader-org-command-map
+   :keymaps 'local/leader/org/cmds
    :wk-full-keys nil
-   "j"  '(:ignore t :wk "journal")
-   "jj" '(org-journal-new-entry :wk "new entry")
-   "js" '(org-journal-search-forever :wk "search"))
+   "j" '(:prefix-command local/leader/org/journal/cmds :wk "journal"))
+  (general-define-key
+   :keymaps 'local/leader/org/journal/cmds
+   :wk-full-keys nil
+   "j" '(org-journal-new-entry :wk "new entry")
+   "s" '(org-journal-search-forever :wk "search"))
   (major-leader-def
     :keymaps 'org-journal-mode-map
     :major-modes t
@@ -2969,6 +3262,23 @@ If you experience stuttering, increase this.")
   :hook (after-init . global-wakatime-mode)
   :defer 10)
 
+;; Version Control
+
+;; Global keybindings:
+;; | key         | command                                    |
+;; |-------------+--------------------------------------------|
+;; | =SPC g f f= | View a file at a specific branch or commit |
+
+
+(general-define-key
+ :keymaps 'local/leader/vc/cmds
+ :wk-full-keys nil
+ "f" '(:prefix-command local/leader/vc/find/cmds :wk "file"))
+(general-define-key
+ :keymaps 'local/leader/vc/find/cmds
+ :wk-full-keys nil
+ "f" '(counsel-git :wk "find file"))
+
 ;; diff-hl
 ;; Highlights uncommitted changes on the fringe.
 
@@ -2999,12 +3309,19 @@ If you experience stuttering, increase this.")
 ;; Magit
 ;; Awesome git frontend.
 
+;; Global keybindings:
+;; | key       | command                      |
+;; |-----------+------------------------------|
+;; | =SPC g s= | Open a ~magit~ status window |
+
 
 (use-package magit
   :commands (magit-file-delete)
   :general
-  (leader-def
-    "g" 'magit-status)
+  (general-define-key
+   :keymaps 'local/leader/vc/cmds
+   :wk-full-keys nil
+   "s" '(magit-status :wk "status"))
   :custom
   (magit-diff-toggle-refine-hunk t "Show word-granularity differences within diff hunks.")
   (magit-prefer-remote-upstream t "Favor remote branches when reading upstream branch.")
@@ -3236,11 +3553,11 @@ If you experience stuttering, increase this.")
   :hook (after-find-file . global-flycheck-mode)
   :general
   (general-define-key
-   :keymaps 'my-leader-toggles-command-map
+   :keymaps 'local/leader/toggles/cmds
    :wk-full-keys nil
    "s" '(flycheck-mode :wk "toggle flycheck mode"))
   (general-define-key
-   :keymaps 'my-leader-errors-command-map
+   :keymaps 'local/leader/errors/cmds
    :wk-full-keys nil
    "b" '(flycheck-buffer :wk "check for errors")
    "c" '(flycheck-clear :wk "clear errors")
@@ -3394,8 +3711,7 @@ If you experience stuttering, increase this.")
   (lsp-pyls-plugins-yapf-enabled nil)
 
   :config
-  (let ((lsp-keymap-prefix local/leader-major-key))
-    (lsp-enable-which-key-integration))
+  (let ((lsp-keymap-prefix local/leader-major-key)) (lsp-enable-which-key-integration))
   (lsp-register-custom-settings
    '(("pyls.plugins.pyls_mypy.enabled" t t)
      ("pyls.plugins.pyls_mypy.live_mode" nil t)
