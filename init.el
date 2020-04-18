@@ -769,6 +769,7 @@ If you experience stuttering, increase this.")
 
 (use-package fira-code-mode
   :commands (fira-code-mode)
+  :if (display-graphic-p)
   :custom
   (fira-code-mode-disabled-ligatures
    '("x")
@@ -3396,7 +3397,7 @@ If you experience stuttering, increase this.")
 (use-package prog-mode
   :ensure nil
   :hook
-  (prog-mode . fira-code-mode)
+  (prog-mode . (lambda () (when display-graphic-p fira-code-mode)))
   :custom
   (prettify-symbols-unprettify-at-point 'right-edge))
 

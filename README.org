@@ -1031,6 +1031,7 @@ This is a simple minor mode for Fira Code ligatures.
 #+begin_src elisp
   (use-package fira-code-mode
     :commands (fira-code-mode)
+    :if (display-graphic-p)
     :custom
     (fira-code-mode-disabled-ligatures
      '("x")
@@ -3665,7 +3666,7 @@ Mother of all programming modes.
   (use-package prog-mode
     :ensure nil
     :hook
-    (prog-mode . fira-code-mode)
+    (prog-mode . (lambda () (when display-graphic-p fira-code-mode)))
     :custom
     (prettify-symbols-unprettify-at-point 'right-edge))
 #+end_src
