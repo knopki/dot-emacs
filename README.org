@@ -1654,13 +1654,13 @@ Some evil commands:
    "d" '(kill-this-buffer :wk "kill this buffer")
    "e" '(erase-buffer :wk "erase buffer")
    "n" '(next-buffer :wk "next buffer")
-   "N" '(:prefix-command local/leader/buffers/indirect/cmds :wk "indirect")
+   "N" '(:prefix-command local/leader/buffers/new/cmds :wk "indirect")
    "p" '(previous-buffer :wk "previous buffer")
    "x" '(kill-buffer-and-window :wk "kill buffer with window")
    "w" '(read-only-mode :wk "read only buffer"))
 
   (general-define-key
-   :keymaps 'local/leader/buffers/indirect/cmds
+   :keymaps 'local/leader/buffers/new/cmds
    :wk-full-keys nil
    "C-i" '(make-indirect-buffer :wk "create indirect buffer")
    "i"    '(clone-indirect-buffer :wk "indirect buffer from current")
