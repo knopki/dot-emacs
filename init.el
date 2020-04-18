@@ -3,7 +3,7 @@
 ;;; This file was tangled (automatically generated) from `README.org'
 ;;; Code:
 
-;; -*- lexical-binding: t -*-
+;; -*- lexical-binding: t; -*-
 
 ;; Load 'early-init on old versions
 (unless (>= emacs-major-version 27)
