@@ -47,6 +47,9 @@ If you experience stuttering, increase this.")
   (setq package-enable-at-startup nil)          ; To prevent initializing twice
   (package-initialize))
 
+;; package.el has no business modifying the user's init.el
+(advice-add #'package--ensure-init-file :override #'ignore)
+
 
 
 ;; Load =use-package=.
